@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title> Gym status </title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+    </head>
+    <body>
+        <div style="width: 800px; margin:auto;">
+            <h1> Number of Gyms by Teams </h1>
+            <canvas id="teamChart" width="400" height="400" style="width: 400px;"></canvas>
+            <h1> Number of Gyms by Users </h1>
+            <canvas id="trnrChart" width="400" height="400"></canvas>
+        </div>
+        <script>
+            var URL = "https://mapdata2.gomap.eu/mnew.php?mid=0&ex=%5B10%2C11%2C13%2C14%2C16%2C17%2C19%2C20%2C21%2C22%2C23%2C29%2C30%2C32%2C33%2C35%2C39%2C41%2C43%2C44%2C46%2C48%2C49%2C50%2C52%2C54%2C58%2C60%2C61%2C69%2C70%2C72%2C77%2C84%2C86%2C90%2C92%2C96%2C98%2C104%2C109%2C116%2C118%2C120%2C161%2C162%2C163%2C165%2C166%2C167%2C168%2C177%2C178%2C183%2C187%2C190%2C194%2C198%2C206%2C209%2C216%2C218%2C220%2C223%5D&w=14.240820017805705&e=14.759138020524377&n=46.22983200641623&s=45.870103364048745&gid=0";
+
+            $.getJSON(URL).then(function (data){
+                console.log(data.gyms);
+                var gyms = data.gyms;
+                var trnrs = {};
+                var trnr_colors = {};
+                var teams = [0, 0, 0, 0];
+                for (var i = 0; i < data.gyms.length; i++) {
+                    var gym = data.gyms[i];
+                    teams[gym.team_id]++;
+                    for (var j = 0; j < gym.memb.length; j++) {
+                        var memb = gym.memb[j];
+                        if (trnrs[memb.tn] === undefined) {
+                            trnrs[memb.tn] = 0;
+                            trnr_colors[memb.tn] = ["#e5e5e5", "#0576ee", "#f2160a", "#fad107"][gym.team_id];
+                        }
+                        trnrs[memb.tn]++;
+                    }
+                }
+                console.log(trnrs);
+                console.log(teams);
+                var teamChart = new Chart("teamChart", {
+                    type: "pie",
+                    data: {
+                        labels: ["None", "Mystic", "Valor", "Inctinct"],
+                        datasets: [{
+                            backgroundColor : ["#e5e5e5", "#0576ee", "#f2160a", "#fad107"],
+                            data: teams,
+                        }]
+                    }
+                })
+                var users = [];
+                for (var name in trnrs) {
+                    users.push([trnrs[name], name]);
+                }
+                console.log(users);
+                users.sort(function(a, b) {
+                  return a[0] - b[0];
+                });
+                console.log(users);
+                var labels = [], nums = [], clrs = [];
+                for (var i = users.length-1; i >= 0; i--) {
+                    labels.push(users[i][1]);
+                    nums.push(users[i][0]);
+                    clrs.push(trnr_colors[users[i][1]]);
+                    if (labels.length >= 50) {
+                        break;
+                    }
+                }
+                console.log(labels);
+                console.log(nums);
+
+                var teamChart = new Chart("trnrChart", {
+                    type: "horizontalBar",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: nums,
+                            backgroundColor : clrs,
+                        }]
+                    }
+                })
+            }).fail(function (data) {
+                alert("Error fetching gyms from GoMap.eu");
+            });
+        </script>
+    </body>
+</html>
