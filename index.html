@@ -55,7 +55,8 @@
                 }
                 console.log(users);
                 users.sort(function(a, b) {
-                  return a[0] - b[0];
+                    if (a[0] == b[0]) return a[1].toLowerCase() > b[1].toLowerCase() ? -1:1;
+                    return a[0] - b[0];
                 });
                 console.log(users);
                 $("#trnrChart").attr("height", 10*users.length);
