@@ -1,3 +1,6 @@
+h1 small {
+    font-size: small;
+}
 #container {
     width: 800px;
     margin:auto;
@@ -38,6 +41,9 @@
 .row.big .label {
     line-height: 50px;
 }
+.row .label a {
+    color: #797979;
+}
 .row .label {
     border-right: solid 1px #e5e5e5;
     color: #797979;
@@ -51,6 +57,12 @@
     line-height: 25px;
     vertical-align: center;
     white-space: nowrap;
+}
+
+#trnrChart .row .label:before {
+    content: counter(trnr-counter) ".";
+    counter-increment: trnr-counter;
+    float: left;
 }
 
 .row.big .bar {
@@ -76,11 +88,6 @@
 }
 #trnrChart {
     counter-reset: trnr-counter;
-}
-#trnrChart .row .label:before {
-    content: counter(trnr-counter) ".";
-    counter-increment: trnr-counter;
-    float: left;
 }
 .row .bar .value {
     color: rgba(0, 0, 0, 0);
