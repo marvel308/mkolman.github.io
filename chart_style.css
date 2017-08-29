@@ -6,13 +6,13 @@
     min-height: 200px;
 }
 #search {
-    width: 150px;
+    width: 170px;
     text-align: right;
     padding-right: 10px;
 }
 #searchResult {
     display: inline-block;
-    width: 640px;
+    width: 620px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -42,7 +42,7 @@
     border-right: solid 1px #e5e5e5;
     color: #797979;
     font-size: 13px;
-    width: 140px;
+    width: 160px;
     padding-right: 10px;
     display: inline-block;
     float: left;
@@ -50,6 +50,7 @@
     text-align: right;
     line-height: 25px;
     vertical-align: center;
+    white-space: nowrap;
 }
 
 .row.big .bar {
@@ -59,8 +60,8 @@
     /*background-color: red;*/
     height: 20px;
     padding-top: 5px;
-    margin-left: 150px;
-    width: 650px;
+    margin-left: 170px;
+    width: 630px;
 }
 
 .row.big .bar .value {
@@ -72,6 +73,14 @@
     height: 100%;
     margin-top: -2px;
     color: gray;
+}
+#trnrChart {
+    counter-reset: trnr-counter;
+}
+#trnrChart .row .label:before {
+    content: counter(trnr-counter) ".";
+    counter-increment: trnr-counter;
+    float: left;
 }
 .row .bar .value {
     color: rgba(0, 0, 0, 0);
