@@ -19,7 +19,7 @@ h1 {
     margin:auto;
 }
 #teamChart {
-    min-height: 200px;
+    min-height: 204px;
 }
 #search {
     width: 170px;
@@ -83,7 +83,7 @@ h1 {
 }
 .enumerate.hide {
     position: relative;
-    max-height: 280px;
+    height: 280px;
     overflow: hidden;
 }
 .enumerate.hide:after {
