@@ -1,6 +1,19 @@
 h1 small {
     font-size: small;
 }
+h1 {
+    /*color: #ffffff;*/
+    font-family: 'Lato', sans-serif;
+    font-size: 40px;
+    font-weight: 300;
+    /*line-height: 58px;*/
+    /*margin: 0 0 58px;*/
+}
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+
 #container {
     width: 800px;
     margin:auto;
@@ -57,10 +70,39 @@ h1 small {
     line-height: 25px;
     vertical-align: center;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-#trnrChart .row .label:before {
-    content: counter(trnr-counter) ".";
+.row:hover .label {
+    overflow: visible;
+}
+
+.enumerate {
+    counter-reset: trnr-counter;
+}
+.enumerate.hide {
+    position: relative;
+    max-height: 280px;
+    overflow: hidden;
+}
+.enumerate.hide:after {
+    content: "Show all";
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    color: white;
+
+    background: rgba(0, 0, 0, 0.5); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74)); /* Standard syntax */
+}
+.enumerate .row .label:before {
+    content: counter(trnr-counter) ". ";
     counter-increment: trnr-counter;
     float: left;
 }
@@ -86,9 +128,6 @@ h1 small {
     margin-top: -2px;
     color: gray;
 }
-#trnrChart {
-    counter-reset: trnr-counter;
-}
 .row .bar .value {
     color: rgba(0, 0, 0, 0);
     background-color: #e5e5e5;
@@ -100,3 +139,4 @@ h1 small {
     transition: 0.1s height, margin-top 0.1s, background-color 0.1s, color 0.5s;
     white-space: nowrap;
 }
+
