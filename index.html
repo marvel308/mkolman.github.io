@@ -97,7 +97,8 @@
                 for (var i = 0; i < data.gyms.length; i++) {
                     var gym = data.gyms[i];
                     teams[gym.team_id]++;
-                    gym_data.push([gym.time_ocuppied, gym]);
+                    var time_ocuppied = (new Date())/1000 - gym.ts + gym.time_ocuppied;
+                    gym_data.push([time_ocuppied, gym]);
                     for (var j = 0; j < gym.memb.length; j++) {
                         var memb = gym.memb[j];
                         if (trnrs[memb.tn] === undefined) {
@@ -143,15 +144,14 @@
                 var gym_colors = [];
                 for (var i = 0; i < gym_data.length; i++) {
                     gym = gym_data[i][1];
-                    var time_ocuppied = new Date() - gym.ts;
-                    time_ocuppied += gym.time_ocuppied;
+                    var time_ocuppied = gym_data[i][0];
                     gym_names.push("<a href='https://www.google.si/maps/place/" +
                                    gym.latitude + "," + gym.longitude + "'>" +
                                    gym.name + "</a>");
-                    gym_durations.push(gym.time_ocuppied);
+                    gym_durations.push(time_ocuppied);
                     gym_human_durations.push(
-                        Math.floor(gym.time_ocuppied/86400) + "d "+
-                        Math.floor((gym.time_ocuppied % 86400)/3600) + "h");
+                        Math.floor(time_ocuppied/86400) + "d "+
+                        Math.floor((time_ocuppied % 86400)/3600) + "h");
                     gym_colors.push(["#e5e5e5", "#0576ee", "#f2160a", "#fad107"][gym.team_id]);
                     // console.log(gym);
                 }
