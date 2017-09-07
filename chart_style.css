@@ -35,6 +35,15 @@ h1 {
     color: #797979;
     font-size: 13px;
 }
+
+.loading img {
+    height: 100%;
+}
+.loading {
+    height: 204px;
+    text-align: center;
+}
+
 .template {
     display: none;
 }

@@ -9,6 +9,7 @@
         <div id="container">
             <h1> Number of Gyms by Teams in Ljubljana</h1>
             <div id="teamChart">
+                <div class="loading"><img src="img/loading.gif"/></div>
                 <div class="row big template">
                     <div class="label">
                         PlaceHolder
@@ -23,6 +24,7 @@
             <input type="text" placeholder="Search" onkeyup="highlight_trainers('#search', '#trnrChart', '#searchResult');" class="search" id="search"/>
             <span id="searchResult" class="searchResult"></span>
             <div id="trnrChart" class="enumerate hide">
+                <div class="loading"><img src="img/loading.gif"/></div>
                 <div class="row template">
                     <div class="label"></div>
                     <div class="bar">
@@ -31,7 +33,7 @@
                 </div>
             </div>
 
-            <h1> Wall of shame <small> is offline for bug-fixing </small><a style="float:right; cursor: pointer;" onclick="$('#gym-description').slideToggle();">?</a></h1>
+            <h1> Wall of shame <small> since Sep 7, 12:00 </small><a style="float:right; cursor: pointer;" onclick="$('#gym-description').slideToggle();">?</a></h1>
             <div id="gym-description">
                 <a href="https://www.youtube.com/watch?v=uZ7vkmUNTPA"><img src="https://media.giphy.com/media/cMVQTH5yYus12/giphy.gif" style="width: 150px; float: right; margin-left: 10px;"/></a>
                 <p>
@@ -71,6 +73,7 @@
             <input type="text" placeholder="Search" onkeyup="highlight_trainers('#searchShame', '#shameChart', '#searchShameResult');" class="search" id="searchShame"/>
             <span id="searchShameResult" class="searchResult"></span>
             <div id="shameChart" class="enumerate hide">
+                <div class="loading"><img src="img/loading.gif"/></div>
                 <div class="row open template">
                     <div class="label"></div>
                     <div class="bar">
@@ -90,7 +93,7 @@
             </div>
 
             <footer>
-                Made by Maks Kolman. Check me out on <a href="http://www.github.com/MKolman">GitHub</a>.
+                Made by Maks Kolman. Check me out on <a href="http://www.github.com/MKolman">GitHub</a>. Tell me about bugs on <a href="https://www.facebook.com/messages/t/maks.kolman">Facebook messenger</a> or via <a href="mailto:kolman.maks@gmail.com">email</a>.
             </footer>
         </div>
         <script type="text/javascript" src="pokemon.js"></script>
@@ -98,7 +101,12 @@
             var team_colors = ["#e5e5e5", "#0576ee", "#f2160a", "#fad107"];
             var team_colors_rgb = [ "rgb(229, 229, 229)", "rgb(5, 118, 238)", "rgb(242, 22, 10)", "rgb(250, 209, 7)"];
             var team_colors_rgba = [ "rgba(229, 229, 229, 0.5)", "rgba(5, 118, 238, 0.5)", "rgba(242, 22, 10, 0.5)", "rgba(250, 209, 7, 0.5)"];
-            $(".hide").click(function(event){$(event.currentTarget).removeClass("hide");});
+            $(".hide").click(function(event){
+                $(event.currentTarget).removeClass("hide");
+                if (typeof ga !== 'undefined') {
+                    ga('send', 'event', 'open_tab', event.currentTarget.id);
+                }
+            });
             function highlight_trainers(search_sel, row_sel, res_sel) {
                 var search = {};
                 try {
@@ -120,9 +128,14 @@
                     }
                     $(res_sel).html(result);
                 }
+
+                if (typeof ga !== 'undefined') {
+                    ga('send', 'event', 'search', search_sel, $(search_sel).val());
+                }
             }
             function make_graph(el, labels, values, colors, human_values, buttons) {
                 // console.log(labels, values, colors);
+                $(".loading", el).hide();
                 var template = $(".template", el).clone();
                 template.removeClass("template");
                 var max_value = 0;
@@ -263,7 +276,6 @@
                 make_graph($("#gymChart"), gym_names, gym_durations, gym_colors,
                            gym_human_durations, gym_buttons);
 
-                //draw_shame(trnr_colors);
 
             }).fail(function (data) {
                 alert("Error fetching gyms from GoMap.eu");
@@ -315,6 +327,7 @@
                 });
             }
             // draw_shame();
+            draw_shame();
 
 
             /******** GOOGLE ANALYTICS *******/
