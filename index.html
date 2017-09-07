@@ -3,7 +3,13 @@
         <title> Gym status </title>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <link rel="stylesheet" type="text/css" href="chart_style.css"/>
-
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-7785253471931691",
+            enable_page_level_ads: true
+          });
+        </script>
     </head>
     <body>
         <div id="container">
@@ -275,8 +281,6 @@
                 }
                 make_graph($("#gymChart"), gym_names, gym_durations, gym_colors,
                            gym_human_durations, gym_buttons);
-
-
             }).fail(function (data) {
                 alert("Error fetching gyms from GoMap.eu");
             });
