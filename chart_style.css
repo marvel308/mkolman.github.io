@@ -21,12 +21,12 @@ h1 {
 #teamChart {
     min-height: 204px;
 }
-#search {
+.search {
     width: 170px;
     text-align: right;
     padding-right: 10px;
 }
-#searchResult {
+.searchResult {
     display: inline-block;
     width: 620px;
     white-space: nowrap;
@@ -53,6 +53,7 @@ h1 {
 
 .row.big .label {
     line-height: 50px;
+    height: 50px;
 }
 .row .label a {
     color: #797979;
@@ -65,7 +66,7 @@ h1 {
     padding-right: 10px;
     display: inline-block;
     float: left;
-    height: 100%;
+    height: 25px;
     text-align: right;
     line-height: 25px;
     vertical-align: center;
@@ -115,7 +116,7 @@ h1 {
     height: 20px;
     padding-top: 5px;
     margin-left: 170px;
-    width: 630px;
+    width: 629px;
 }
 
 .row.big .bar .value {
@@ -138,6 +139,40 @@ h1 {
     width: 0%;
     transition: 0.1s height, margin-top 0.1s, background-color 0.1s, color 0.5s;
     white-space: nowrap;
+}
+
+.row .button {
+    display:none;
+    font-size: 9px;
+    border: 1px solid #797979;
+    padding: 1px;
+    border-radius: 4px;
+    background-color: #e5e5e5;
+    margin-right: 3px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.row .button .big {
+    font-size: 17px;
+    float: left;
+    margin-right: 5px;
+}
+
+
+.row:hover {
+    height: 50px;
+    white-space: nowrap;
+    /*overflow-x: auto;*/
+    /*overflow-y: hidden;*/
+}
+.row:hover .button {
+    display: inline-flex;
+}
+
+#gym-description {
+    display: none;
+    overflow: hidden;
 }
 
 footer {
