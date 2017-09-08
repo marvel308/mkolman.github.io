@@ -5,16 +5,27 @@
         <link rel="stylesheet" type="text/css" href="chart_style.css"/>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>
+          /******** GOOGLE ADSENSE *******/
           (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: "ca-pub-7785253471931691",
             enable_page_level_ads: true
           });
+
+            /******** GOOGLE ANALYTICS *******/
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-42885055-3', 'auto');
+          ga('send', 'pageview');
+
         </script>
     </head>
     <body>
         <div id="container">
-            <h1> Number of Gyms by Teams in Ljubljana</h1>
-            <div id="teamChart">
+            <h1> Number of Users by Teams in Ljubljana</h1>
+            <div id="userChart">
                 <div class="loading"><img src="img/loading.gif"/></div>
                 <div class="row big template">
                     <div class="label">
@@ -26,13 +37,13 @@
                 </div>
             </div>
 
-            <h1> Number of Gyms by Users in Ljubljana</h1>
-            <input type="text" placeholder="Search" onkeyup="highlight_trainers('#search', '#trnrChart', '#searchResult');" class="search" id="search"/>
-            <span id="searchResult" class="searchResult"></span>
-            <div id="trnrChart" class="enumerate hide">
+            <h1> Number of Gyms by Teams in Ljubljana</h1>
+            <div id="teamChart">
                 <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row template">
-                    <div class="label"></div>
+                <div class="row big template">
+                    <div class="label">
+                        PlaceHolder
+                    </div>
                     <div class="bar">
                         <div class="value" title="N/A"></div>
                     </div>
@@ -78,7 +89,7 @@
             </div>
             <input type="text" placeholder="Search" onkeyup="highlight_trainers('#searchShame', '#shameChart', '#searchShameResult');" class="search" id="searchShame"/>
             <span id="searchShameResult" class="searchResult"></span>
-            <div id="shameChart" class="enumerate hide">
+            <div id="shameChart" class="enumerate hide expandable">
                 <div class="loading"><img src="img/loading.gif"/></div>
                 <div class="row open template">
                     <div class="label"></div>
@@ -88,8 +99,35 @@
                 </div>
             </div>
 
+            <h1> Number of Gyms by Users in Ljubljana</h1>
+            <input type="text" placeholder="Search" onkeyup="highlight_trainers('#search', '#trnrChart', '#searchResult');" class="search" id="search"/>
+            <span id="searchResult" class="searchResult"></span>
+            <div id="trnrChart" class="enumerate hide expandable">
+                <div class="loading"><img src="img/loading.gif"/></div>
+                <div class="row template">
+                    <div class="label"></div>
+                    <div class="bar">
+                        <div class="value" title="N/A"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h1> Users by Level in Ljubljana</h1>
+            <input type="text" placeholder="Search" onkeyup="highlight_trainers('#searchLvl', '#lvlChart', '#searchLvlResult');" class="search" id="searchLvl"/>
+            <span id="searchLvlResult" class="searchResult"></span>
+            <div id="lvlChart" class="enumerate hide">
+                <div class="loading"><img src="img/loading.gif"/></div>
+                <div class="row template">
+                    <div class="label"></div>
+                    <div class="bar">
+                        <div class="value" title="N/A"></div>
+                    </div>
+                </div>
+            </div>
+
             <h1> Longest standing Gyms in Ljubljana</h1>
-            <div id="gymChart" class="enumerate hide">
+            <div id="gymChart" class="enumerate hide expandable">
+                <div class="loading"><img src="img/loading.gif"/></div>
                 <div class="row template">
                     <div class="label"></div>
                     <div class="bar">
@@ -98,247 +136,15 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="pokemon.js"></script>
+        <script type="text/javascript" src="js/pokemon.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/shame.js"></script>
+        <script type="text/javascript" src="js/gomap.js"></script>
         <script>
-            var team_colors = ["#e5e5e5", "#0576ee", "#f2160a", "#fad107"];
-            var team_colors_rgb = [ "rgb(229, 229, 229)", "rgb(5, 118, 238)", "rgb(242, 22, 10)", "rgb(250, 209, 7)"];
-            var team_colors_rgba = [ "rgba(229, 229, 229, 0.5)", "rgba(5, 118, 238, 0.5)", "rgba(242, 22, 10, 0.5)", "rgba(250, 209, 7, 0.5)"];
-            $(".hide").click(function(event){
-                if ($(event.currentTarget).hasClass("hide")) {
-                    $(event.currentTarget).removeClass("hide");
-                    if (typeof ga !== 'undefined') {
-                        ga('send', 'event', 'open_tab', event.currentTarget.id);
-                    }
-                }
-            });
-            function highlight_trainers(search_sel, row_sel, res_sel) {
-                var search = {};
-                try {
-                    search = JSON.parse(window.localStorage.search);
-                } catch (err) {}
-                search[search_sel] = $(search_sel).val();
-                window.localStorage.search = JSON.stringify(search);
-                var str = $(search_sel).val().toLowerCase();
-                var rows = $(row_sel + " .row");
-                var result = "";
-                for (var i = 0; i < rows.length; i++) {
-                    var text = $(".label", rows[i]).text();
-                    if (str.length > 0 && text.toLowerCase().includes(str)) {
-                        $(".label", rows[i]).html("<b>" + text + "</b>");
-                        if (result.length != 0) {result += ", ";}
-                        result += text + "(" + $(".value", rows[i]).text() + ")";
-                    } else {
-                        $(".label", rows[i]).html(text);
-                    }
-                    $(res_sel).html(result);
-                }
-                if (typeof ga !== 'undefined') {
-                    ga('send', 'event', 'search', search_sel, $(search_sel).val());
-                }
-            }
-            function make_graph(el, labels, values, colors, human_values, buttons) {
-                // console.log(labels, values, colors);
-                $(".loading", el).hide();
-                var template = $(".template", el).clone();
-                template.removeClass("template");
-                var max_value = 0;
-                for (var i = 0; i < values.length; i++) max_value = Math.max(max_value, values[i]);
 
-                for (var i = 0; i < labels.length; i++) {
-                    var mold = template.clone();
-                    $(".label", mold).html(labels[i]);
-                    $(".value", mold).css("background-color", colors[i]);
-                    if (human_values === undefined) {
-                        $(".value", mold).html(values[i]);
-                        $(".value", mold).attr("title", $("<span>" + labels[i] + "</span>").text() + ": " + values[i]);
-                    } else {
-                        $(".value", mold).html(human_values[i]);
-                        $(".value", mold).attr("title", $("<span>" + labels[i] + "</span>").text() + ": " + human_values[i]);
-                    }
-                    if (buttons !== undefined) {
-                        for (var j = 0; j < buttons[i].length; j++) {
-                            var button = buttons[i][j];
-                            mold.append("<div class='button' style='background-color: "+ button.color +";'> <span class='big'>"+ button.big +"</span>" + button.line1 + "<br/>"+ button.line2 +"</div>")
-                        }
-                    }
-                    // var obj = mold.clone()
-                    el.append(mold);
-                    $(".value", mold).animate({width: (100*values[i]/max_value + "%")});
-                }
-            }
-            var URL = "https://mapdata2.gomap.eu/mnew.php?mid=0&ex=%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60%2C61%2C62%2C63%2C64%2C65%2C66%2C67%2C68%2C69%2C70%2C71%2C72%2C73%2C74%2C75%2C76%2C77%2C78%2C79%2C80%2C81%2C82%2C83%2C84%2C85%2C86%2C87%2C88%2C89%2C90%2C91%2C92%2C93%2C94%2C95%2C96%2C97%2C98%2C99%2C100%2C101%2C102%2C103%2C104%2C105%2C106%2C107%2C108%2C109%2C110%2C111%2C112%2C113%2C114%2C115%2C116%2C117%2C118%2C119%2C120%2C121%2C122%2C123%2C124%2C125%2C126%2C127%2C128%2C129%2C130%2C131%2C132%2C133%2C134%2C135%2C136%2C137%2C138%2C139%2C140%2C141%2C142%2C143%2C144%2C145%2C146%2C147%2C148%2C149%2C150%2C151%2C152%2C153%2C154%2C155%2C156%2C157%2C158%2C159%2C160%2C161%2C162%2C163%2C164%2C165%2C166%2C167%2C168%2C169%2C170%2C171%2C172%2C173%2C174%2C175%2C176%2C177%2C178%2C179%2C180%2C181%2C182%2C183%2C184%2C185%2C186%2C187%2C188%2C189%2C190%2C191%2C192%2C193%2C194%2C195%2C196%2C197%2C198%2C199%2C200%2C201%2C202%2C203%2C204%2C205%2C206%2C207%2C208%2C209%2C210%2C211%2C212%2C213%2C214%2C215%2C216%2C217%2C218%2C219%2C220%2C221%2C222%2C223%2C224%2C225%2C226%2C227%2C228%2C229%2C230%2C231%2C232%2C233%2C234%2C235%2C236%2C237%2C238%2C239%2C240%2C241%2C242%2C243%2C244%2C245%2C246%2C247%2C248%2C249%2C250%5D&w=14.240820017805705&e=14.759138020524377&n=46.22983200641623&s=45.870103364048745&gid=0";
-
-
-            $.getJSON(URL).then(function (data){
-                var gyms = data.gyms;
-                var trnrs = {};
-                var trnr_colors = {};
-                var teams = [0, 0, 0, 0];
-                var gym_data = [];
-                for (var i = 0; i < data.gyms.length; i++) {
-                    var gym = data.gyms[i];
-                    teams[gym.team_id]++;
-                    var time_ocuppied = (new Date())/1000 - gym.ts + gym.time_ocuppied;
-                    gym_data.push([time_ocuppied, gym]);
-                    for (var j = 0; j < gym.memb.length; j++) {
-                        var memb = gym.memb[j];
-                        if (trnrs[memb.tn] === undefined) {
-                            trnrs[memb.tn] = [];
-                            trnr_colors[memb.tn] = team_colors[gym.team_id];
-                        }
-                        gym.me = memb;
-                        // console.log(memb);
-                        trnrs[memb.tn].push(JSON.parse(JSON.stringify(gym)));
-                    }
-                }
-                make_graph($("#teamChart"), ["None", "Mystic", "Valor", "Inctinct"],
-                            teams, team_colors);
-
-                var users = [];
-                for (var name in trnrs) {
-                    users.push([trnrs[name], name]);
-                }
-                users.sort(function(a, b) {
-                    if (a[0].length == b[0].length) return a[1].toLowerCase() > b[1].toLowerCase() ? 1:-1;
-                    return b[0].length - a[0].length;
-                });
-                // $("#trnrChart").attr("height", 10*users.length);
-                var labels = [], nums = [], clrs = [], buttons = [];
-                for (var i = 0; i < users.length; i++) {
-                    labels.push(users[i][1]);
-                    nums.push(users[i][0].length);
-                    clrs.push(trnr_colors[users[i][1]]);
-                    if (labels.length >= 50) {
-                        // break;
-                    }
-                    buttons.push([]);
-                    for (var j = 0; j < users[i][0].length; j++) {
-                        var gym = users[i][0][j];
-                        var time_ocuppied = (new Date()/1000 - gym.me.time_deploy);
-                        var str_occupied = "";
-                        if (time_ocuppied > 86400) {
-                            str_occupied = Math.round(time_ocuppied/86400)+"d";
-                        } else if (time_ocuppied > 3600) {
-                            str_occupied = Math.round(time_ocuppied/3600)+"h";
-                        } else if (time_ocuppied > 60) {
-                            str_occupied = Math.round(time_ocuppied/60)+"min";
-                        } else {
-                            str_occupied = Math.round(time_ocuppied)+"s";
-                        }
-                        buttons[i].push({
-                            line1: gym.name,
-                            line2: POKEMON[gym.me.p] + " CP" + gym.me.cp,
-                            big: str_occupied
-                        })
-                    }
-                }
-                make_graph($("#trnrChart"), labels, nums, clrs, undefined, buttons);
-                if (window.localStorage.search) {
-                    try {
-                        var search = JSON.parse(window.localStorage.search);
-                        if (search["#search"]) {
-                            $("#search").val(search["#search"]);
-                            highlight_trainers('#search', '#trnrChart', '#searchResult');
-                        }
-                    } catch (err) {
-                        window.localStorage.search = "{}";
-                    }
-                }
-
-                gym_data.sort(function(a, b) {
-                    return b[0] - a[0];
-                })
-                var gym_names = [];
-                var gym_durations = [];
-                var gym_human_durations = [];
-                var gym_colors = [];
-                var gym_buttons = [];
-                for (var i = 0; i < gym_data.length; i++) {
-                    gym = gym_data[i][1];
-                    var time_ocuppied = gym_data[i][0];
-                    gym_names.push("<a href='https://www.google.si/maps/place/" +
-                                   gym.latitude + "," + gym.longitude + "'>" +
-                                   gym.name + "</a>");
-                    gym_durations.push(time_ocuppied);
-                    gym_human_durations.push(
-                        Math.floor(time_ocuppied/86400) + "d "+
-                        Math.floor((time_ocuppied % 86400)/3600) + "h " +
-                        Math.floor((time_ocuppied % 3600)/60) + "min");
-                    gym_colors.push(team_colors[gym.team_id]);
-                    gym_buttons.push([]);
-                    for (var j = 0; j < gym.memb.length; j++) {
-                        var m = gym.memb[j];
-                        gym_buttons[i].push({
-                            line1: m.tn,
-                            line2: POKEMON[m.p] + " CP" + m.cp,
-                            big: m.tl,
-                        })
-                    }
-                    // console.log(gym);
-                }
-                make_graph($("#gymChart"), gym_names, gym_durations, gym_colors,
-                           gym_human_durations, gym_buttons);
-            }).fail(function (data) {
-                alert("Error fetching gyms from GoMap.eu");
-            });
-
-            function draw_shame(trnr_colors) {
-                trnr_colors = trnr_colors || {};
-                var shame_url = "https://api.myjson.com/bins/e23kh";
-                $.get(shame_url, function(data) {
-                    var sorted_data = [];
-                    for (var name in data) {
-                        sorted_data.push([data[name].length, name, data[name]]);
-                    }
-                    sorted_data.sort(function(a, b) {
-                        if (a[0] == b[0]) return a[1].toLowerCase() > b[1].toLowerCase() ? 1:-1;
-                        return b[0] - a[0];
-                    });
-                    var names = [], shame = [], colors = [], buttons = [];
-                    for (var i = 0; i < sorted_data.length; i++) {
-                        shame.push(sorted_data[i][0]);
-                        names.push(sorted_data[i][1]);
-                        colors.push(trnr_colors[sorted_data[i][1]] ||
-                                    team_colors[data[sorted_data[i][1]][sorted_data[i][0]-1].defeat_team] ||
-                                    "#e5e5e5");
-                        buttons.push([]);
-                        for (var j = 0; j < sorted_data[i][2].length; j++) {
-                            var victim = sorted_data[i][2][sorted_data[i][2].length-j-1];
-                            buttons[i].push({
-                                line1: victim.name,
-                                line2: victim.gym_name,
-                                big: Math.round((victim.defeat_time - victim.time)/3600) + "h",
-                                color: team_colors_rgba[victim.team],
-                            });
-                        }
-                    }
-                    make_graph($("#shameChart"), names, shame, colors, undefined, buttons);
-
-                    if (window.localStorage.search) {
-                        try {
-                            var search = JSON.parse(window.localStorage.search);
-                            if (search["#searchShame"]) {
-                                $("#searchShame").val(search["#searchShame"]);
-                                highlight_trainers('#searchShame', '#shameChart', '#searchShameResult');
-                            }
-                        } catch (err) {
-                            window.localStorage.search = "{}";
-                        }
-                    }
-                });
-            }
-            // draw_shame();
+            draw_gomap();
             draw_shame();
 
-
-            /******** GOOGLE ANALYTICS *******/
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 'UA-42885055-3', 'auto');
-          ga('send', 'pageview');
 
         </script>
     </body>

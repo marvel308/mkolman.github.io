@@ -169,13 +169,13 @@ h1 {
 }
 
 
-.row:hover {
+.expandable .row:hover {
     height: 50px;
     white-space: nowrap;
     /*overflow-x: auto;*/
     /*overflow-y: hidden;*/
 }
-.row:hover .button {
+.expandable .row:hover .button {
     display: inline-flex;
 }
 
