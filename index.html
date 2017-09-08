@@ -108,9 +108,11 @@
             var team_colors_rgb = [ "rgb(229, 229, 229)", "rgb(5, 118, 238)", "rgb(242, 22, 10)", "rgb(250, 209, 7)"];
             var team_colors_rgba = [ "rgba(229, 229, 229, 0.5)", "rgba(5, 118, 238, 0.5)", "rgba(242, 22, 10, 0.5)", "rgba(250, 209, 7, 0.5)"];
             $(".hide").click(function(event){
-                $(event.currentTarget).removeClass("hide");
-                if (typeof ga !== 'undefined') {
-                    ga('send', 'event', 'open_tab', event.currentTarget.id);
+                if ($(event.currentTarget).hasClass("hide")) {
+                    $(event.currentTarget).removeClass("hide");
+                    if (typeof ga !== 'undefined') {
+                        ga('send', 'event', 'open_tab', event.currentTarget.id);
+                    }
                 }
             });
             function highlight_trainers(search_sel, row_sel, res_sel) {
@@ -134,7 +136,6 @@
                     }
                     $(res_sel).html(result);
                 }
-
                 if (typeof ga !== 'undefined') {
                     ga('send', 'event', 'search', search_sel, $(search_sel).val());
                 }
