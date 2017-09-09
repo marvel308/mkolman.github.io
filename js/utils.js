@@ -7,7 +7,6 @@ var URL = "https://mapdata2.gomap.eu/mnew.php?mid=0&ex=%5B1%2C2%2C3%2C4%2C5%2C6%
 
 /*** GENERAL FUNCTIONS *****/
 $(".hide").click(function(event){
-    console.log($(event.currentTarget));
     $(event.currentTarget).off("click");
     if ($(event.currentTarget).hasClass("hide")) {
         $(event.currentTarget).removeClass("hide");

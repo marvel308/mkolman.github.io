@@ -91,7 +91,7 @@ function create_trnr_chart(trnrs, trnr_colors) {
 function create_lvl_chart(trnrs, trnr_colors) {
     var users = [];
     for (var name in trnrs) {
-        console.log(trnrs[name]);
+        // console.log(trnrs[name]);
         users.push([trnrs[name][0].me.tl, name]);
     }
     users.sort(function(a, b) {
