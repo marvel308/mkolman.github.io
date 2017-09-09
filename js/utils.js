@@ -28,12 +28,13 @@ function highlight_trainers(search_sel, row_sel, res_sel) {
     var result = "";
     for (var i = 0; i < rows.length; i++) {
         var text = $(".label", rows[i]).text();
+        var name = $(".label .name", rows[i]).text();
         if (str.length > 0 && text.toLowerCase().includes(str)) {
-            $(".label", rows[i]).html("<b>" + text + "</b>");
+            $(".label .name", rows[i]).html("<b>" + name + "</b>");
             if (result.length != 0) {result += ", ";}
             result += text + "(" + $(".value", rows[i]).text() + ")";
         } else {
-            $(".label", rows[i]).html(text);
+            $(".label .name", rows[i]).html(name);
         }
         $(res_sel).html(result);
     }
@@ -43,15 +44,16 @@ function highlight_trainers(search_sel, row_sel, res_sel) {
 }
 function make_graph(el, labels, values, colors, human_values, buttons) {
     // console.log(labels, values, colors);
+    var enumerate = el.hasClass("enumerate");
     $(".loading", el).hide();
     var template = $(".template", el).clone();
     template.removeClass("template");
     var max_value = 0;
     for (var i = 0; i < values.length; i++) max_value = Math.max(max_value, values[i]);
-
+    var prev_value = 0, prev_place = 0;
     for (var i = 0; i < labels.length; i++) {
         var mold = template.clone();
-        $(".label", mold).html(labels[i]);
+        $(".label", mold).html("<span class='name'>"+labels[i]+"</span>");
         $(".value", mold).css("background-color", colors[i]);
         if (human_values === undefined) {
             $(".value", mold).html(values[i]);
@@ -65,6 +67,13 @@ function make_graph(el, labels, values, colors, human_values, buttons) {
                 var button = buttons[i][j];
                 mold.append("<div class='button' style='background-color: "+ button.color +";'> <span class='big'>"+ button.big +"</span>" + button.line1 + "<br/>"+ button.line2 +"</div>")
             }
+        }
+        if (enumerate) {
+            if (prev_value != values[i]) {
+                prev_place = i+1;
+                prev_value = values[i];
+            }
+            $(".label", mold).prepend("<span class='place'>"+prev_place+". </span>")
         }
         // var obj = mold.clone()
         el.append(mold);

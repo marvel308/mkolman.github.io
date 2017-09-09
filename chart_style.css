@@ -88,9 +88,6 @@ h1 {
     overflow: visible;
 }
 
-.enumerate {
-    counter-reset: trnr-counter;
-}
 .enumerate.hide {
     position: relative;
     height: 280px;
@@ -111,9 +108,7 @@ h1 {
     background: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74)); /* Standard syntax */
 }
-.enumerate .row .label:before {
-    content: counter(trnr-counter) ". ";
-    counter-increment: trnr-counter;
+.enumerate .row .label .place {
     float: left;
 }
 
