@@ -28,7 +28,7 @@ function highlight_trainers(search_sel, row_sel, res_sel) {
     for (var i = 0; i < rows.length; i++) {
         var text = $(".label", rows[i]).text();
         var name = $(".label .name", rows[i]).text();
-        if (str.length > 0 && text.toLowerCase().includes(str)) {
+        if (str.length > 0 && text.toLowerCase().indexOf(str) !== -1) {
             $(".label .name", rows[i]).html("<b>" + name + "</b>");
             if (result.length != 0) {result += ", ";}
             result += text + "(" + $(".value", rows[i]).text() + ")";
