@@ -15,6 +15,8 @@ $(".hide").click(function(event){
         }
     }
 });
+
+
 function highlight_trainers(search_sel, row_sel, res_sel) {
     var search = {};
     try {
@@ -78,4 +80,11 @@ function make_graph(el, labels, values, colors, human_values, buttons) {
         el.append(mold);
         $(".value", mold).animate({width: (100*values[i]/max_value + "%")});
     }
+
+    $(".hide .row").off("click");
+    $(".hide .row").click(function(event){
+        // $(event.currentTarget).toggleClass("open");
+        event.cancelBubble = true;
+        event.stopPropagation();
+    });
 }

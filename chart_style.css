@@ -55,6 +55,7 @@ h1 {
 }
 
 .row {
+    overflow: hidden;
     height: 25px;
     border-bottom: solid 1px #e5e5e5;
     border-right: solid 1px #e5e5e5;
@@ -84,7 +85,7 @@ h1 {
     text-overflow: ellipsis;
 }
 
-.row:hover .label {
+.row:hover .label, .row.open .label {
     overflow: visible;
 }
 
@@ -127,7 +128,7 @@ h1 {
     height: 40px;
     line-height: 45px;
 }
-.row:hover .bar .value {
+.row:hover .bar .value, .row.open .bar .value {
     background-color: #e5e5e5!important;
     height: 100%;
     margin-top: -2px;
@@ -164,13 +165,13 @@ h1 {
 }
 
 
-.expandable .row:hover {
+.expandable .row:hover, .expandable .row.open {
     height: 50px;
     white-space: nowrap;
     /*overflow-x: auto;*/
     /*overflow-y: hidden;*/
 }
-.expandable .row:hover .button {
+.expandable .row:hover .button, .expandable .row.open .button {
     display: inline-flex;
 }
 
