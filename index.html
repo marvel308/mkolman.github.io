@@ -4,163 +4,17 @@
         <link rel="stylesheet" type="text/css" href="chart_style.css"/>
         <link rel="shortcut icon" type="image/png" href="img/logo.png"/>
         <link rel="shortcut icon" type="image/png" href="img/logo.png"/>
-
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script>
-          /******** GOOGLE ADSENSE *******/
-          (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-7785253471931691",
-            enable_page_level_ads: true
-          });
-        </script>
-        <script>
-            /******** GOOGLE ANALYTICS *******/
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 'UA-42885055-3', 'auto');
-          ga('send', 'pageview');
-
-        </script>
     </head>
     <body>
         <div id="container">
-            <h1> Number of Users by Teams in Ljubljana</h1>
-            <div id="userChart">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row big template">
-                    <div class="label">
-                        PlaceHolder
-                    </div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
-
-            <h1> Number of Gyms by Teams in Ljubljana</h1>
-            <div id="teamChart">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row big template">
-                    <div class="label">
-                        PlaceHolder
-                    </div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
-
-            <h1> Wall of shame <small> since Sep 7, 12:00 </small><a style="float:right; cursor: pointer;" onclick="$('#gym-description').slideToggle();">?</a></h1>
-            <div id="gym-description">
-                <a href="https://www.youtube.com/watch?v=uZ7vkmUNTPA"><img src="https://media.giphy.com/media/cMVQTH5yYus12/giphy.gif" style="width: 150px; float: right; margin-left: 10px;"/></a>
-                <p>
-                This section has to do with <b>players that have problems with
-                early evacuation</b> of enemy gyms.
-                </p>
-                <p>
-                In the current version of the game a player gets the maximum
-                reward from a gym (50 coins) after their Pokemon is in the gym
-                for a minimum of 500 minutes (8h 20min).
-                </p>
-                <p>
-                It is therefore understood that honourable trainers take down
-                enemy gyms no sooner than 500 minutes after the first Pokemon
-                has been placed to defend it.
-                </p>
-                <p>
-                Those who break the rule are worthy of shame. The graph shows
-                the number of times that player has been caught doing foul play.
-                </p>
-                <p>
-                If you know the team colour of any of the grey players you can
-                contact me via <a href="https://www.facebook.com/messages/t/maks.kolman">
-                Facebook messenger</a> to fix the error.
-                </p>
-                <p>
-                <b>Disclaimer:</b>  Gym reporting is not instant and can
-                therefore be incorrect. For example, if you take a gym and are
-                beaten in a couple of minutes your ownership of the gym may not
-                have been recorded, therefore whoever beat you will get no
-                shame.
-                </p>
-                <p>
-                    <a href="https://facebook.com/groups/1641595316167745?view=permalink&id=1899516627042278"> Pokemon GO Slovenija </a>
-                </p>
-            </div>
-            <input type="text" placeholder="Search" onkeyup="highlight_trainers('#searchShame', '#shameChart', '#searchShameResult');" class="search" id="searchShame"/>
-            <span id="searchShameResult" class="searchResult"></span>
-            <div id="shameChart" class="enumerate hide expandable">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row template">
-                    <div class="label"></div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
-
-            <h1> Number of Gyms by Users in Ljubljana</h1>
-            <input type="text" placeholder="Search" onkeyup="highlight_trainers('#search', '#trnrChart', '#searchResult');" class="search" id="search"/>
-            <span id="searchResult" class="searchResult"></span>
-            <div id="trnrChart" class="enumerate hide expandable">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row template">
-                    <div class="label"></div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
-
-            <h1> Users by Level in Ljubljana</h1>
-            <input type="text" placeholder="Search" onkeyup="highlight_trainers('#searchLvl', '#lvlChart', '#searchLvlResult');" class="search" id="searchLvl"/>
-            <span id="searchLvlResult" class="searchResult"></span>
-            <div id="lvlChart" class="enumerate hide">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row template">
-                    <div class="label"></div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
-
-            <h1> Fastest falling Gyms </h1>
-            <div id="gymBadChart" class="enumerate hide expandable">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row template">
-                    <div class="label"></div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
-
-            <h1> Longest standing Gyms in Ljubljana</h1>
-            <div id="gymChart" class="enumerate hide expandable">
-                <div class="loading"><img src="img/loading.gif"/></div>
-                <div class="row template">
-                    <div class="label"></div>
-                    <div class="bar">
-                        <div class="value" title="N/A"></div>
-                    </div>
-                </div>
-            </div>
+            <h1>  Wall of shame has been moved to a new location </h1>
+            <p> You will be automatically redirected in 5s</p>
+            <p><a href="https://pogoslo.github.io/telovadnice/">https://pogoslo.github.io/telovadnice/</a></p>
         </div>
-        <script type="text/javascript" src="js/pokemon.js"></script>
-        <script type="text/javascript" src="js/utils.js"></script>
-        <script type="text/javascript" src="js/shame.js"></script>
-        <script type="text/javascript" src="js/gomap.js"></script>
-        <script>
-
-            draw_gomap();
-            draw_shame();
-
-
+        <script type="text/javascript">
+            setTimeout(function(){
+                window.location = "https://pogoslo.github.io/telovadnice/"
+            }, 5000)
         </script>
     </body>
 </html>
