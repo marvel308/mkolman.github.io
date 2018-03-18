@@ -15,7 +15,7 @@ body.cv {
     display: table-cell;
     vertical-align: middle;
     > div.aligned {
-        background-color: #22A7F0;
+        background-color: $picton;
         color: white;
         width: 500px;
         text-align: center;
@@ -71,6 +71,17 @@ h1 {
                     display: none;
                 }
             }
+        }
+    }
+}
+
+#footer {
+    padding-top: 2em;
+    color: $picton;
+    a {
+        color: $madison;
+        &:hover {
+            color: $picton;
         }
     }
 }
