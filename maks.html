@@ -1,21 +1,50 @@
 <html>
-    <head>
-        <title> Maks Kolman </title>
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
-        <link rel="shortcut icon" type="image/png" href="img/logos/logo4_256.png"/>
-    </head>
-    <body class='cv'>
-        <div class="aligned">
-            <h2> Maks Kolman </h2>
-            <a href="docs/cv.pdf">Full CV</a>
-            <br><br>
+  <head>
+    <title> Maks Kolman </title>
 
-            Software developer @ <a href="https://bitstamp.net">Bitstamp</a> <br>
-            Master's student of computational physics @ <a href="http://www.fmf.uni-lj.si">Faculty of mathematics and physics</a> | <a href="http://www.uni-lj.si">University of Ljubljana</a> <br>
-            Student researcher @ <a href="http://e6.ijs.si">The Parallel and Distributed Systems Laboratory</a> | <a href="http://www.ijs.si">Jožef Stefan Institute</a> <br>
-            Programming teacher @ <a href="http://prog.gimvic.org">Programming club</a> | <a href="http://www.gimvic.org">Gimnazija Vič</a>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="shortcut icon" type="image/png" href="img/logos/logo4_256.png"/>
 
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+  </head>
+  <body class='cv'>
+    <div class="aligned">
+      <h2> Maks Kolman </h2>
+      <a download="maks_kolman_redacted_cv.pdf" href="docs/maks_kolman_redacted_cv.pdf">Redacted CV</a><br>
+      <a href="javascript:getFullCV()">Full CV (requires a key)</a>
+      <br><br>
 
-        </div>
-    </body>
+      Software developer @ <a href="https://bitstamp.net">Bitstamp</a> <br>
+      Master's student of computational physics @ <a href="http://www.fmf.uni-lj.si">Faculty of mathematics and physics</a> | <a href="http://www.uni-lj.si">University of Ljubljana</a> <br>
+      Student researcher @ <a href="http://e6.ijs.si">The Parallel and Distributed Systems Laboratory</a> | <a href="http://www.ijs.si">Jožef Stefan Institute</a> <br>
+      Programming teacher @ <a href="http://prog.gimvic.org">Programming club</a> | <a href="http://www.gimvic.org">Gimnazija Vič</a>
+    </div>
+    <script type="text/javascript">
+      function getAesEncFile(uri, passcode, callback) {
+        // Download a file encrypted with AES e.g.
+        // openssl-1.0 aes-256-cbc -in original.pdf -out encrypted.pdf.aes -k passcode -base64
+        if (!passcode) {
+          passcode = prompt("Enter AES encryption key:");
+        }
+        if (passcode) {
+          $.get(uri, function(data) {
+            // For some reason openssl pushes new lines every 64 chars
+            data = data.split(/\s/).join('');
+            // Decrypt
+            let decrypted = CryptoJS.AES.decrypt(data, passcode);
+            callback(decrypted);
+          });
+        }
+      }
+      function getFullCV() {
+        getAesEncFile('docs/maks_kolman_full_cv.pdf.aes', null, function (decrypted) {
+          var link = document.createElement("a");
+          link.download = 'maks_kolman_full_cv.pdf';
+          link.href = 'data:application/pdf;base64, ' + decrypted.toString(CryptoJS.enc.Base64);
+          link.click();
+        });
+      }
+    </script>
+  </body>
 </html>
