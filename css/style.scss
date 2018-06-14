@@ -1,92 +1,73 @@
-// Pastel Blue
-$picton: #22A7F0;
-$hummingbird: #C5EFF7;
-$madison: #2C3E50;
-
 body {
     padding: 0;
     margin: 0;
+    background-color: #eee;
 }
 body.cv {
-    background-image: url(../img/background.jpg);
-    background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
     display: table-cell;
     vertical-align: middle;
     > div.aligned {
-        background-color: $picton;
-        color: white;
         width: 500px;
         text-align: center;
         padding: 1em 2em 2em 2em;
         margin: auto;
+        ul {
+            text-align: left;
+        }
     }
 }
-
+ul {
+    margin: 0.5em 0;
+    padding: 0 1em;
+    list-style: none;
+    li:before {
+        content: ">";
+        display: block;
+        height: 0;
+        width: 0;
+        left: -1.25em;
+        top: 0;
+        position: relative;
+        transform: scaleY(2);
+        font-size: 50%;
+    }
+}
 a {
     text-decoration: none;
     cursor: pointer;
-    color: $hummingbird;
+    color: red;
     &:hover {
-        color: white;
+        color: #673ab7;
     }
 }
 h1, h2 {
     font-weight: 100;
-}
-h1 {
-    color: $madison;
     margin-bottom: 0;
+    font-family: monospace;
 }
 
 .aligned {
-    width: 900px;
+    width: 700px;
     margin: auto;
 }
 #header {
     margin-top: 1em;
-    margin-bottom: 2em;
-    color: $picton;
+    margin-bottom: 0em;
 }
 #content {
-    background-color: $picton;
-    color: white;
-    padding-top: 1em;
+    background-color: #eee;
     padding-bottom: 2em;
-    > div {
-        padding: 1em;
-        .right-image {
-            display: none;
-            float: right;
-            max-width: 50%;
-        }
-        .box {
-            vertical-align: top;
-            ul li {
-                .description {
-                    display: none;
-                }
-                .close {
-                    display: none;
-                }
+    .box {
+        vertical-align: top;
+        ul li {
+            .description {
+                display: none;
+            }
+            .close {
+                display: none;
             }
         }
-    }
-}
-
-#footer {
-    padding-top: 2em;
-    color: $picton;
-    a {
-        color: $madison;
-        &:hover {
-            color: $picton;
-        }
-    }
-}
-@media (min-width: 1000px) {
-    #content > div.aligned .right-image {
-        display: block;
     }
 }
