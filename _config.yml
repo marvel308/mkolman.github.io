@@ -24,7 +24,7 @@ url: "http://maks.kolman.si"
 github_username:  MKolman
 linkedin_username: MaksKolman
 youtube_username: KolmanMaks
-google-analytics: UA-42885055-4
+google_analytics: UA-42885055-4
 
 # Blog posts URL format
 permalink: /blog/:title/
