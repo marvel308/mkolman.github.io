@@ -1,2 +1,7 @@
 /mkolman.github.io.sublime-workspace
 /mkolman.github.io.sublime-project
+_site
+.sass-cache
+.jekyll-metadata
+vendor
+.bundle

@@ -1,0 +1,51 @@
+---
+---
+
+$text-color: #444;
+$grey-color:       lighten($text-color, 40%);
+$grey-color-light: $grey-color;
+
+@import "minima";
+
+$background-color: #eee;
+$header-color: #111;
+$link-color: #d32f2f;
+$hover-color: #673ab7;
+
+.site-footer {
+    border-top: none;
+}
+.site-header {
+    border-bottom: none;
+    border-top-color: $link-color;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: $background-color;
+    color: $text-color;
+    h1, h2, h3, h4, a.site-title, a.page-link, a.site-title:visited, a.page-link:visited {
+        color: #111;
+        font-weight: bolder;
+        margin-bottom: 0;
+        font-family: monospace;
+    }
+
+    a {
+        text-decoration: none;
+        cursor: pointer;
+        color: $link-color;
+        &:hover {
+            color: $hover-color;
+        }
+        &:visited {
+            color: $hover-color;
+        }
+    }
+}
+
+.link-description {
+    display: block;
+    font-style: normal;
+}
