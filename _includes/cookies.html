@@ -1,0 +1,23 @@
+<div id="cookie-consent">
+    <div class="wrapper">
+        <a class="response" href="javascript:declineCookies()">×</a>
+        <a class="response" href="javascript:acceptCookies()">Accept</a>
+        This website uses <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage">cookies</a> for Google Analytics.
+    </div>
+</div>
+<script type="text/javascript">
+    function acceptCookies() {
+        localStorage.cookie_consent = "yes";
+        $("#cookie-consent").slideUp();
+        {%- if jekyll.environment == 'production' and site.google_analytics -%}
+            startGA();
+        {%- endif -%}
+    }
+    function declineCookies() {
+        localStorage.cookie_consent = "no";
+        $("#cookie-consent").slideUp();
+    }
+    if (!localStorage.cookie_consent) {
+        $("#cookie-consent").slideDown();
+    }
+</script>

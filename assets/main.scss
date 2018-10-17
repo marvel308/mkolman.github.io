@@ -49,3 +49,22 @@ body {
     display: block;
     font-style: normal;
 }
+
+#cookie-consent {
+    position: fixed;
+    display: none;
+    bottom: 0;
+    width: 100%;
+    background-color: $text-color;
+    color: $background-color;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    a {
+        color: $background-color;
+            font-weight: bolder;
+        &.response {
+            float: right;
+            margin-left: 1em;
+        }
+    }
+}
