@@ -13,15 +13,15 @@ you bask in my code, you can create pull requests to fix my tipos.
 > developer.
 
 I hear you ask through time and space. Firstly, I do not appreciate the tone of
-the voice I put in your mouth. And secondly, I guess I am no true Scotsman then
-<sup><small>[1](https://en.wikipedia.org/wiki/No_true_Scotsman)</small></sup>.
+the voice I put in your mouth. And secondly, I guess that means I am
+[no true Scotsman](https://en.wikipedia.org/wiki/No_true_Scotsman).
 
 But Jekyll has some cool functionality. Check out this python code block:
 {% highlight python %}
 a = 'a = {}\nprint(a.format(repr(a)))'
 print(a.format(repr(a)))
 {% endhighlight %}
-_Woaah_... A functions that prints itself out.
+_Woaah_... Code that prints itself.
 
 Want an image? BAM!
 ![This is an image of a sentence that is a description of this image]({{"assets/img/this-is-an-image.jpg"|relative_url}})

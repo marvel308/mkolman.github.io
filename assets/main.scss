@@ -2,7 +2,7 @@
 ---
 
 $text-color: #444;
-$grey-color:       lighten($text-color, 40%);
+$grey-color: lighten($text-color, 40%);
 $grey-color-light: $grey-color;
 
 @import "minima";
@@ -46,7 +46,7 @@ body {
 }
 
 .link-description {
-    display: block;
+    display: none;
     font-style: normal;
 }
 
