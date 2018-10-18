@@ -1,0 +1,47 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"> </script>
+<!-- <script type="text/javascript" src="{{ "/assets/js/jquery-3.3.1.min.js" | relative_url }}"> </script> -->
+
+<script>
+  $("a.toggle-description").click(function(event){
+      $(".link-description", event.target.parentElement).toggle();
+  });
+</script>
+
+
+{%- if jekyll.environment == 'production' and site.google_analytics -%}
+  {%- include google-analytics.html -%}
+{%- endif -%}
+
+
+{%- if page.decrypt -%}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+<!-- <script type="text/javascript" src="{{ "/assets/js/crypto-js.min.js" | relative_url }}"></script> -->
+  <script type="text/javascript">
+      function getAesEncFile(uri, passcode, callback) {
+          // Download a file encrypted with AES e.g.
+          // openssl-1.0 aes-256-cbc -in original.pdf -out encrypted.pdf.aes -k passcode -base64
+          if (!passcode) {
+             passcode = prompt("Enter AES encryption key:");
+          }
+          if (passcode) {
+              $.get(uri, function(data) {
+                  // For some reason openssl pushes new lines every 64 chars
+                  data = data.split(/\s/).join('');
+                  // Decrypt
+                  let decrypted = CryptoJS.AES.decrypt(data, passcode);
+                  callback(decrypted);
+              });
+          }
+      }
+
+      $(".decrypt").click(function(event){
+          event.preventDefault();
+          let target = $(event.target);
+          target.unbind('click');
+          getAesEncFile(target.attr("href"), null, function (decrypted) {
+              target.html(target.html().replace("decrypt", "<del>decrypt</del> download"));
+              target.attr("href", "data:application/pdf;base64, " + decrypted.toString(CryptoJS.enc.Base64));
+          });
+      });
+  </script>
+{%- endif -%}
