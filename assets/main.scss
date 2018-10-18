@@ -45,8 +45,12 @@ body {
     }
 }
 
+.hidden {
+    display: none !important;
+}
+
 .link-description {
-    display: none;
+    display: block;
     font-style: normal;
 }
 
