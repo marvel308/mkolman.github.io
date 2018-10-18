@@ -1,4 +1,5 @@
 <div id="cookie-consent">
+    <a href="javascript:showCookies()"><img class="cookie" src="{{"assets/img/cookie.gif"|relative_url}}" /></a>
     <div class="wrapper">
         <a class="response" href="javascript:declineCookies()">×</a>
         <a class="response" href="javascript:acceptCookies()">Accept</a>
@@ -8,16 +9,21 @@
 <script type="text/javascript">
     function acceptCookies() {
         localStorage.cookie_consent = "yes";
-        $("#cookie-consent").slideUp();
+        $("#cookie-consent").removeClass("show");
         {%- if jekyll.environment == 'production' and site.google_analytics -%}
             startGA();
         {%- endif -%}
     }
     function declineCookies() {
         localStorage.cookie_consent = "no";
-        $("#cookie-consent").slideUp();
+        $("#cookie-consent").removeClass("show");
     }
-    if (!localStorage.cookie_consent) {
-        $("#cookie-consent").slideDown();
+    function showCookies() {
+        $("#cookie-consent").addClass("show");
     }
+    document.addEventListener("DOMContentLoaded", function() {
+        if (!localStorage.cookie_consent) {
+            $("#cookie-consent").addClass("show");
+        }
+    });
 </script>
