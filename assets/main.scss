@@ -2,8 +2,8 @@
 ---
 
 $text-color: #444;
-$grey-color: lighten($text-color, 40%);
-$grey-color-light: $grey-color;
+$grey-color: lighten($text-color, 10%);
+// $grey-color-light: $grey-color;
 
 @import "minima";
 
@@ -83,5 +83,13 @@ body {
     }
     img.cookie {
         width: 2em;
+    }
+}
+
+#hallOfFame {
+    code {
+        max-width: 10em;
+        overflow-x: auto;
+        display: block;
     }
 }
