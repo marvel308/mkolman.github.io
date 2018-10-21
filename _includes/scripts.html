@@ -34,6 +34,8 @@
           target.unbind('click');
           getAesEncFile(target.attr("href"), null, function (decrypted) {
               target.html(target.html().replace("decrypt", "<del>decrypt</del> download"));
+              let filename = target.attr("href").replace(/.aes$/, "").split("/");
+              target.attr("download", filename[filename.length-1]);
               target.attr("href", "data:application/pdf;base64, " + decrypted.toString(CryptoJS.enc.Base64));
           });
       });
