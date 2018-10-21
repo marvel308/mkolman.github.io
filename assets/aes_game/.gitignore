@@ -1,5 +1,9 @@
 *
-
+!*.aes
 !.gitignore
 !encrypt.sh
-!*.aes
+
+
+!admin
+admin/*
+!admin/*.aes
