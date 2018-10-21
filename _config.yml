@@ -16,7 +16,8 @@
 title: Byte-Size Snacks
 email: maks@kolman.si
 description: >- # this means to ignore newlines until "baseurl:"
-  This site is hosted on github.
+    A site to hold my thoughts, code, experiments and tools.
+    I will keep fixing it until it's completely broken.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://maks.kolman.si"
 
