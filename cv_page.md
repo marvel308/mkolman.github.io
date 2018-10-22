@@ -8,7 +8,7 @@ decrypt: yes
 You can download my CV, however only an
 [obfuscated version]({{"assets/docs/maks_kolman_redacted_cv.pdf"|relative_url}})
 is available to the public. If you have the password or want to try and guess it you can
-[decrypt the full CV]({{"assets/docs/maks_kolman_full_cv.pdf.aes"|relative_url}}){:.decrypt}.
+[decrypt full CV]({{"assets/docs/maks_kolman_full_cv.pdf.aes"|relative_url}}){:.decrypt}.
 
 <!-- * [2018-$now] Software developer @ [Google search](https://www.google.com) \| [SRE](https://landing.google.com/sre/) -->
 * [2017-2018] Software developer @ [Bitstamp](https://bitstamp.net)

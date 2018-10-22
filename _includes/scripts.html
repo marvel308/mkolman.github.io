@@ -38,18 +38,21 @@
               });
           }
       }
-
+      for (let dec_link of $(".decrypt")) {
+        dec_link.href = "#" + $(dec_link).attr("href");
+      }
       $(".decrypt").click(function(event){
           event.preventDefault();
           let target = $(event.target);
           target.unbind('click');
-          getAesEncFile(target.attr("href"), null, function (decrypted) {
-              target.html(target.html().replace("decrypt", "<del>decrypt</del> download"));
-              let filename = target.attr("href").replace(/.aes$/, "").split("/");
-              filename = filename[filename.length-1];
-              target.attr("download", filename);
+          let file_url = target.attr("href");
+          getAesEncFile(file_url, null, function (decrypted) {
+              target.html(target.html().replace("decrypt", "<del>decrypt</del> download decrypted"));
+              let file_name = file_url.replace(/.aes$/, "").split("/");
+              file_name = file_name[file_name.length-1];
+              target.attr("download", file_name);
 
-              let file_ext = filename.split(".");
+              let file_ext = file_name.split(".");
               file_ext = file_ext[file_ext.length-1];
               let file_mime_type = MIME_TYPE[file_ext] || "text/plain";
 
