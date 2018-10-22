@@ -44,7 +44,7 @@ body {
             color: $hover-color;
         }
     }
-    div.post-content > p:first-child {
+    div.post-content.e-content > p:first-child {
         color: $grey-color;
         font-style: italic;
     }
