@@ -12,6 +12,7 @@ $header-color: #111;
 $link-color: #d32f2f;
 $hover-color: #673ab7;
 
+// Override Minima
 .site-footer {
     border-top: none;
 }
@@ -19,7 +20,7 @@ $hover-color: #673ab7;
     border-bottom: none;
     border-top-color: $link-color;
 }
-
+// General CSS
 body {
     padding: 0;
     margin: 0;
@@ -43,17 +44,13 @@ body {
             color: $hover-color;
         }
     }
+    div.post-content > p:first-child {
+        color: $grey-color;
+        text-decoration: italic;
+    }
 }
 
-.hidden {
-    display: none !important;
-}
-
-.link-description {
-    display: block;
-    font-style: normal;
-}
-
+// Cookies
 #cookie-consent {
     position: fixed;
     bottom: 0;
@@ -86,6 +83,16 @@ body {
     }
 }
 
+// Utilities
 div.horizontal-scroll {
     overflow-x: auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.link-description {
+    display: block;
+    font-style: normal;
 }

@@ -5,6 +5,9 @@ date:   2018-10-17 8:30:27 +0200
 categories: jekyll first test github
 ---
 
+Motivation behind creating this website and choosing the technologies that are
+used.
+
 This is a static website made with [Jekyll](https://jekyllrb.com). Source is
 hosted on [GitHub](https://github.com/MKolman/mkolman.github.io) so not only can
 you bask in my code, you can create pull requests to fix my tipos.
