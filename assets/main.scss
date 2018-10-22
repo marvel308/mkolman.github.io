@@ -83,6 +83,12 @@ body {
     }
 }
 
+// Make overflown mathjax equations scrollable
+span.mjx-chtml.MJXc-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 // Utilities
 div.horizontal-scroll {
     overflow-x: auto;
