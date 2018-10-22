@@ -11,6 +11,17 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
 <!-- <script type="text/javascript" src="{{ "/assets/js/crypto-js.min.js" | relative_url }}"></script> -->
   <script type="text/javascript">
+      MIME_TYPE = {
+          "csv":  "text/csv",
+          "gif":  "image/gif",
+          "jpg":  "image/jpeg",
+          "png":  "image/png",
+          "pdf":  "application/pdf",
+          "py":   "text/python",
+          "txt":  "text/plain",
+          "wav":  "audio/wav",
+          "zip":  "application/zip",
+      }
       function getAesEncFile(uri, passcode, callback) {
           // Download a file encrypted with AES e.g.
           // openssl-1.0 aes-256-cbc -in original.pdf -out encrypted.pdf.aes -k passcode -base64
@@ -35,8 +46,14 @@
           getAesEncFile(target.attr("href"), null, function (decrypted) {
               target.html(target.html().replace("decrypt", "<del>decrypt</del> download"));
               let filename = target.attr("href").replace(/.aes$/, "").split("/");
-              target.attr("download", filename[filename.length-1]);
-              target.attr("href", "data:application/pdf;base64, " + decrypted.toString(CryptoJS.enc.Base64));
+              filename = filename[filename.length-1];
+              target.attr("download", filename);
+
+              let file_ext = filename.split(".");
+              file_ext = file_ext[file_ext.length-1];
+              let file_mime_type = MIME_TYPE[file_ext] || "text/plain";
+
+              target.attr("href", "data:"+file_mime_type+";base64, "+decrypted.toString(CryptoJS.enc.Base64));
           });
       });
   </script>
