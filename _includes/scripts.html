@@ -44,9 +44,9 @@
       $(".decrypt").click(function(event){
           event.preventDefault();
           let target = $(event.target);
-          target.unbind('click');
-          let file_url = target.attr("href");
+          let file_url = target.attr("href").slice(1);
           getAesEncFile(file_url, null, function (decrypted) {
+              target.unbind('click');
               target.html(target.html().replace("decrypt", "<del>decrypt</del> download decrypted"));
               let file_name = file_url.replace(/.aes$/, "").split("/");
               file_name = file_name[file_name.length-1];
