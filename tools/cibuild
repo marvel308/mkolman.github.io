@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e  # halt script on error
+
+bundle exec jekyll build
+bundle exec htmlproofer --url-ignore "/dm.kolman.si/,/www.ijs.si/,/www.linkedin.com/in/MaksKolman/,/www.uni-lj.si/" --disable-external _site
