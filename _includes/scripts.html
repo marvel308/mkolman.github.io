@@ -3,6 +3,9 @@
 {%- if jekyll.environment == 'production' and site.google_analytics -%}
   {%- include google-analytics.html -%}
 {%- endif -%}
+{%- if jekyll.environment == 'production' and site.google_adsense -%}
+  {%- include google-adsense.html -%}
+{%- endif -%}
 
 {%- if page.math -%}
   <script type="text/x-mathjax-config">
