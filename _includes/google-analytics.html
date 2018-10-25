@@ -8,7 +8,7 @@ function startGA() {
     ga('create', '{{ site.google_analytics }}', 'auto');
     ga('send', 'pageview');
 }
-if (localStorage.cookie_consent == "yes") {
+if (localStorage.cookie_consent != "no") {
     startGA();
 }
 </script>
