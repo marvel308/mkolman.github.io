@@ -44,9 +44,14 @@ body {
             color: $hover-color;
         }
     }
-    div.post-content.e-content > p:first-child {
-        color: $grey-color;
-        font-style: italic;
+    div.post-content.e-content {
+        &> p:first-child {
+            color: $grey-color;
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1em;
+        }
     }
 }
 

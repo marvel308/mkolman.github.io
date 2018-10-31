@@ -29,7 +29,7 @@ This is an interesting mathematical question. [World Chess Organization
 this exact question. At the time of writing Carlsen is the top rated player in
 the world with a rating 2834.7 and Caruana is close second with 2832.3.
 
-## Chess 101
+# Chess 101
 
 Chess is a two player [zero-sum game][zerosum] with [complete information][complete]. This
 means that both players have directly opposing goals (i.e. what is good for one
@@ -42,7 +42,7 @@ player's ratings.
 
 [complete]: https://en.wikipedia.org/wiki/Complete_information
 
-## Elo rating system
+# Elo rating system
 
 First lets talk about the [rating system][elosystem] used in chess. A physicist
 [Arpad Elo][aprad] designed it as a method to judge the skill of players in any
@@ -86,7 +86,7 @@ _Graph depicts rating change for three K-factors when opponents with different
 relative strength draw or win a game._
 </center>
 
-# FIDE variant of Elo rating system
+## FIDE variant of Elo rating system
 
 The main difference between various implementations of the Elo rating system is
 the use of the K-factor. Some have constant value for all players, some have
@@ -101,7 +101,7 @@ as their rating remains under 2300.
 * $K = 10$ , for players with any published rating of at least 2400 and at least
 30 games played in previous events. Thereafter it remains permanently at 10.
 
-## Using rating to calculate the probability of winning
+# Using rating to calculate the probability of winning
 
 Now lets return to Caruana and his 2.4 rating points disadvantage to Carlsen.
 What does that mean in terms of his winning chances?
@@ -163,7 +163,7 @@ $N_M$ games, the second line calculates the probability that Caruana will win
 $N_F$ of the remaining games, and lastly we calculate the probability that the
 rest of the games are drawn.
 
-## Results
+# Results
 
 Here we are at last. It is about time we answer the question at the top of the
 page. What does math have to say about Caruana's chances of becoming the world
