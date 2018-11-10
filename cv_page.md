@@ -10,7 +10,7 @@ You can download my CV, however only an
 is available to the public. If you have the password or want to try and guess it you can
 [decrypt full CV]({{"assets/docs/maks_kolman_full_cv.pdf.aes"|relative_url}}){:.decrypt}.
 
-<!-- * [2018-$now] Software developer @ [Google search](https://www.google.com) \| [SRE](https://landing.google.com/sre/) -->
+* [2018-$now] Software Engineer @ [Site Reliability Eengineering](https://landing.google.com/sre/) for [Google Search Frontend](https://www.google.com) \| [Google Dublin](https://careers.google.com/locations/dublin/)
 * [2017-2018] Software developer @ [Bitstamp](https://bitstamp.net)
 * [2015-2018] Master's student of computational physics @ [Faculty of mathematics and physics](https://www.fmf.uni-lj.si) \| [University of Ljubljana](https://www.uni-lj.si)
 * [2015-2018] Student researcher @ [The Parallel and Distributed Systems Laboratory](http://e6.ijs.si) \| [Jožef Stefan Institute](https://www.ijs.si)
