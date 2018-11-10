@@ -5,7 +5,7 @@ date:   2018-11-10 21:00:00 +0000
 categories: debugging SRE network bug
 ---
 
-A story about my non-trivial debugging experience.
+A story about my first non-trivial debugging experience.
 
 A _'fake it \'till you make it'_ attitude led me to a job as a [Site Reliability
 Engineer][GoogleSRE] at Google Dublin. On 2018-11-05 I started as a Software
