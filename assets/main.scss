@@ -12,6 +12,8 @@ $header-color: #111;
 $link-color: #d32f2f;
 $hover-color: #673ab7;
 
+@import "gcse_overrides";
+
 // Override Minima
 .site-footer {
     border-top: none;
