@@ -1,6 +1,7 @@
 ---
 layout: page
 permalink: /hlp
+sitemap: false
 decrypt: yes
 ---
 <center id="youtubeWrapper">
