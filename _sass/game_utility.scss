@@ -1,0 +1,67 @@
+.jo-btn {
+    cursor: pointer;
+    display: inline-table;
+    width: 32%;
+    background-color: $link-color;
+    color: white;
+    border-radius: 1em;
+    font-size: 3em;
+    height: 2em;
+    text-align: center;
+    margin-top: 0.1em;
+    > span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.fullscreenify {
+    position: fixed;
+    white-space: nowrap;
+    top: 0%;
+    left: 5%;
+    &.vertical {
+        transform-origin: left center;
+        transform: translateY(-50%) rotate(90deg);
+        top: 5%;
+        left: 50%;
+    }
+}
+
+.fullscreen-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    background-color: $background-color;
+    input {
+        margin-top: 1.75em;
+        text-align: center;
+        border: none;
+        font-size: 3em;
+        width: 100%;
+    }
+    .fullscreen-close {
+        position: fixed;
+        top: 0.1em;
+        left: 0.1em;
+        font-size: 3em;
+        height: 1.5em;
+        width: 1.5em;
+        color: $link-color;
+        // background-color: yellow;
+        // border-radius: 1em;
+        text-align: center;
+        cursor: pointer;
+        font-weight: bold;
+    }
+}
+
+
+@include media-query($on-palm) {
+    .jo-btn {
+        width: 100%
+    }
+}

@@ -1,5 +1,4 @@
 
-
 {%- if jekyll.environment == 'production' and site.google_analytics -%}
   {%- include google-analytics.html -%}
 {%- endif -%}
@@ -78,4 +77,10 @@
           });
       });
   </script>
+{%- endif -%}
+
+{%-  if page.title == 'Board game utilities' -%}
+  <script type="text/javascript" src="{{ "/assets/game_utility/js/draw.js" | relative_url }}"></script>
+  <script type="text/javascript" src="{{ "/assets/game_utility/js/wordlist.js" | relative_url }}"></script>
+  <script type="text/javascript" src="{{ "/assets/game_utility/js/actions.js" | relative_url }}"></script>
 {%- endif -%}

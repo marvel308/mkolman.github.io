@@ -13,6 +13,7 @@ $link-color: #d32f2f;
 $hover-color: #673ab7;
 
 @import "gcse_overrides";
+@import "game_utility";
 
 // Override Minima
 .site-footer {
@@ -108,4 +109,25 @@ div.horizontal-scroll {
 .link-description {
     display: block;
     font-style: normal;
+}
+.blink {
+    animation-duration: 0.8s;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    51% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
 }
