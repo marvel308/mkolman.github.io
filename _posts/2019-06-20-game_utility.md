@@ -7,7 +7,7 @@ categories: game boardgame implemetation drawing words
 
 Quick and easy tools to help you while playing board games e.g. [Just One][justone].
 
-<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
 
 <span onclick="showFullscreenCanvas();" class="jo-btn" style="font-family: 'Cookie', Helvetica, sans-serif;"><span>DRAW</span></span>
 <span onclick="showFullscreenInput();" class="jo-btn" style="font-family: 'monospace';"><span>TYPE<span class="blink">|</span></span></span>
