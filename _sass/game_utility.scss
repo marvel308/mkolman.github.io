@@ -16,15 +16,11 @@
 }
 
 .fullscreenify {
-    position: fixed;
     white-space: nowrap;
-    top: 0%;
-    left: 5%;
     &.vertical {
-        transform-origin: left center;
-        transform: translateY(-50%) rotate(90deg);
-        top: 5%;
-        left: 50%;
+        writing-mode: vertical-rl;
+        text-orientation: sideways;
+        margin-top: 5%;
     }
 }
 

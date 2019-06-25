@@ -29,6 +29,7 @@ function fullscreenify(element) {
 
 function showFullscreenText(txt) {
     let container = getFullscreenBg();
+    container.style.textAlign = "center";
     let txtSpan = document.createElement("span");
     txtSpan.innerHTML = txt;
     txtSpan.style.opacity = 0;
