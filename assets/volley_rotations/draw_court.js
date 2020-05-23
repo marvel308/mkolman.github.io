@@ -75,343 +75,263 @@ function updateObject(initial, update) {
 	}
 	return result;
 }
-class Player {
-	/* constructor creates a new div.player and appends it to #court
-	x and y are 0-1 and will be normalized to absolute
-	left: and top: css attributes
-	*/
-	constructor(x, y, txt) {
-		this.element = document.createElement("div");
-		this.court = document.getElementById("court");
-		this.move(x, y, txt);
-		this.element.className += "player";
-		this.court.appendChild(this.element);
-		// this.enableDraggable();
-	}
-	enableDraggable() {
-		let self = this;
-		let courtSize = this.court.getBoundingClientRect().width*0.65;
-		let mouseX = 0, mouseY = 0;
 
-		function drag(event) {
-			event.preventDefault();
-			let x = event.pageX, y = event.pageY;
-			self.move(self.x + (x-mouseX)/courtSize, self.y + (y-mouseY)/courtSize);
-			mouseX = x;
-			mouseY = y;
-		}
-		function cleanup(event) {
-			self.court.removeEventListener("mousemove", drag);
-			self.court.removeEventListener("mouseup", cleanup);
-			self.court.removeEventListener("mouseleave", cleanup);
-		}
-		this.element.addEventListener("mousedown", (event) => {
-			mouseX = event.pageX;
-			mouseY = event.pageY;
-			courtSize = this.court.getBoundingClientRect().width*0.65;
-			this.court.addEventListener("mousemove", drag);
-			this.court.addEventListener("mouseup", cleanup);
-			this.court.addEventListener("mouseleave", cleanup);
-		})
-	}
-	// Position the player element according to this.x and this.y
-	move(x, y, txt, delay) {
-		if (delay) {
-			setTimeout(() => { this.move(x, y, txt); }, delay);
-			return;
-		}
-		this.x = x;
-		this.y = y;
-		if (txt) {
-			if (colors[txt]){
-				this.element.style.backgroundColor = colors[txt];
-				this.element.innerText = txt;
-				this.element.style.backgroundImage = "";
+var app = new Vue({
+	delimiters: ['${', '}'],
+	el: '#app',
+	data: {
+		selection: {
+			type: "2",
+			rotation: "0",
+			libero: true,
+			serve: true,
+			haikyu: false,
+			gameState: "home",
+		},
+		allRotations: [],
+		allGameStates: ["home", "stack", "defend", "attack"],
+		players: [
+			{x: 0, y: 0, name: "", imgCount: 0}, {x: 0, y: 0, name: "", imgCount: 0},
+			{x: 0, y: 0, name: "", imgCount: 0}, {x: 0, y: 0, name: "", imgCount: 0},
+			{x: 0, y: 0, name: "", imgCount: 0}, {x: 0, y: 0, name: "", imgCount: 0},
+		],
+		ball: {x: -0.12, y: -0.05, img: "B", name: "B"},
+		attackerReceiverName: "M",
+	},
+	computed: {
+		gameStatesFlow() {
+			if (this.selection.serve) {
+				// Serving: serve rotation
+				return [
+					{id: "home", name: "start"},
+					{id: "stack", name: "serve"},
+					{id: "defend", name: "defend"},
+					{id: "attack", name: "attack"},
+				];
 			} else {
-				this.element.innerText = "";
-				this.element.style.backgroundImage = "url(/assets/volley_rotations/team/"+txt+".png)";
+				// Not serving: receive rotation
+				return [
+					{id: "home", name: "start"},
+					{id: "stack", name: "receive"},
+					{id: "attack", name: "attack"},
+					{id: "defend", name: "defend"},
+				];
 			}
-		}
-		// Court padding in %
-		let courtLeft = 10, courtRight = 10, courtTop = 4, courtBottom = 16, playerDiameter = 15;
-		this.element.style.left = (courtLeft + (100 - courtLeft - courtRight - playerDiameter) * this.x) + "%";
-		this.element.style.top = (courtTop + (100 - courtTop - courtBottom - playerDiameter) * this.y) + "%";
-	}
-
-	// Delete all "#court div.player" elements
-	static clearAll() {
-		let players = document.querySelectorAll("#court div.player");
-		players.forEach(player => {player.remove()});
-	}
-}
-
-class Ball extends Player {
-	constructor(x, y) {
-		super(x, y, "B");
-		this.element.className = "ball";
-	}
-}
-
-class Team {
-	constructor(typeData, type, rotation, hasLibero, isServe, gameState, haikyuSkin) {
-		this.players = [];
-		for (let i = 0; i < 6; i++) { this.players.push(new Player(homePositions[i][0], homePositions[i][1], typeData.players[i])); }
-		this.ball = new Ball(-0.15, -0.05);
-		this.init(typeData, type, rotation, hasLibero, isServe, gameState, haikyuSkin);
-	}
-	init(typeData, type, rotation, hasLibero, isServe, gameState, haikyuSkin) {
-		this.typeData = typeData;
-		this.type = type;
-		this.rotation = +rotation;
-		this.hasLibero = hasLibero;
-		this.isServe = isServe;
-		this.gameState = gameState;
-		this.haikyuSkin = haikyuSkin;
-		this.gamePositions = updateObject(gamePositions, this.typeData.game);
-		if (isServe) {
-			this.stackPositions = typeData.serve[this.rotation];
-		} else {
-			this.stackPositions = typeData.receive[this.rotation];
-		}
-		this.attackerReceiverName = "OM"[Math.round(Math.random())];
-	}
-	updatePlayers() {
-		let imgCounter = {};
-		let getterMap = {
-			home: (i, p) => { return this.getHomeCoor(i, p); },
-			stack: (i, p) => { return this.getStackCoor(i, p); },
-			attack: (i, p) => { return this.getAttackCoor(i, p); },
-			defend: (i, p) => { return this.getDefenseCoor(i, p); },
-		};
-		let x=0, y=0, getter=getterMap[this.gameState];
-		for (let i = 0; i < 6; i++) {
-			let name = this.typeData.players[i];
-			let posId = (i+6-this.rotation) % 6;
-			let isBackRow = posId >= 4 || (posId == 0 && !this.isServe);
-			let cnt = "";
-			if (this.haikyuSkin) {
-				cnt = imgCounter[name] || 0;
-				imgCounter[name] = cnt + 1;
+		},
+		currentRotation() {
+			if (this.allRotations.length == 0) { return {}; }
+			return this.allRotations[+this.selection.type]
+		},
+		stackPositions() {
+			if (this.allRotations.length == 0) { return []; }
+			if (this.selection.serve) {
+				return this.currentRotation.serve[this.selection.rotation];
+			} else {
+				return this.currentRotation.receive[this.selection.rotation];
 			}
-			if (isBackRow && this.hasLibero && name == "M") {
-				name = "L";
-			}
-			[x, y] = getter(i, posId);
-			this.players[i].move(x, y, name+cnt);
-			this.updateBall(i, posId, name, x, y);
+		},
+		gamePositions() {
+			if (this.allRotations.length == 0) { return {}; }
+			return updateObject(gamePositions, this.currentRotation.game);
+		},
+		defensePositions() {
+			return this.gamePositions.defense;
+		},
+		attackPositions() {
+			return this.gamePositions.attack;
+		},
+		nextStateName() {
+			let data = {
+				home: ["receive", "serve"],
+				stack: ["attack", "defense"],
+				defend: ["next rotation", "attack"],
+				attack: ["defense", "receive rotation"],
+			};
+			return data[this.selection.gameState][+this.selection.serve];
+		},
+		thisStateName() {
+			let data = {
+				home: ["Start positions", "Start positions"],
+				stack: ["Serve receive positions", "Serve positions"],
+				defend: ["Defense positions", "Defense positions"],
+				attack: ["Attack positions", "Attack positions"],
+			};
+			return data[this.selection.gameState][+this.selection.serve];
 		}
-	}
-	updateBall(i, posId, name, x, y) {
-		if (i == 0) {
-			// This is independant of any coordinates
-			if (this.gameState == "home") {
-				this.ball.move(-0.12, -0.05);
-			} else if (this.gameState == "stack" && this.isServe) {
-				this.ball.move(1, 1.23);
-				this.ball.move(0.5, -0.2, null, 2000);
-			} else if (this.gameState == "stack" && !this.isServe) {
-				this.ball.move(0.2, -0.2);
-			} else if (this.gameState == "defend") {
-				this.ball.move(0.8, -0.2);
-			} else if (this.gameState == "attack") {
-				this.ball.move(0.8, 0.15);
-			}
-		}
-
-		// Take current state into account
-		let amReceiver = (name == this.attackerReceiverName || (this.attackerReceiverName == "M" && name == "L")) && (posId >= 4 || posId == 0);
-		let amAttacker = name == this.attackerReceiverName && (0 < posId && posId < 4);
-		if (this.gameState == "stack" && !this.isServe && amReceiver) {
-			this.ball.move(x, y, null, 1000);
-		} else if (this.gameState == "defend" && amReceiver) {
-			this.ball.move(x, y, null, 1000);
-		} else if (this.gameState == "attack") {
-			let spikeX = {M: 0.5, O: 0, R: 1, S: 1}[name];
-			if (y == 0.3) {
-				this.players[i].move(spikeX, 0, null, 1000)
-			}
-			if (amAttacker) {
-				this.ball.move(spikeX, 0, null, 1000)
-				this.ball.move(0.5, -0.4, null, 1800);
-			}
-		}
-
-	}
-	getHomeCoor(i, posId) {
-		let x = homePositions[posId][0], y = homePositions[posId][1];
-		return [x, y];
-	}
-	getStackCoor(i, posId) {
-		let x = this.stackPositions[posId].x, y = this.stackPositions[posId].y;
-		return [x, y];
-	}
-	getAttackCoor(i, posId, ) {
-		let coor = this.gamePositions.attack[this.typeData.players[i]];
-		if (posId >= 4 || posId == 0) { return coor.back; }
-		else { return coor.front; }
-	}
-	getDefenseCoor(i, posId, ) {
-		let coor = this.gamePositions.defense[this.typeData.players[i]];
-		if (posId >= 4 || posId == 0) { return coor.back; }
-		else { return coor.front; }
-	}
-	updatePositions() {
-		return this.typeData;
-		if (this.players.length != 6) {
-			return this.typeData;
-		}
-		for (let i = 0; i < 6; i++) {
-			this.stackPositions[i] = {
-				x: this.players[i].x,
-				y: this.players[i].y,
-			}
-		}
-		if (this.isServe) {
-			this.typeData.serve[this.rotation] = this.stackPositions;
-		} else {
-			this.typeData.receive[this.rotation] = this.stackPositions;
-		}
-		return this.typeData;
-	}
-}
-
-class Rotations {
-	constructor() {
-		this.loadRotations();
-	}
-	loadRotations() {
+	},
+	watch: {
+		selection: {
+			deep: true,
+			handler(old, updated) {
+				this.setPlayerNames();
+				this.updatePlayers();
+			},
+		},
+	},
+	created() {
 		let self = this;
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				self.rotations = JSON.parse(this.responseText);
-
-
-				// self.rotations[2].serve[0] = self.rotations[1].serve[0];
-				// self.rotations[2].receive[0] = self.rotations[1].receive[0];
-
-				// self.rotations[2].serve[1] = self.rotations[1].serve[1];
-				// self.rotations[2].receive[1] = self.rotations[1].receive[1];
-
-				// self.rotations[2].serve[2] = self.rotations[1].serve[2];
-				// self.rotations[2].receive[2] = self.rotations[1].receive[2];
-
-				// self.rotations[2].serve[3] = self.rotations[0].serve[1];
-				// self.rotations[2].receive[3] = self.rotations[0].receive[1];
-
-				// self.rotations[2].serve[4] = self.rotations[0].serve[2];
-				// self.rotations[2].receive[4] = self.rotations[0].receive[2];
-
-				// self.rotations[2].serve[5] = self.rotations[0].serve[3];
-				// self.rotations[2].receive[5] = self.rotations[0].receive[3];
-
-				// for (let type in self.rotations) {
-				// 	for (let i = 0; i < 3; i++) {
-				// 		self.rotations[type].serve[i+3] = self.rotations[type].serve[i];
-				// 		self.rotations[type].receive[i+3] = self.rotations[type].receive[i];
-				// 	}
-				// }
-				loadInterface(self.rotations);
-				Player.clearAll();
-				self.makeTeam();
+				self.allRotations = JSON.parse(this.responseText);
+				self.setPlayerNames();
+				self.updatePlayers();
+				self.$forceUpdate();
 			}
 		};
 		xmlhttp.open("GET", "/assets/volley_rotations/rotations.json", true);
 		xmlhttp.send();
+	},
+	methods: {
+		setPlayerNames() {
+			let imgCounter = {};
+			for (let i = 0; i < 6; i++) {
+				let name = this.currentRotation.players[i];
+				let cnt = imgCounter[name] || 0;
+				this.players[i].name = name;
+				this.players[i].imgCount = cnt;
+				imgCounter[name] = cnt+1;
+			}
+		},
+		updatePlayers() {
+			let getterMap = {
+				home: (i, p) => { return this.getHomeCoor(i, p); },
+				stack: (i, p) => { return this.getStackCoor(i, p); },
+				attack: (i, p) => { return this.getAttackCoor(i, p); },
+				defend: (i, p) => { return this.getDefenseCoor(i, p); },
+			};
+			this.attackerReceiverName = "OM"[Math.round(Math.random())];
+			let x=0, y=0, getter=getterMap[this.selection.gameState];
+			for (let i = 0; i < 6; i++) {
+				let name = this.currentRotation.players[i];
+				let posId = this.getPosition(i);
+				[x, y] = getter(i, posId);
+				this.moveObj(this.players[i], x, y);
+				this.updateBall(i, posId, name, x, y);
+			}
+		},
+		updateBall(i, posId, name, x, y) {
+			if (i == 0) {
+				// This is independant of any coordinates
+				if (this.selection.gameState == "home") {
+					this.moveObj(this.ball, -0.12, -0.05);
+				} else if (this.selection.gameState == "stack" && this.selection.serve) {
+					this.moveObj(this.ball, 1, 1.23);
+					this.moveObj(this.ball, 0.5, -0.2, 2000);
+				} else if (this.selection.gameState == "stack" && !this.selection.serve) {
+					this.moveObj(this.ball, 0.2, -0.2);
+				} else if (this.selection.gameState == "defend") {
+					this.moveObj(this.ball, 0.8, -0.2);
+				} else if (this.selection.gameState == "attack") {
+					this.moveObj(this.ball, 0.8, 0.15);
+				}
+			}
+
+			// Take current state into account
+			let amReceiver = name == this.attackerReceiverName && (posId >= 4 || posId == 0);
+			let amAttacker = name == this.attackerReceiverName && (0 < posId && posId < 4);
+			if (this.selection.gameState == "stack" && !this.selection.serve && amReceiver) {
+				this.moveObj(this.ball, x, y, 1000);
+			} else if (this.selection.gameState == "defend" && amReceiver) {
+				this.moveObj(this.ball, x, y, 1000);
+			} else if (this.selection.gameState == "attack") {
+				let spikeX = {M: 0.5, O: 0, R: 1, S: 1}[name];
+				if (y == 0.3) {
+					this.moveObj(this.players[i], spikeX, 0, 1000);
+				}
+				if (amAttacker) {
+					this.moveObj(this.ball, spikeX, 0, 1010);
+					this.moveObj(this.ball, 0.5, -0.4, 1800);
+				}
+			}
+
+		},
+		moveObj(obj, x, y, timeout) {
+			if (timeout) {
+				setTimeout(() => {this.moveObj(obj, x, y)}, timeout);
+			} else {
+				obj.x = x;
+				obj.y = y;
+			}
+		},
+		getHomeCoor(i, posId) {
+			return homePositions[posId];
+		},
+		getStackCoor(i, posId) {
+			return [this.stackPositions[posId].x, this.stackPositions[posId].y];
+		},
+		getAttackCoor(i, posId, ) {
+			let coor = this.attackPositions[this.players[i].name];
+			if (posId >= 4 || posId == 0) { return coor.back; }
+			else { return coor.front; }
+		},
+		getDefenseCoor(i, posId, ) {
+			let coor = this.defensePositions[this.players[i].name];
+			if (posId >= 4 || posId == 0) { return coor.back; }
+			else { return coor.front; }
+		},
+		getStyle(player) {
+			let result = {};
+			if (this.selection.haikyu || player.name == "B"){
+				result.backgroundImage = "url(/assets/volley_rotations/team/"+player.img+".png)";
+			} else {
+				result.backgroundColor = player.color;
+			}
+
+			// Court padding in %
+			let courtLeft = 10, courtRight = 10, courtTop = 4, courtBottom = 16, playerDiameter = 15;
+			result.left = (courtLeft + (100 - courtLeft - courtRight - playerDiameter) * player.x) + "%";
+			result.top = (courtTop + (100 - courtTop - courtBottom - playerDiameter) * player.y) + "%";
+			return result;
+		},
+		getPosition(id) {
+			return (id+6-this.selection.rotation) % 6;
+		},
+
+		getDisplayPlayers()  {
+			let players = copy(this.players);
+			for (let i = 0; i < 6; i++) {
+				let posId = this.getPosition(i);
+				let isBackRow = posId >= 4 || (posId == 0 && !this.selection.serve);
+				if (isBackRow && this.selection.libero && players[i].name == "M") {
+					players[i].name = "L";
+					players[i].imgCount = "0";
+				}
+				players[i].img = players[i].name + players[i].imgCount;
+				players[i].color = colors[players[i].name];
+			}
+			return players;
+		},
+		setNextState() {
+			switch (this.selection.gameState) {
+				case "home":
+					this.selection.gameState = "stack";
+					break;
+				case "stack":
+					if (this.selection.serve) {
+						this.selection.gameState = "defend";
+					} else {
+						this.selection.gameState = "attack";
+					}
+					break;
+				case "defend":
+					if (this.selection.serve) {
+						this.selection.gameState = "attack";
+					} else {
+						this.selection.gameState = "home";
+						this.selection.rotation = (+this.selection.rotation + 1) % 6;
+						this.selection.serve = true;
+					}
+					break;
+				case "attack":
+					if (this.selection.serve) {
+						this.selection.gameState = "home";
+						this.selection.serve = false;
+					} else {
+						this.selection.gameState = "defend";
+					}
+					break;
+			}
+		},
 	}
-	makeTeam() {
-		if (this.team) {
-			this.rotations[this.team.type] = this.team.updatePositions();
-		}
-		let data = this.getSelections();
-		if (this.team) {
-			this.team.init(this.rotations[data.type], data.type, data.rotation, data.libero, data.serve, data.state, data.haikyu);
-		} else {
-			this.team = new Team(this.rotations[data.type], data.type, data.rotation, data.libero, data.serve, data.state, data.haikyu);
-		}
-		this.team.updatePlayers();
-		sertActiveNavBar(data.rotation, data.serve, data.state);
-	}
-
-	getSelections() {
-		let result = {
-			type: document.getElementById("typeSelector").value,
-			rotation: document.getElementById("rotationSelector").value,
-			libero: document.getElementById("liberoCheckbox").checked,
-			serve: document.getElementById("serveCheckbox").checked,
-			state: document.getElementById("gameStateSelector").value,
-			haikyu: document.getElementById("haikyuCheckbox").checked,
-		};
-		return result;
-	}
-}
-
-
-function loadInterface(rotations) {
-	let typeSelect = document.getElementById("typeSelector");
-	for (let i in rotations) {
-		typeSelect.innerHTML = `<option value="${i}">${rotations[i].name}</option>`+typeSelect.innerHTML;
-	}
-}
-
-function sertActiveNavBar(rotation, isServe, gameState) {
-	document.querySelectorAll("div.navbar div.active").forEach(nav => {
-		nav.className = "";
-	});
-	let selector = 'div.navbar.states div[data-serve="{serve}"][data-state="{state}"]'
-		.replace("{serve}", +isServe)
-		.replace("{state}", gameState);
-	// if (gameState != "home") {
-	document.querySelector(selector).className = "active";
-	// }
-	selector = 'div.navbar.rotations div[data-rotation="{rot}"]'
-		.replace("{rot}", rotation);
-	document.querySelector(selector).className = "active";
-}
-
-
-function setup() {
-	rotations = new Rotations();
-	document.getElementById("typeSelector").addEventListener("change", () => {rotations.makeTeam()});
-	document.getElementById("rotationSelector").addEventListener("change", () => {rotations.makeTeam()});
-	document.getElementById("liberoCheckbox").addEventListener("change", () => {rotations.makeTeam()});
-	document.getElementById("serveCheckbox").addEventListener("change", () => {rotations.makeTeam()});
-	document.getElementById("haikyuCheckbox").addEventListener("change", () => {rotations.makeTeam()});
-	document.getElementById("gameStateSelector").addEventListener("change", () => {rotations.makeTeam()});
-	document.querySelectorAll("div.navbar.states div").forEach(nav => {
-		let data = nav.dataset;
-		nav.addEventListener("click", () => {
-			document.getElementById("serveCheckbox").checked = data.serve === "1";
-			document.getElementById("gameStateSelector").value = data.state;
-			rotations.makeTeam();
-		});
-	});
-	function setRotation(rotation) {
-		document.getElementById("serveCheckbox").checked = true;
-		document.getElementById("gameStateSelector").value = "home";
-		document.getElementById("rotationSelector").value = rotation;
-		rotations.makeTeam();
-	}
-	document.querySelectorAll("div.navbar.rotations div").forEach(nav => {
-		let data = nav.dataset;
-		nav.addEventListener("click", () => { setRotation(data.rotation); });
-	});
-	document.querySelector("#court div.rotate.left").addEventListener("click", () => {
-		let rot = document.getElementById("rotationSelector");
-		setRotation((+rot.value + 5) % 6);
-	});
-	document.querySelector("#court div.rotate.right").addEventListener("click", () => {
-		let rot = document.getElementById("rotationSelector");
-		setRotation((+rot.value + 1) % 6);
-	});
-	players = [
-		new Player(0.15, 0.1),
-		new Player(0.50, 0.1),
-		new Player(0.85, 0.1),
-		new Player(0.15, 0.8),
-		new Player(0.50, 0.8),
-		new Player(0.85, 0.8),
-	];
-}
-
-setup();
+});

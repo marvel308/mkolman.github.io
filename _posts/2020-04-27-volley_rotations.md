@@ -14,56 +14,84 @@ Netflix.
 
 A stronger and better person than me would let the anime inspire them to do some volleyball related strength training. Instead I ran to YouTube to binge volleyball rotations explanation videos and am now compiling this post.
 
-<select id="typeSelector">
-</select>
-<select id="rotationSelector">
-	<option value="0">Rotation 1</option>
-	<option value="1">Rotation 2</option>
-	<option value="2">Rotation 3</option>
-	<option value="3">Rotation 4</option>
-	<option value="4">Rotation 5</option>
-	<option value="5">Rotation 6</option>
-</select>
-<select id="gameStateSelector">
-	<option value="home">1. Home</option>
-	<option value="stack">2. Stack</option>
-	<option value="defend">3. Defend</option>
-	<option value="attack">4. Attack</option>
-</select>
-<input type="checkbox" id="liberoCheckbox" checked/><label for="liberoCheckbox"> Libero </label>
-<input type="checkbox" id="serveCheckbox" checked/><label for="serveCheckbox"> Serve </label>
-<input type="checkbox" id="haikyuCheckbox"/><label for="haikyuCheckbox"> Haikyu </label>
-<div class="navbar rotations">
-	<div data-rotation="0">1</div><div data-rotation="1">2</div><div data-rotation="2">3</div><div data-rotation="3">4</div><div data-rotation="4">5</div><div data-rotation="5">6</div>
-</div>
-<div class="navbar states">
-	<div data-serve="1" data-state="home">start</div><div data-serve="1" data-state="stack">serve</div><div data-serve="1" data-state="defend">defend</div><div data-serve="1" data-state="attack">attack</div>
-</div>
-<div class="navbar states">
-	<div data-serve="0" data-state="home">start</div><div data-serve="0" data-state="stack">receive</div><div data-serve="0" data-state="attack">attack</div><div data-serve="0" data-state="defend">defend</div>
-</div>
-<div id="court">
-	<div class="lecture">This is what it is and you can't deal with it</div>
-	<div class="description">
-		Serve receive rotation 1 <br>
-		Start positions <br>
-		<span class="button">Show receive</span>
+<div id="app">
+	<select id="rotationTypeSelect" v-model="selection.type">
+		<option :value="index" v-for="(rotationType, index) in allRotations">${ rotationType.name }</option>
+	</select>
+	<div style="display: none">
+		<select v-model="selection.rotation">
+			<option :value="index-1" v-for="index in 6">Rotation ${ index }</option>
+		</select>
+		<select v-model="selection.gameState">
+			<option
+				:value="state"
+				v-for="(state, index) in allGameStates"
+			>${index+1}. ${state} </option>
+		</select>
+		<input type="checkbox" id="liberoCheckbox" v-model="selection.libero"/><label for="liberoCheckbox"> Libero </label>
+		<input type="checkbox" id="serveCheckbox" v-model="selection.serve"/><label for="serveCheckbox"> Serve </label>
+		<input type="checkbox" id="haikyuCheckbox" v-model="selection.haikyu"/><label for="haikyuCheckbox"> Haikyu </label>
 	</div>
-	<div class="lines full"></div>
-	<div class="lines three"></div>
-	<img class="net" src="{{'/assets/volley_rotations/net.png'}}" />
-	<div class="rotate right">⤸</div>
-	<div class="rotate left">⤹</div>
-	<!-- <div class="player pos1">1</div>
-	<div class="player pos2">2</div>
-	<div class="player pos3">3</div>
-	<div class="player pos4">4</div>
-	<div class="player pos5">5</div>
-	<div class="player pos6">6</div> -->
+	<p v-if="currentRotation.name == '5-1'">
+		The 5-1 rotation is played with one setter and 5 attackers. The setter is responsible for setting from both front and back row.
+	</p>
+	<p v-if="currentRotation.name == '4-2'">
+    	The 4-2 rotation is played with two setters and four total attackers. The setter in the back row assumes a defensive role while the front row setter does the actual setting.
+	</p>
+	<p v-if="currentRotation.name == '6-2'">
+    	The 6-2 rotation is played with two setters and six total attackers. The setter in the front row assumes the role of right side hitter while the back row setter does the actual setting.
+	</p>
+	<div class="navbar rotations">
+		<div
+			:class="{active: index-1 == selection.rotation}"
+			v-for="index in 6"
+			v-on:click="selection.rotation = index-1; selection.serve = true; selection.gameState = 'home';"
+		>${index}</div>
+	</div>
+	<div class="navbar states">
+		<div
+			:class="{active: state.id == selection.gameState}"
+			v-on:click="selection.gameState == state.id ? updatePlayers() : selection.gameState = state.id"
+			v-for="state in gameStatesFlow"
+		>${ state.name }</div>
+	</div>
+	<div id="court">
+		<div class="lecture">This is what it is and you can't deal with it</div>
+		<!-- Court background -->
+		<div class="lines full"></div>
+		<div class="lines three"></div>
+		<img class="net" src="{{'/assets/volley_rotations/net.png'}}" />
+		<img class="haikyu" :class="{ fade: !selection.haikyu }" v-on:click="selection.haikyu = !selection.haikyu;" src="{{'/assets/volley_rotations/haikyu_logo.png'}}" />
+		<!-- Rotate left and right -->
+		<div
+			class="rotate right"
+			v-on:click="selection.rotation = (+selection.rotation + 1) % 6; selection.serve = true; selection.gameState = 'home';"
+		>⤸</div>
+		<div
+			class="rotate left"
+			v-on:click="selection.rotation = (+selection.rotation + 5) % 6; selection.serve = true; selection.gameState = 'home';"
+		>⤹</div>
+		<!-- Players and ball -->
+		<div class="player" :style="getStyle(player)" v-for="player in getDisplayPlayers()">${ selection.haikyu ? '' : player.name}</div>
+		<div class="ball" :style="getStyle(ball)"></div>
+		<!-- Bottom left description and "next" button -->
+		<div class="description">
+			Serve ${ ["receive ", ""][+selection.serve] }rotation ${ +selection.rotation + 1 } <br>
+			${ thisStateName } <br>
+			<a class="button" v-on:click.stop.prevent="setNextState"> Show ${ nextStateName } </a>
+		</div>
+	</div>
 </div>
-<script src="{{'/assets/volley_rotations/draw_court.js'}}" type="text/script"></script>
+
 
 <style>
+	#rotationTypeSelect {
+		font-size: 3em;
+		background: none;
+		border: none;
+		display: block;
+		font-family: monospace;
+	}
 	#court {
 		width: 100%;
 		position: relative;
@@ -77,15 +105,28 @@ A stronger and better person than me would let the anime inspire them to do some
 	#court img, #court div {
 		position: absolute;
 	}
+	#court .haikyu {
+		right: 0;
+		top: 84%;
+		width: 11%;
+		cursor: pointer;
+		transition: width 0.5s;
+	}
+	#court .haikyu.fade {
+		opacity: 0.5;
+	}
+	#court .haikyu:hover {
+		width: 12%;
+		opacity: 1;
+	}
 	#court .description {
 		left: 0;
-		top: 85%;
+		bottom: 0;
+		min-height: 15%;
 		line-height: 1.0;
 
 	    background-color: #eee;
-	    z-index: 3;
-	     /*border-radius: 40%; */
-	    box-shadow: 0 0 10px 10px #eee;
+	    box-shadow: 0 0 5px 5px #eee;
 	}
 	#court .description .button {
 		background: #D32F2F;
@@ -98,6 +139,7 @@ A stronger and better person than me would let the anime inspire them to do some
 		padding-right: 3px;
 		position: relative;
 		cursor: pointer;
+		text-decoration: none;
 	}
 	#court .description .button:after {
 		content: "";
@@ -247,5 +289,5 @@ A stronger and better person than me would let the anime inspire them to do some
 	}
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="{{'/assets/volley_rotations/draw_court.js'}}"></script>
-<!-- 10 | O(15) M(15) S(15) | 10-->
