@@ -7,6 +7,8 @@ let colors = {
 
 };
 
+const TIME_DELAY = 2000;
+
 let homePositions = [
 	[0.85, 0.8],
 	[0.85, 0.1],
@@ -391,7 +393,7 @@ var app = new Vue({
 
 				let delayPos = this.getDelayedPlayerPos(playerId);
 				if (delayPos) {
-					this.moveObj(this.players[playerId], delayPos[0], delayPos[1], 1000);
+					this.moveObj(this.players[playerId], delayPos[0], delayPos[1], TIME_DELAY);
 				}
 			}
 		},
@@ -402,7 +404,7 @@ var app = new Vue({
 					this.moveObj(this.ball, -0.12, -0.05);
 				} else if (this.selection.gameState == "serve") {
 					this.moveObj(this.ball, 1, 1.23);
-					this.moveObj(this.ball, 0.5, -0.2, 1500);
+					this.moveObj(this.ball, 0.5, -0.2, TIME_DELAY+500);
 				} else if (this.selection.gameState == "receive") {
 					this.moveObj(this.ball, 0.2, -0.2);
 				} else if (this.selection.gameState == "defend") {
@@ -415,14 +417,14 @@ var app = new Vue({
 			// Take current state into account
 			let myBall = i == this.attackerReceiverId;
 			if (this.selection.gameState == "receive" && myBall) {
-				this.moveObj(this.ball, x, y, 1000);
+				this.moveObj(this.ball, x, y, TIME_DELAY);
 			} else if (this.selection.gameState == "defend" && myBall) {
-				this.moveObj(this.ball, x, y, 1000);
+				this.moveObj(this.ball, x, y, TIME_DELAY);
 			} else if (this.selection.gameState.endsWith("ttack")) {
 				let spikeX = {M: 0.5, O: 0, R: 1, S: 1}[name];
 				if (myBall) {
-					this.moveObj(this.ball, spikeX, 0, 1010);
-					this.moveObj(this.ball, (spikeX+0.4)%1, -0.2, 1800);
+					this.moveObj(this.ball, spikeX, 0, TIME_DELAY+10);
+					this.moveObj(this.ball, (spikeX+0.4)%1, -0.2, TIME_DELAY*1.8);
 				}
 			}
 		},

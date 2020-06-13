@@ -14,9 +14,29 @@ Netflix.
 
 A stronger and better person than me would let the anime inspire them to do
 some volleyball related strength training. Instead I ran to YouTube to binge
-volleyball rotations explanation videos. I was underwhelmed by the amount of
-interactive rotation explorers there are online so I decided to make one
-myself.
+volleyball offensive system explanation videos. I was underwhelmed by the
+amount of interactive system explorers there are online so I decided to make
+one myself.
+
+# Game rotations
+
+At all times there are 6 players on every side of the court. Three in the
+front row and three in the back row. Their positions are named 1-6, with 1
+starting in the back right and continuing counter-clockwise to 6 in the middle
+back.
+
+![positions]({{"/assets/volley_rotations/positions.png"}}){:.img-positions}
+
+Before each serve players must not pass their direct neighbor to any of the
+four sides e.g. they must be right of their left neighbor if they have one,
+otherwise they are bound by the outside court lines. Failure to do so will
+result in referee calling "out of rotation" fault and award a point to their
+opponents.
+
+Every time your team wins a point on your opponent's serve the players rotate
+one spot clockwise (player on position 1 goes to 6, 6 goes to 5, 5 to 4,
+etc.). This means that in total there are 6 different rotations that we have
+to understand in order to play any offensive system.
 
 # Player roles
 
@@ -39,14 +59,20 @@ setter in the rotation. As their name implies they specialize in attacking
 from the right side of the court. In the back row they also cover the right
 side of the court.
 
-**Libero** is a player specialized in defense. They will usually switch out
-middle blockers when they rotate into back row. They will always receive serves
-and try to pass opponent's spikes from the middle of the court. 
+**Libero** is a special player role used in defense. Unlike other players they
+switch in and out as often as they please but that comes at a cost. They are
+not allowed to serve, attack, or set the ball overhead within 3m of the net.
+You will always notice them as the player on the team with a contrasting
+uniform. They will usually switch out middle blockers when they rotate into
+back row. Libero will always receive serves and try to pass opponent's spikes
+from the middle of the court. Because libero is not allowed to serve they will
+not be playing when it's middle blocker's turn to serve.
 
 <div id="app">
-	<select id="rotationTypeSelect" v-model="selection.type">
+	<select style="display: inline-block;" id="rotationTypeSelect" v-model="selection.type">
 		<option :value="index" v-for="(rotationType, index) in allRotations">${ rotationType.name }</option>
 	</select>
+	<h2 style="font-size: 2em; display: inline-block; margin-left: 0.2em;">system</h2>
 	<div style="display: none">
 		<select v-model="selection.rotation">
 			<option :value="index-1" v-for="index in 6">Rotation ${ index }</option>
@@ -68,29 +94,7 @@ and try to pass opponent's spikes from the middle of the court.
     	The 4-2 rotation is played with two setters and four total attackers. The setter in the back row assumes a defensive role while the front row setter does the actual setting. Because the active setter is always in the front row all the passing and receiving can be done by the players in the back row.
 	</p>
 	<p v-if="currentRotation.name == '6-2'">
-    	The 6-2 rotation is played with two setters and six total attackers. The setter in the front row assumes the role of right side hitter while the back row setter does the actual setting. Libero and both outside hitters are responsible for receiving serves in every rotation.
-	</p>
-	<h2> Rotation ${+selection.rotation+1} - ${thisStateName} </h2>
-	<p v-if="selection.gameState == 'home'">
-		These are the base positions for each player. There are precise rules describing required relative positions between adjacent players which you can see by <b>clicking on individual players</b>. If those rules are not adhered to at the start of the rally, the referee will call <i>out of rotation</i> fault and your opponent will get a point.
-	</p>
-	<p v-if="selection.gameState == 'serve'">
-		When your team serves, the player in the back right position (${playerRoles.server !== undefined ? currentRotation.players[playerRoles.server] : 0}) goes to serve while other players can rearrange on the court in order to get closer to their desired positions. However, they still have to remain in the proper relative positions until the ball is served.
-	</p>
-	<p v-if="selection.gameState == 'defend'">
-		When the ball is on your opponents' side your team prepares for their attack. The front row players will try to block their spiker at the net while the back row players will pass any ball that makes it through the block.
-	</p>
-	<p v-if="selection.gameState.endsWith('ttack')">
-		After the first contact with the ball is made your team gets ready to attack. Setter runs to their designated spot on the center-right side of the net while the attackers take a few steps back to get ready to run in and spike. The setter then sets the ball to one of them to hopefully score a point while the back row players watch the ball to save it in case it gets blocked.
-	</p>
-	<p v-if="selection.gameState == 'firstAttack' && playerRoles.attackers.toString() != playerRoles.first_attackers.toString()">
-		<b>Note:</b> after a serve receive the attackers in this rotation don't have enough time to get to their preferred attacking positions. That means that your first attack might be suboptimal.
-	</p>
-	<p v-if="selection.gameState == 'receive'">
-		During a serve receive the players have to respect the relative positions described by the rotation. <b> Click on players </b> to see their bounds. Generally speaking the back row players are responsible for receiving the ball and the front row players try to position in a way to make the following attack as easy as possible.
-		<span v-if="isBackRow(playerRoles.setter)">
-			In this rotation the setter is in the back row. Because we don't want them to receive we move them out of the way and instead bring back the outside hitter from the front row to help with receiving.
-		</span>
+    	The 6-2 rotation is played with two setters and six total attackers - all six players act as attacker while in the front row. That includes the setter who in the front row assumes the role of right side hitter while the back row setter does the actual setting. Libero and both outside hitters are responsible for receiving serves in every rotation.
 	</p>
 	<!-- Button to go to next game state -->
 	<a class="button next" v-on:click.stop.prevent="setNextState"> Show ${ nextStateName } </a>
@@ -172,11 +176,37 @@ and try to pass opponent's spikes from the middle of the court.
 			</div>
 		</div>
 	</div>
+	<h2> Rotation ${+selection.rotation+1} - ${thisStateName} </h2>
+	<p v-if="selection.gameState == 'home'">
+		These are the base positions for each player. There are precise rules describing required relative positions between adjacent players which you can see by <b>clicking on individual players</b>. If those rules are not adhered to at the start of the rally, the referee will call <i>out of rotation</i> fault and your opponent will get a point.
+	</p>
+	<p v-if="selection.gameState == 'serve'">
+		When your team serves, the player in the back right position (${playerRoles.server !== undefined ? currentRotation.players[playerRoles.server] : 0}) goes to serve while other players can rearrange on the court in order to get closer to their desired positions. However, they still have to remain in the proper relative positions until the ball is served.
+	</p>
+	<p v-if="selection.gameState == 'defend'">
+		When the ball is on your opponents' side your team prepares for their attack. The front row players will try to block their spiker at the net while the back row players will pass any ball that makes it through the block.
+	</p>
+	<p v-if="selection.gameState.endsWith('ttack')">
+		After the first contact with the ball is made your team gets ready to attack. Setter runs to their designated spot on the center-right side of the net while the attackers take a few steps back to get ready to run in and spike. The setter then sets the ball to one of them to hopefully score a point while the back row players watch the ball to save it in case it gets blocked.
+	</p>
+	<p v-if="selection.gameState == 'firstAttack' && playerRoles.attackers.toString() != playerRoles.first_attackers.toString()">
+		<b>Note:</b> after a serve receive the attackers in this rotation don't have enough time to get to their preferred attacking positions. That means that the attackers will be spiking from positions they are not as specialized in during the first attack.
+	</p>
+	<p v-if="selection.gameState == 'receive'">
+		During a serve receive the players have to respect the relative positions described by the rotation. <b> Click on players </b> to see their bounds. Generally speaking the back row players are responsible for receiving the ball and the front row players try to position in a way to make the following attack as easy as possible.
+		<span v-if="isBackRow(playerRoles.setter)">
+			In this rotation the setter is in the back row. Because we don't want them to receive we move them out of the way and instead bring back the outside hitter from the front row to help with receiving.
+		</span>
+	</p>
 </div>
 
 <style>
+	.img-positions {
+		float: right;
+		width: 50%;
+	}
 	#rotationTypeSelect {
-		font-size: 3em;
+		font-size: 2em;
 		background: none;
 		border: none;
 		display: block;
@@ -357,7 +387,7 @@ and try to pass opponent's spikes from the middle of the court.
 		box-shadow: 0px 0px 10px black;
 		color: black;
 		cursor: pointer;
-		transition: left 1s, top 1s, box-shadow 1s, transform 1s, opacity 0.3s;
+		transition: left 2s, top 2s, box-shadow 1s, transform 1s, opacity 0.3s;
 		background-size: cover;
 	}
 	#court .ball {
