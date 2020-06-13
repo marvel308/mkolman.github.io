@@ -1,9 +1,9 @@
 let colors = {
-	"L": "#ffee00",  // Yellow
-	"O": "#98b33e",  // Green 
-	"M": "#bbade8",  // Light Purple
-	"R": "#6893fc",  // Light Blue
-	"S": "#497afa",  // Blue
+	L: "#ffee00",  // Yellow
+	O: "#98b33e",  // Green
+	M: "#bbade8",  // Light Purple
+	R: "#6893fc",  // Light Blue
+	S: "#497afa",  // Blue
 
 };
 
@@ -15,51 +15,145 @@ let homePositions = [
 	[0.15, 0.8],
 	[0.5, 0.8],
 ];
-let gamePositions = {
-	"defense": {
-		"L": {
-			"back": [0.5, 0.8]
-		},
-		"M": {
-			"back": [0.5, 0.8],
-			"front": [0.5, 0.0]
-		},
-		"R": {
-			"back": [0.9, 0.7],
-			"front": [0.9, 0.0]
-		},
-		"S": {
-			"back": [0.9, 0.7],
-			"front": [0.9, 0.0]
-		},
-		"O": {
-			"back": [0.1, 0.7],
-			"front": [0.1, 0.0]
-		}
-	},
-	"attack": {
-		"L": {
-			"back": [0.5, 0.8]
-		},
-		"M": {
-			"back": [0.5, 0.8],
-			"front": [0.5, 0.3]
-		},
-		"R": {
-			"back": [0.9, 0.7],
-			"front": [1.1, 0.3]
-		},
-		"S": {
-			"back": [0.9, 0.7],
-			"front": [1.1, 0.3]
-		},
-		"O": {
-			"back": [0.1, 0.7],
-			"front": [-0.1, 0.3]
-		}
 
-	}
+let allPositions = {
+	server: [1, 1.23],
+	setter: [0.8, 0.05],
+	receivers: [[0.1, 0.7], [0.5, 0.8], [0.9, 0.7]],
+	attackers: [[-0.1, 0.3], [0.5, 0.3], [1.1, 0.3]],
+	spikers: [[0, 0], [0.5, 0], [1, 0]],
+	blockers: [[0.1, 0], [0.5, 0], [0.9, 0]],
+	passers: [[0.1, 0.7], [0.5, 0.8], [0.9, 0.7]],
+	diggers: [[0.1, 0.5], [0.5, 0.6], [0.9, 0.5]],
 };
+
+class Rotation {
+	constructor(rotation) {
+		this.name = rotation.name;
+		this.serve = rotation.serve; // legacy
+		this.receive = rotation.receive; // legacy
+		this.players = rotation.players;
+		this.setter = rotation.setter;
+		this.receivers = rotation.receivers;
+		this.attackers = rotation.attackers;
+		this.first_attackers = rotation.first_attackers;
+		this.receive_stack = rotation.receive_stack;
+		this.serve_stack = rotation.serve_stack;
+		this.makeBlockers();
+		this.makePassers();
+		// Player -> Rotation -> State -> (x, y)
+		// Player = 1...6
+		// Rotation = 1...6
+		// State = home, serve, receive, attack, defend
+		this.initPositions();
+		this.makePositions();
+	}
+	getPlayerPosition(player, rotation) {
+		return (player + 6 - rotation) % 6;
+	}
+	initPositions() {
+		// Set all positions to home to init
+		this.playerPositions = [];
+		for (let player = 0; player < 6; player++) {
+			let rotationPositions = [];
+			for (let rotation = 0; rotation < 6; rotation++) {
+				let hp = homePositions[this.getPlayerPosition(player, rotation)];
+				let pos = {home: hp, serve: hp, receive: hp, attack: hp, defend: hp, firstAttack: hp};
+				rotationPositions.push(pos);
+			}
+			this.playerPositions.push(rotationPositions);
+		}
+	}
+	makePassers() {
+		this.passers = [];
+		for (let rotation = 0; rotation < 6; rotation++) {
+			this.passers.push([0, 0, 0]);
+			for (let i = 0; i < 3; i++) {
+				// Back row players (4, 5, 0), (5, 0, 1),...
+				let player = (4 + i + rotation) % 6;
+				let name = this.players[player];
+				if (name == "O") this.passers[rotation][0] = player;
+				else if (name == "M") this.passers[rotation][1] = player;
+				else this.passers[rotation][2] = player; // S and R
+			}
+		}
+	}
+	makeBlockers() {
+		this.blockers = [];
+		for (let rotation = 0; rotation < 6; rotation++) {
+			this.blockers.push([0, 0, 0]);
+			for (let i = 0; i < 3; i++) {
+				// Front row players (1, 2, 3), (2, 3, 4),...
+				let player = (1 + i + rotation) % 6;
+				let name = this.players[player];
+				if (name == "O") this.blockers[rotation][0] = player;
+				else if (name == "M") this.blockers[rotation][1] = player;
+				else this.blockers[rotation][2] = player; // S and R
+			}
+		}
+	}
+	makePositions() {
+		for (let rotation = 0; rotation < 6; rotation++) {
+			// Set attackers positions
+			for (let i in this.attackers[rotation]) {
+				let player = this.attackers[rotation][i];
+				if (player === null) continue;
+				this.playerPositions[player][rotation].attack = allPositions.attackers[i];
+				this.playerPositions[player][rotation].attack_delayed = allPositions.spikers[i];
+			}
+			// Set first_attackers positions
+			for (let i in this.first_attackers[rotation]) {
+				let player = this.first_attackers[rotation][i];
+				if (player === null) continue;
+				this.playerPositions[player][rotation].firstAttack = allPositions.attackers[i];
+				this.playerPositions[player][rotation].firstAttack_delayed = allPositions.spikers[i];
+			}
+			// Set receivers positions
+			for (let i in this.receivers[rotation]) {
+				let player = this.receivers[rotation][i];
+				if (player === null) continue;
+				this.playerPositions[player][rotation].receive = allPositions.receivers[i];
+			}
+			// Set passers positions
+			for (let i in this.passers[rotation]) {
+				let player = this.passers[rotation][i];
+				if (player === null) continue;
+				this.playerPositions[player][rotation].defend = allPositions.passers[i];
+				this.playerPositions[player][rotation].attack = allPositions.diggers[i];
+				this.playerPositions[player][rotation].firstAttack = allPositions.diggers[i];
+			}
+			// Set blockers positions
+			for (let i in this.blockers[rotation]) {
+				let player = this.blockers[rotation][i];
+				if (player === null) continue;
+				this.playerPositions[player][rotation].defend = allPositions.blockers[i];
+			}
+			// Set receive stacking
+			for (let player in this.receive_stack[rotation]) {
+				this.playerPositions[+player][rotation].receive = this.receive_stack[rotation][player];
+			}
+			// Set serve stacking
+			for (let player in this.serve_stack[rotation]) {
+				this.playerPositions[+player][rotation].serve = this.serve_stack[rotation][player];
+			}
+			// Set setter position
+			let setter = this.setter[rotation];
+			this.playerPositions[setter][rotation].attack = allPositions.setter;
+			this.playerPositions[setter][rotation].firstAttack = allPositions.setter;
+			// Set setter position
+			let server = rotation;
+			this.playerPositions[server][rotation].serve = allPositions.server;
+		}
+	}
+}
+
+function chooseRandom(choices, banned) {
+  	let result;
+  	do {
+		result = choices[Math.floor(Math.random() * choices.length)];
+  	} while (banned.includes(result));
+	return result;
+}
 
 function copy(obj) {
 	return JSON.parse(JSON.stringify(obj));
@@ -88,83 +182,151 @@ var app = new Vue({
 			haikyu: false,
 			gameState: "home",
 		},
+		trackPlayer: null,
 		allRotations: [],
-		allGameStates: ["home", "stack", "defend", "attack"],
+		allGameStates: ["home", "serve", "receive", "defend", "attack", "firstAttack"],
 		players: [
 			{x: 0, y: 0, name: "", imgCount: 0}, {x: 0, y: 0, name: "", imgCount: 0},
 			{x: 0, y: 0, name: "", imgCount: 0}, {x: 0, y: 0, name: "", imgCount: 0},
 			{x: 0, y: 0, name: "", imgCount: 0}, {x: 0, y: 0, name: "", imgCount: 0},
 		],
 		ball: {x: -0.12, y: -0.05, img: "B", name: "B"},
-		attackerReceiverName: "M",
+		attackerReceiverId: 0,
+		gameStatesFlow: {
+			serve: [
+				{id: "home", name: "start"},
+				{id: "serve", name: "serve"},
+				{id: "defend", name: "defend"},
+				{id: "attack", name: "attack"},
+			],
+			receive: [
+				// {id: "home", name: "start"},
+				{id: "receive", name: "receive"},
+				{id: "firstAttack", name: "attack"},
+				{id: "defend", name: "defend"},
+				{id: "attack", name: "attack"},
+			],
+		},
 	},
 	computed: {
-		gameStatesFlow() {
-			if (this.selection.serve) {
-				// Serving: serve rotation
-				return [
-					{id: "home", name: "start"},
-					{id: "stack", name: "serve"},
-					{id: "defend", name: "defend"},
-					{id: "attack", name: "attack"},
-				];
-			} else {
-				// Not serving: receive rotation
-				return [
-					{id: "home", name: "start"},
-					{id: "stack", name: "receive"},
-					{id: "attack", name: "attack"},
-					{id: "defend", name: "defend"},
-				];
-			}
-		},
 		currentRotation() {
 			if (this.allRotations.length == 0) { return {}; }
-			return this.allRotations[+this.selection.type]
+			let result = new Rotation(this.allRotations[+this.selection.type]);
+			return result;
 		},
-		stackPositions() {
-			if (this.allRotations.length == 0) { return []; }
-			if (this.selection.serve) {
-				return this.currentRotation.serve[this.selection.rotation];
-			} else {
-				return this.currentRotation.receive[this.selection.rotation];
+		playerRoles() {
+			let rot = +this.selection.rotation;
+			return {
+				setter: this.currentRotation.setter[rot],
+				receivers: this.currentRotation.receivers[rot],
+				attackers: this.currentRotation.attackers[rot],
+				first_attackers: this.currentRotation.first_attackers[rot],
+				passers: this.currentRotation.passers[rot],
+				blockers: this.currentRotation.blockers[rot],
+				server: rot,
 			}
-		},
-		gamePositions() {
-			if (this.allRotations.length == 0) { return {}; }
-			return updateObject(gamePositions, this.currentRotation.game);
-		},
-		defensePositions() {
-			return this.gamePositions.defense;
-		},
-		attackPositions() {
-			return this.gamePositions.attack;
 		},
 		nextStateName() {
 			let data = {
 				home: ["receive", "serve"],
-				stack: ["attack", "defense"],
-				defend: ["next rotation", "attack"],
-				attack: ["defense", "receive rotation"],
+				serve: ["defense", "defense"],
+				receive: ["attack", "attack"],
+				defend: ["attack", "attack"],
+				attack: ["next rotation", "receive rotation"],
+				firstAttack: ["defense", "receive rotation"],
 			};
 			return data[this.selection.gameState][+this.selection.serve];
 		},
 		thisStateName() {
 			let data = {
-				home: ["Start positions", "Start positions"],
-				stack: ["Serve receive positions", "Serve positions"],
-				defend: ["Defense positions", "Defense positions"],
-				attack: ["Attack positions", "Attack positions"],
+				home: ["start", "start"],
+				serve: ["serve", "serve"],
+				receive: ["serve receive", "serve receive"],
+				defend: ["defense", "defense"],
+				attack: ["attack", "attack"],
+				firstAttack: ["attack", "attack"],
 			};
 			return data[this.selection.gameState][+this.selection.serve];
+		},
+		trackedPlayerPositionLimits() {
+			if (this.trackPlayer == null || ["attack", "defend", "firstAttack"].includes(this.selection.gameState)) {
+				return [];
+			}
+			let allLimits = {
+				0: {top: 1, left: 5},
+				1: {bottom: 0, left: 2},
+				2: {bottom: 5, left: 3, right: 1},
+				3: {bottom: 4, right: 2},
+				4: {top: 3, right: 5},
+				5: {top: 2, left: 4, right: 0},
+			};
+			this.trackPlayer = +this.trackPlayer;
+			let posId = this.getPosition(this.trackPlayer);
+			let player = this.players[this.trackPlayer];
+			let limits = allLimits[posId];
+			let lines = [], linesExtra = [];
+			let START = -7.5/65, END = 1+7.5/65;
+			let isServe = this.selection.gameState === "serve";
+			if (isServe && posId == 0) {
+				lines = [
+					{primary: true, top: END, bottom: player.y, left: player.x, right: player.x},
+					{primary: true, top: player.y, bottom: player.y, left: player.x, right: END},
+					{primary: true, top: player.y, bottom: player.y, left: START, right: player.x},
+				];
+			} else {
+				for (let key of ["top", "bottom", "left", "right"]) {
+					let line = {top: player.y, bottom: player.y, left: player.x, right: player.x, primary: true};
+					if (limits[key] === undefined || (isServe && limits[key] == 0)) {
+						if (key == "top" || key == "left") line[key] = START;
+						else line[key] = END;
+					} else {
+						let other = this.players[this.getIndex(limits[key])];
+						if (key == "left" || key == "right") {
+							line[key] = other.x;
+							linesExtra.push({left: other.x, right: other.x,
+								top: Math.min(other.y, player.y) - 0.05,
+								bottom: Math.max(other.y, player.y) + 0.05 });
+						} else {
+							line[key] = other.y;
+							linesExtra.push({top: other.y, bottom: other.y,
+								left: Math.min(other.x, player.x) - 0.05,
+								right: Math.max(other.x, player.x) + 0.05 });
+						}
+					}
+					lines.push(line);
+				}
+			}
+			let lineStyles = [];
+			for (let r of lines.concat(linesExtra)) {
+				let topLeft = this.coorToCourt(r.left, r.top);
+				let bottomRight = this.coorToCourt(r.right, r.bottom);
+				lineStyles.push({
+					left: topLeft.centerLeft + "%",
+					top: topLeft.centerTop + "%",
+					right: 100 - bottomRight.centerLeft + "%",
+					bottom: 100 - bottomRight.centerTop + "%",
+					borderStyle: r.primary ? "solid" : "dashed",
+					// borderWidth: r.pri ? "3px" : "1px",
+					borderColor: r.primary ? "#d32f2f" : "black",
+				});
+			}
+			return lineStyles;
 		}
 	},
 	watch: {
 		selection: {
 			deep: true,
-			handler(old, updated) {
+			handler() {
+				if (!this.currentRotation.players) return;
+				if (this.selection.serve && this.selection.gameState == "receive") {
+					this.selection.gameState = "serve";
+				}
+				if (!this.selection.serve && this.selection.gameState == "serve") {
+					this.selection.gameState = "receive";
+				}
 				this.setPlayerNames();
 				this.updatePlayers();
+				window.location.hash = window.encodeURI(JSON.stringify(this.selection));
 			},
 		},
 	},
@@ -181,8 +343,24 @@ var app = new Vue({
 		};
 		xmlhttp.open("GET", "/assets/volley_rotations/rotations.json", true);
 		xmlhttp.send();
+		if (window.location.hash.length > 2) {
+			this.selection = JSON.parse(window.decodeURI(window.location.hash.substring(1)));
+		}
+
 	},
 	methods: {
+		getPlayerPos(playerId) {
+			return this.currentRotation.playerPositions[playerId][+this.selection.rotation][this.selection.gameState];
+		},
+		getDelayedPlayerPos(playerId) {
+			return this.currentRotation.playerPositions[playerId][+this.selection.rotation][this.selection.gameState+"_delayed"];
+		},
+		isBackRow(playerId) {
+			return [4, 5, 0].includes(this.getPosition(playerId));
+		},
+		isFrontRow(playerId) {
+			return [1, 2, 3].includes(this.getPosition(playerId));
+		},
 		setPlayerNames() {
 			let imgCounter = {};
 			for (let i = 0; i < 6; i++) {
@@ -194,20 +372,27 @@ var app = new Vue({
 			}
 		},
 		updatePlayers() {
-			let getterMap = {
-				home: (i, p) => { return this.getHomeCoor(i, p); },
-				stack: (i, p) => { return this.getStackCoor(i, p); },
-				attack: (i, p) => { return this.getAttackCoor(i, p); },
-				defend: (i, p) => { return this.getDefenseCoor(i, p); },
-			};
-			this.attackerReceiverName = "OM"[Math.round(Math.random())];
-			let x=0, y=0, getter=getterMap[this.selection.gameState];
-			for (let i = 0; i < 6; i++) {
-				let name = this.currentRotation.players[i];
-				let posId = this.getPosition(i);
-				[x, y] = getter(i, posId);
-				this.moveObj(this.players[i], x, y);
-				this.updateBall(i, posId, name, x, y);
+			if (this.selection.gameState == "firstAttack") {
+				this.attackerReceiverId =  chooseRandom(this.playerRoles.first_attackers, [null, this.playerRoles.setter]);
+			} else if (this.selection.gameState == "attack") {
+				this.attackerReceiverId =  chooseRandom(this.playerRoles.attackers, [null, this.playerRoles.setter]);
+			} else if (this.selection.gameState == "defend") {
+				this.attackerReceiverId =  chooseRandom(this.playerRoles.passers, [null, this.playerRoles.setter]);
+			} else if (this.selection.gameState == "receive") {
+				this.attackerReceiverId =  chooseRandom(this.playerRoles.receivers, [null, this.playerRoles.setter]);
+			}
+			let x=0, y=0;
+			for (let playerId = 0; playerId < 6; playerId++) {
+				let name = this.currentRotation.players[playerId];
+				let posId = this.getPosition(playerId);
+				[x, y] = this.getPlayerPos(playerId);
+				this.moveObj(this.players[playerId], x, y);
+				this.updateBall(playerId, posId, name, x, y);
+
+				let delayPos = this.getDelayedPlayerPos(playerId);
+				if (delayPos) {
+					this.moveObj(this.players[playerId], delayPos[0], delayPos[1], 1000);
+				}
 			}
 		},
 		updateBall(i, posId, name, x, y) {
@@ -215,36 +400,31 @@ var app = new Vue({
 				// This is independant of any coordinates
 				if (this.selection.gameState == "home") {
 					this.moveObj(this.ball, -0.12, -0.05);
-				} else if (this.selection.gameState == "stack" && this.selection.serve) {
+				} else if (this.selection.gameState == "serve") {
 					this.moveObj(this.ball, 1, 1.23);
-					this.moveObj(this.ball, 0.5, -0.2, 2000);
-				} else if (this.selection.gameState == "stack" && !this.selection.serve) {
+					this.moveObj(this.ball, 0.5, -0.2, 1500);
+				} else if (this.selection.gameState == "receive") {
 					this.moveObj(this.ball, 0.2, -0.2);
 				} else if (this.selection.gameState == "defend") {
 					this.moveObj(this.ball, 0.8, -0.2);
-				} else if (this.selection.gameState == "attack") {
+				} else if (this.selection.gameState.endsWith("ttack")) {
 					this.moveObj(this.ball, 0.8, 0.15);
 				}
 			}
 
 			// Take current state into account
-			let amReceiver = name == this.attackerReceiverName && (posId >= 4 || posId == 0);
-			let amAttacker = name == this.attackerReceiverName && (0 < posId && posId < 4);
-			if (this.selection.gameState == "stack" && !this.selection.serve && amReceiver) {
+			let myBall = i == this.attackerReceiverId;
+			if (this.selection.gameState == "receive" && myBall) {
 				this.moveObj(this.ball, x, y, 1000);
-			} else if (this.selection.gameState == "defend" && amReceiver) {
+			} else if (this.selection.gameState == "defend" && myBall) {
 				this.moveObj(this.ball, x, y, 1000);
-			} else if (this.selection.gameState == "attack") {
+			} else if (this.selection.gameState.endsWith("ttack")) {
 				let spikeX = {M: 0.5, O: 0, R: 1, S: 1}[name];
-				if (y == 0.3) {
-					this.moveObj(this.players[i], spikeX, 0, 1000);
-				}
-				if (amAttacker) {
+				if (myBall) {
 					this.moveObj(this.ball, spikeX, 0, 1010);
-					this.moveObj(this.ball, 0.5, -0.4, 1800);
+					this.moveObj(this.ball, (spikeX+0.4)%1, -0.2, 1800);
 				}
 			}
-
 		},
 		moveObj(obj, x, y, timeout) {
 			if (timeout) {
@@ -254,21 +434,18 @@ var app = new Vue({
 				obj.y = y;
 			}
 		},
-		getHomeCoor(i, posId) {
-			return homePositions[posId];
-		},
-		getStackCoor(i, posId) {
-			return [this.stackPositions[posId].x, this.stackPositions[posId].y];
-		},
-		getAttackCoor(i, posId, ) {
-			let coor = this.attackPositions[this.players[i].name];
-			if (posId >= 4 || posId == 0) { return coor.back; }
-			else { return coor.front; }
-		},
-		getDefenseCoor(i, posId, ) {
-			let coor = this.defensePositions[this.players[i].name];
-			if (posId >= 4 || posId == 0) { return coor.back; }
-			else { return coor.front; }
+		coorToCourt(x, y) {
+			// Court padding in %
+			let courtLeft = 10,  courtTop = 4, courtSize = 80, playerDiameter = 15;
+			result = {
+				left: (courtLeft + (courtSize - playerDiameter) * x),
+				top: (courtTop + (courtSize - playerDiameter) * y),
+			};
+			result.right = 100 - result.left - playerDiameter;
+			result.bottom = 100 - result.top - playerDiameter;
+			result.centerLeft = result.left + playerDiameter/2;
+			result.centerTop = result.top + playerDiameter/2;
+			return result;
 		},
 		getStyle(player) {
 			let result = {};
@@ -277,17 +454,17 @@ var app = new Vue({
 			} else {
 				result.backgroundColor = player.color;
 			}
-
-			// Court padding in %
-			let courtLeft = 10, courtRight = 10, courtTop = 4, courtBottom = 16, playerDiameter = 15;
-			result.left = (courtLeft + (100 - courtLeft - courtRight - playerDiameter) * player.x) + "%";
-			result.top = (courtTop + (100 - courtTop - courtBottom - playerDiameter) * player.y) + "%";
+			let court = this.coorToCourt(player.x, player.y);
+			result.left = court.left + "%";
+			result.top = court.top + "%";
 			return result;
 		},
 		getPosition(id) {
 			return (id+6-this.selection.rotation) % 6;
 		},
-
+		getIndex(position) {
+			return (+this.selection.rotation+position) % 6;
+		},
 		getDisplayPlayers()  {
 			let players = copy(this.players);
 			for (let i = 0; i < 6; i++) {
@@ -305,25 +482,32 @@ var app = new Vue({
 		setNextState() {
 			switch (this.selection.gameState) {
 				case "home":
-					this.selection.gameState = "stack";
-					break;
-				case "stack":
 					if (this.selection.serve) {
-						this.selection.gameState = "defend";
+						this.selection.gameState = "serve";
 					} else {
-						this.selection.gameState = "attack";
+						this.selection.gameState = "receive";
 					}
 					break;
+				case "serve":
+					this.selection.gameState = "defend";
+					break;
+				case "receive":
+					this.selection.gameState = "firstAttack";
+					break;
 				case "defend":
+					this.selection.gameState = "attack";
+					break;
+				case "attack":
 					if (this.selection.serve) {
-						this.selection.gameState = "attack";
+						this.selection.gameState = "receive";
+						this.selection.serve = false;
 					} else {
 						this.selection.gameState = "home";
 						this.selection.rotation = (+this.selection.rotation + 1) % 6;
 						this.selection.serve = true;
 					}
 					break;
-				case "attack":
+				case "firstAttack":
 					if (this.selection.serve) {
 						this.selection.gameState = "home";
 						this.selection.serve = false;
@@ -332,6 +516,6 @@ var app = new Vue({
 					}
 					break;
 			}
-		},
+		}
 	}
 });
