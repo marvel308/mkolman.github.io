@@ -30,7 +30,7 @@ back.
 Before each serve players must not pass their direct neighbor to any of the
 four sides e.g. they must be right of their left neighbor if they have one,
 otherwise they are bound by the outside court lines. Failure to do so will
-result in referee calling "out of rotation" fault and award a point to their
+result in referee calling "out of rotation" fault and awarding a point to their
 opponents.
 
 Every time your team wins a point on your opponent's serve the players rotate
@@ -47,7 +47,7 @@ in the front row and passing while in the back.
 
 **Outside hitters** or **left side hitters** are players who hit and block on
 the front left side of the court. They also pass from the left side of the
-court and are usually one of the main receivers on opponent's serves.
+court and are usually one of the main receivers of opponent's serves.
 
 **Middle blockers** or **middle attackers** thrive in the middle third of the
 court. They are usually tall and use that height to block opposing attacks and
@@ -96,6 +96,8 @@ not be playing when it's middle blocker's turn to serve.
 	<p v-if="currentRotation.name == '6-2'">
     	The 6-2 rotation is played with two setters and six total attackers - all six players act as attacker while in the front row. That includes the setter who in the front row assumes the role of right side hitter while the back row setter does the actual setting. Libero and both outside hitters are responsible for receiving serves in every rotation.
 	</p>
+	<!-- Rotation title -->
+	<h2> Rotation ${+selection.rotation+1} - ${thisStateName} </h2>
 	<!-- Button to go to next game state -->
 	<a class="button next" v-on:click.stop.prevent="setNextState"> Show ${ nextStateName } </a>
 	<div id="court">
@@ -151,32 +153,29 @@ not be playing when it's middle blocker's turn to serve.
 		<div v-if="selection.gameState.endsWith('ttack')" class="area spike">SET & SPIKE</div>
 		<div v-if="selection.gameState.endsWith('ttack')" class="area dig">DIG BLOCKED</div>
 		<div v-if="selection.gameState == 'receive'" class="area pass">SERVE RECEIVE</div>
-		<!-- Navbars -->
-		<div class="navbar-container" style="left: 0; top: 85%; width: 100%">
-			<div class="navbar rotations">
-				<div
-					:class="{active: index-1 == selection.rotation}"
-					v-for="index in 6"
-					v-on:click="selection.rotation = index-1;"
-				>${index}</div>
-			</div>
-			<div class="navbar states">
-				<div
-					:class="{active: state.id == selection.gameState && selection.serve}"
-					v-on:click="selection.gameState == state.id && selection.serve ? updatePlayers() : [selection.gameState, selection.serve] = [state.id, true]"
-					v-for="state in gameStatesFlow.serve"
-				>${ state.name }</div>
-			</div>
-			<div class="navbar states">
-				<div
-					:class="{active: state.id == selection.gameState && !selection.serve}"
-					v-on:click="selection.gameState == state.id && !selection.serve ? updatePlayers() : [selection.gameState, selection.serve] = [state.id, false]"
-					v-for="state in gameStatesFlow.receive"
-				>${ state.name }</div>
-			</div>
-		</div>
 	</div>
-	<h2> Rotation ${+selection.rotation+1} - ${thisStateName} </h2>
+	<!-- Navbars -->
+	<div class="navbar rotations">
+		<div
+			:class="{active: index-1 == selection.rotation}"
+			v-for="index in 6"
+			v-on:click="selection.rotation = index-1;"
+		>${index}</div>
+	</div>
+	<div class="navbar states">
+		<div
+			:class="{active: state.id == selection.gameState && selection.serve}"
+			v-on:click="selection.gameState == state.id && selection.serve ? updatePlayers() : [selection.gameState, selection.serve] = [state.id, true]"
+			v-for="state in gameStatesFlow.serve"
+		>${ state.name }</div>
+	</div>
+	<div class="navbar states">
+		<div
+			:class="{active: state.id == selection.gameState && !selection.serve}"
+			v-on:click="selection.gameState == state.id && !selection.serve ? updatePlayers() : [selection.gameState, selection.serve] = [state.id, false]"
+			v-for="state in gameStatesFlow.receive"
+		>${ state.name }</div>
+	</div>
 	<p v-if="selection.gameState == 'home'">
 		These are the base positions for each player. There are precise rules describing required relative positions between adjacent players which you can see by <b>clicking on individual players</b>. If those rules are not adhered to at the start of the rally, the referee will call <i>out of rotation</i> fault and your opponent will get a point.
 	</p>
@@ -215,7 +214,8 @@ not be playing when it's middle blocker's turn to serve.
 	#court {
 		width: 100%;
 		position: relative;
-		/*overflow: hidden;*/
+		overflow: hidden;
+		margin-bottom: -15%;
 	}
 	#court:after {
 		content: "";
