@@ -69,6 +69,7 @@ from the middle of the court. Because libero is not allowed to serve they will
 not be playing when it's middle blocker's turn to serve.
 
 <div id="app">
+	<div id="above-court">
 	<select style="display: inline-block;" id="rotationTypeSelect" v-model="selection.type">
 		<option :value="index" v-for="(rotationType, index) in allRotations">${ rotationType.name }</option>
 	</select>
@@ -100,6 +101,7 @@ not be playing when it's middle blocker's turn to serve.
 	<h2> Rotation ${+selection.rotation+1} - ${thisStateName} </h2>
 	<!-- Button to go to next game state -->
 	<a class="button next" v-on:click.stop.prevent="setNextState"> Show ${ nextStateName } </a>
+	</div>
 	<div id="court">
 		<div class="lecture">This is what it is and you can't deal with it</div>
 		<!-- Court background -->
@@ -154,6 +156,7 @@ not be playing when it's middle blocker's turn to serve.
 		<div v-if="selection.gameState.endsWith('ttack')" class="area dig">DIG BLOCKED</div>
 		<div v-if="selection.gameState == 'receive'" class="area pass">SERVE RECEIVE</div>
 	</div>
+	<div id="below-court">
 	<!-- Navbars -->
 	<div class="navbar rotations">
 		<div
@@ -197,6 +200,7 @@ not be playing when it's middle blocker's turn to serve.
 			In this rotation the setter is in the back row. Because we don't want them to receive we move them out of the way and instead bring back the outside hitter from the front row to help with receiving.
 		</span>
 	</p>
+	</div>
 </div>
 
 <style>
@@ -502,6 +506,31 @@ not be playing when it's middle blocker's turn to serve.
 
 		.navbar > div {
 			font-size: initial;
+		}
+	}
+	@media(min-width: 1400px) {
+		#app {
+			width: 1333px;
+			margin-left: -266px;
+		}
+		#above-court, #below-court {
+			float: left;
+			width: 530px;
+		}
+		#above-court {
+			margin-top: 3em;
+		}
+		#court {
+			float: right;
+			width: 800px;
+			margin-bottom: 0;
+		}
+
+		.next.button {
+			margin-bottom: 1em;
+		}
+		.navbar.states + p {
+			margin-top: 1em;
 		}
 	}
 
