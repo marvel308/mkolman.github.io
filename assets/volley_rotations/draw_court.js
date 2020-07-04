@@ -76,7 +76,8 @@ class Rotation {
 				let name = this.players[player];
 				if (name == "O") this.passers[rotation][0] = player;
 				else if (name == "M") this.passers[rotation][1] = player;
-				else this.passers[rotation][2] = player; // S and R
+				else if (name == "S" || name == "R") this.passers[rotation][2] = player;
+				else this.passers[rotation][i] = player; // Unnamed players don't have a set position
 			}
 		}
 	}
@@ -90,7 +91,8 @@ class Rotation {
 				let name = this.players[player];
 				if (name == "O") this.blockers[rotation][0] = player;
 				else if (name == "M") this.blockers[rotation][1] = player;
-				else this.blockers[rotation][2] = player; // S and R
+				else if (name == "S" || name == "R") this.blockers[rotation][2] = player;
+				else this.blockers[rotation][2-i] = player; // Unnamed players don't have a set position
 			}
 		}
 	}
@@ -421,7 +423,8 @@ var app = new Vue({
 			} else if (this.selection.gameState == "defend" && myBall) {
 				this.moveObj(this.ball, x, y, TIME_DELAY);
 			} else if (this.selection.gameState.endsWith("ttack")) {
-				let spikeX = {M: 0.5, O: 0, R: 1, S: 1}[name];
+				let attackers = this.selection.gameState == "attack"?this.playerRoles.attackers:this.playerRoles.first_attackers;
+				let spikeX = [0, 0.5, 1][attackers.indexOf(this.attackerReceiverId)];
 				if (myBall) {
 					this.moveObj(this.ball, spikeX, 0, TIME_DELAY+10);
 					this.moveObj(this.ball, (spikeX+0.4)%1, -0.2, TIME_DELAY*1.8);

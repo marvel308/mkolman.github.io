@@ -97,6 +97,9 @@ not be playing when it's middle blocker's turn to serve.
 	<p v-if="currentRotation.name == '6-2'">
     	The 6-2 rotation is played with two setters and six total attackers - all six players act as attacker while in the front row. That includes the setter who in the front row assumes the role of right side hitter while the back row setter does the actual setting. Libero and both outside hitters are responsible for receiving serves in every rotation.
 	</p>
+	<p v-if="currentRotation.name == '6-0'">
+    	The 6-0 rotation is most often played in amateur level volleyball. No player has a designated role or position. Players change roles every rotation with the middle player in the front row usually taking the role of the setter. This eliminates the need to change your position after a serve which is a welcome simplification in casual games.
+	</p>
 	<!-- Rotation title -->
 	<h2> Rotation ${+selection.rotation+1} - ${thisStateName} </h2>
 	<!-- Button to go to next game state -->
