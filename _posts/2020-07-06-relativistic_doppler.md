@@ -200,9 +200,6 @@ where $\lambda'$ is the wavelength observed, $c$ is the speed of light, and
 $v$ is the speed of the source. Positive values for $v$ mean approaching and
 negative values mean the source is going away from the observer.
 
-If you want to see a derivation of the above formula you can [show more
-math]().
-
 # The answer
 
 You did it! You scrolled all the way to the bottom of this page.
