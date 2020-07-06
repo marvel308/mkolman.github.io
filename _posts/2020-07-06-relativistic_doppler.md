@@ -4,6 +4,7 @@ title:  "How fast do you have to drive to turn red traffic lights green?"
 date:   2020-07-06 10:00:00 +0000
 categories: relativistic Doppler effect red shift blue shift green color transform image
 math: yes
+image: /assets/relativistic_doppler/thumbnail.png
 ---
 
 Items moving at velocities comparable to the speed of light will look very
@@ -92,7 +93,7 @@ understand that answer as well.
 
 # What even is color?
 
-Questioning color is something you'd expect to do after taking too many
+Questioning color is something you'd expect to do after injecting too many
 marijuanas and not while reading this respectable source of science truths.
 However it's imperative that we understand the basics before we go on.
 
