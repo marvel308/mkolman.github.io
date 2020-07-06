@@ -28,6 +28,16 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
+# Only show excerpt in the feed
+# and not the whole post text.
+feed:
+  excerpt_only: true
+
+# For Atom feed at /feed.xml
+author:
+  name: Maks Kolman
+  email: maks+atom@kolman.si
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
