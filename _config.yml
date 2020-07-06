@@ -36,7 +36,7 @@ feed:
 # For Atom feed at /feed.xml
 author:
   name: Maks Kolman
-  email: maks+atom@kolman.si
+  email: maks@kolman.si
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

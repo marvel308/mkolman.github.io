@@ -1,9 +1,18 @@
 <footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+  <data class="u-url" href="{{ '/' | relative_url }}"></data>
   <div class="wrapper">
     <h2 class="footer-heading">{{ site.title | escape }}</h2>
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
+        <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=ByteSizeSnacks', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+          Get new posts to your email <br>
+          <input type="text" name="email" placeholder="Your email address">
+          <input type="hidden" value="ByteSizeSnacks" name="uri"/>
+          <input type="hidden" name="loc" value="en_US"/>
+          <input type="submit" value="Subscribe" />
+        </form>
+      </div>
+      <div class="footer-col footer-col-2">
         {%- include social.html -%}
       </div>
       <div class="footer-col footer-col-3">
