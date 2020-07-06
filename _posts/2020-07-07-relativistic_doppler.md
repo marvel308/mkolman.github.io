@@ -7,7 +7,7 @@ math: yes
 ---
 
 Items moving at velocities comparable to the speed of light will look very
-differently for the split second before they leave Earth forever. Upload any
+different for the split second before they leave Earth forever. Upload any
 image to see how it would change if it were moving at astronomical speeds and
 dive into the world of relativism and color.
 
@@ -85,10 +85,10 @@ _*This is probably not how this scene would look like in real life going <span
 class="velocityLabel">0</span>% the speed of light. But it is how this image
 displayed on an RGB screen would look like._
 
-Above you can experiment with the premise of the questions. It can help you
-get a feeling for what are the velocities involved at which colors start to
-change. You might even be able to answer the title question but read on if you
-want to understand it as well.
+Above you can experiment with the premise of the title. It can help you get a
+feeling for what are the velocities involved at which colors start to change.
+You might even be able to answer the question but read on if you want to
+understand that answer as well.
 
 # What even is color?
 
@@ -97,8 +97,8 @@ marijuanas and not while reading this respectable source of science truths.
 However it's imperative that we understand the basics before we go on.
 
 Visible light represent a small section of all electromagnetic spectrum at the
-380nm - 700nm wavelength range. Its immediate neighbors are ultraviolet (UV: 10nm -
-400nm) and infrared (IR: 700nm - 1mm) light. Other members on the
+380nm - 700nm wavelength range. Its immediate neighbors are ultraviolet (UV:
+10nm - 400nm) and infrared (IR: 700nm - 1mm) light. Other members on the
 spectrum are:
 
 * Gamma rays (< 0.01nm)
@@ -119,7 +119,7 @@ different wavelengths of light as different colors as shown below.
 
 At this point I want to reiterate the question in the title of this post. A
 red traffic light is shining light at around 650nm. Why would it ever appear
-green if there are no wavelengths between 500nm and 550nm present?
+green if there is no light present with wavelengths between 500nm and 550nm?
 
 # Doppler effect
 
@@ -128,8 +128,9 @@ affects sound. It's why an ambulance siren sounds different depending if the
 ambulance is driving towards us or away from us. That can be especially
 noticeable when it drives past us.
 
-**Note:** Don't hurt yourself and call an ambulance to test this. The effect is not
-present if you're inside the car so you should hurt other people close by instead.
+**Note:** Don't hurt yourself and call an ambulance to test this. The effect
+is not present if you're inside the car so you should hurt other people close
+by instead.
 
 <center>
 <audio controls>
@@ -140,44 +141,46 @@ present if you're inside the car so you should hurt other people close by instea
 </center>
 
 Just like how a sound changes when its source is moving, light also changes if
-its source is moving. To actually notice the change in either the speeds
-involved have to be comparable (think a couple percent) to their respective
-speeds.
+its source is moving. To actually notice the change in either, the speeds
+involved have to be comparable (think at least a couple percent) to their
+respective speeds.
 
 ## Relativistic Doppler effect
 
-Sound travels through air at 343 meters per second (= 767.3&#8239;mph = 1234.8&#8239;km/h)
-and
-<a href="https://www.google.com/search?q=Usain%20Bolt%27s%20top%20speed">
-humans can reach 2-3% of that on foot</a> and we have exceeded the speed of sound
-both on
-<a href="https://en.wikipedia.org/wiki/Land_speed_record#1963%E2%80%93present_(jet_and_rocket_propulsion)">land</a>
-and <a href="https://www.google.com/search?q=lockheed%20sr-71%20blackbird%20top%20speed">air</a>.
+Sound travels through air at 343 meters per second (= 767.3&#8239;mph =
+1234.8&#8239;km/h). [Humans can reach 2-3% of that on foot][bolt_speed] and we
+have exceeded the speed of sound both on [land][wiki_land] and
+[air][goog_air].
+
+[bolt_speed]: https://www.google.com/search?q=Usain%20Bolt%27s%20top%20speed
+[wiki_land]: https://en.wikipedia.org/wiki/Land_speed_record#1963%E2%80%93present_(jet_and_rocket_propulsion)
+[goog_air]: https://www.google.com/search?q=lockheed%20sr-71%20blackbird%20top%20speed
 
 The speed of light, however, has few more zeros at roughly
-300&#8202;000&#8202;000&#8239;m/s (~1 billion&#8239;km/h or ~671
-million&#8239;mph). And the fastest human made object is
-<a href="https://en.wikipedia.org/wiki/Parker_Solar_Probe">NASA's Parker
-Solar Probe</a> which will reach its top speed in 2025: a whopping 0.064% of
-the speed of light (192&#8202;000&#8239;m/s = 691&#8202;000&#8239;km/h = 429
-492&#8239;mph). And we will never
-(<a href="https://youtu.be/WA4iX5D9Z64">ever, ever</a>) exceed or even reach
-the speed of light, because it's against the
-<a href="https://en.wikipedia.org/wiki/Speed_of_light#Upper_limit_on_speeds">law</a>.
+300&#8239;000&#8239;000&#8239;m/s (~1 billion&#8239;km/h or ~671
+million&#8239;mph). And the fastest human made object is [NASA's Parker Solar
+Probe][nasa] which will reach its top speed in 2025: a whopping 0.064% of the
+speed of light (192&#8239;000&#8239;m/s = 691&#8239;000&#8239;km/h = 429
+492&#8239;mph). And we will never ([ever, ever][taytay]) exceed or even reach
+the speed of light, because it's against the [law][wiki_light].
+
+[nasa]: https://en.wikipedia.org/wiki/Parker_Solar_Probe
+[taytay]: https://youtu.be/WA4iX5D9Z64
+[wiki_light]: https://en.wikipedia.org/wiki/Speed_of_light#Upper_limit_on_speeds
 
 Color shifting your selfies above was clearly a pointless waste of time.
 You'll never be able to show that Papa Smurf impersonation at 30% the speed of
 light.
 
-However there's more to outer space than the objects we've made and
-we have measurement instruments more precise than a naked human eyes.
-The fastest star in our galaxy is moving with 1&#8202;755&#8239;km/s (0.5%
-speed of light) and hand-held police radars can measure the Doppler effect on
-moving cars.
+However, there's more to outer space than the objects we've made and we have
+measuring instruments more precise than a naked human eyes. The fastest star
+in our galaxy is moving with 1755&#8239;km/s (0.5% speed of light) and
+hand-held police radars can measure the Doppler effect on moving cars using
+light with wavelengths in centimeter range.
 
-When the source of light is moving, the wavelength it produces gets
-either shortened of lengthened by the distance the source travels during
-that time. Below is an illustration of that concept.
+When the source of light is moving, the wavelength it produces gets either
+shortened of lengthened by the distance the source travels during that time.
+Below is an illustration of that concept.
 
 <center>
 	<video loop controls style="max-width: 100%">
@@ -193,8 +196,11 @@ $\lambda$, changes is
 $$\lambda' = \lambda \sqrt{\frac{1-v/c}{1+v/c}}$$
 
 where $\lambda'$ is the wavelength observed, $c$ is the speed of light, and
-$v$ is the speed of the source -- positive values mean approaching and
+$v$ is the speed of the source. Positive values for $v$ mean approaching and
 negative values mean the source is going away from the observer.
+
+If you want to see a derivation of the above formula you can [show more
+math]().
 
 # The answer
 
@@ -225,10 +231,11 @@ red. Like the red in a traffic light for example. But when its source is
 moving at **20% the speed of light** towards us we will perceive it as green.
 
 Part 2 on this topic which will dive further into color science will be coming
-out soon. Make sure to subscribe <a
-href="https://feeds.feedburner.com/ByteSizeSnacks"> via RSS </a> or <a
-href="https://feedburner.google.com/fb/a/mailverify?uri=ByteSizeSnacks&amp;loc=en_US">
-via email</a> to be notified when it gets released.
+out soon. Make sure to subscribe [via RSS][rss] or [via email][email_sub] to
+be notified when it gets released.
+
+[rss]: https://feeds.feedburner.com/ByteSizeSnacks
+[email_sub]: https://feedburner.google.com/fb/a/mailverify?uri=ByteSizeSnacks&amp;loc=en_US
 
 <script type="text/javascript">
 	const img = new Image(),
