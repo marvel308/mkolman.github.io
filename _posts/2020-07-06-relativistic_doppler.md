@@ -54,7 +54,7 @@ center {
 	<label for="uploadimage"> Upload a custom image </label>
 </button>
 <label for="uploadimage"> <span id="filename">default.png</span></label>
-<input type="file" id="uploadimage" style="visibility: hidden;" onchange="loadImg()"/>
+<input type="file" id="uploadimage" style="visibility: hidden;" onchange="loadImg()" accept="image/*" />
 
 Wow, it's TOO BIG. I made the picture smaller. <a href="#" onclick="showBigImg()">I want it big!</a>
 {: id="oversized" style="display: none;"}
