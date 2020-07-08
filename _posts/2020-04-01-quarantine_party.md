@@ -79,7 +79,7 @@ Starting with the characters in the back stack all the photos into layers. Every
 </div>
 
 <div id="display">
-	<img src="/assets/quarantine_party/layers/bg.png" style="z-index: -1; position: relative;">
+	<img src="/assets/quarantine_party/layers/bg.png" style="z-index: -1; position: relative;" alt="background">
 </div>
 
 That's it. You've successfully wasted a couple of hours in our meaningless journey towards death. If you're lucky, like us, you might even fool a couple of people into thinking you're an irresponsible twat that's actually hosting parties while you're supposed to be isolated.

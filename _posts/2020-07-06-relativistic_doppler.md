@@ -56,7 +56,7 @@ center {
 <label for="uploadimage"> <span id="filename">default.png</span></label>
 <input type="file" id="uploadimage" style="visibility: hidden;" onchange="loadImg()" accept="image/*" />
 
-Wow, it's TOO BIG. I made the picture smaller. <a href="#" onclick="showBigImg()">I want it big!</a>
+Wow, it's TOO BIG. I made the picture smaller. <a href="#image-at-0-the-speed-of-light" onclick="showBigImg()">I want it big!</a>
 {: id="oversized" style="display: none;"}
 
 <div class="velocity-labels">
@@ -114,7 +114,7 @@ sensitive to different wavelengths. Together they trick our brain into seeing
 different wavelengths of light as different colors as shown below.
 
 <center>
-<img src="{{'/assets/relativistic_doppler/visiblespectrum.png'}}" />
+<img src="{{'/assets/relativistic_doppler/visiblespectrum.png'}}" alt="visiblespectrum"/>
 <br>
 <i>Colors in the visible spectrum at different wavelengths. The shortest wavelengths we can see are violets around 400nm all the way to the red at 700nm.</i>
 </center>
@@ -210,7 +210,7 @@ Using the formula from the previous section and the wavelength-color link from
 the first section we can construct the below graph.
 
 <center>
-<img src="{{'/assets/relativistic_doppler/shifted_spectrum.png'}}" />
+<img src="{{'/assets/relativistic_doppler/shifted_spectrum.png'}}" alt="shifted_spectrum" />
 <br>
 <i>Different wavelengths appear differently at various velocities. Wavelengths
 around 450nm appear violet when the source is stationary, but becomes green

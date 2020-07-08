@@ -110,17 +110,19 @@ not be playing when it's middle blocker's turn to serve.
 		<!-- Court background -->
 		<div class="lines full"></div>
 		<div class="lines three"></div>
-		<img class="net" src="{{'/assets/volley_rotations/net.png'}}" />
+		<img class="net" src="{{'/assets/volley_rotations/net.png'}}" alt="net"/>
 		<!-- Rotate left and right -->
 		<img
 			class="rotate right"
 			src="{{'/assets/volley_rotations/ccw_arrow.png'}}"
 			v-on:click="selection.rotation = (+selection.rotation + 1) % 6; selection.serve = true; selection.gameState = 'home';"
+			alt="right"
 		/>
 		<img
 			class="rotate left"
 			v-on:click="selection.rotation = (+selection.rotation + 5) % 6; selection.serve = true; selection.gameState = 'home';"
 			src="{{'/assets/volley_rotations/cw_arrow.png'}}"
+			alt="left"
 		/>
 		<!-- Players and ball -->
 		<div class="player" :class="{active: trackPlayer == index, notActive: trackPlayer != null && trackPlayer != index}" v-on:click="trackPlayer == index ? trackPlayer = null : trackPlayer = index" :style="getStyle(player)" v-for="(player, index) in getDisplayPlayers()">${ selection.haikyu ? '' : player.name}</div>
