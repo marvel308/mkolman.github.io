@@ -236,7 +236,7 @@ be notified when it gets released.
 [rss]: https://feeds.feedburner.com/ByteSizeSnacks
 [email_sub]: https://feedburner.google.com/fb/a/mailverify?uri=ByteSizeSnacks&amp;loc=en_US
 
-<script type="text/javascript">
+<script type="module">
 	const img = new Image(),
 		canvas = document.getElementById('canvas'),
 		ctx = canvas.getContext('2d'),
@@ -303,8 +303,6 @@ be notified when it gets released.
 			img.src = DEFAULT_IMAGE;
 		}
 	}
-</script>
-<script type="module">
 	import init, {color_shift_canvas} from "https://www.kolman.si/doppler-color-shift/pkg/doppler_color_shift.js";
 	async function run() {
 		let rateLimitTime = new Date();
