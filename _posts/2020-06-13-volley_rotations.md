@@ -3,6 +3,7 @@ layout: post
 title:  "Volleyball rotations explained"
 date:   2020-06-13 10:00:00 +0000
 categories: volley volleyball rotations libero setter hitter middle blocker attacker opposite outside hitter Haikyu
+image: /assets/volley_rotations/thumbnail.png
 ---
 
 Explanation of different volleyball rotations and guidelines on how to move around the court.
