@@ -22,6 +22,10 @@ $hover-color: #673ab7;
     --hover-color: #{$hover-color};
 }
 
+video, picture {
+    max-width: 100%;
+}
+
 // Override Minima
 .site-footer {
     border-top: none;
