@@ -14,8 +14,8 @@ Below is an audio file they intercepted. Can you find the alias of the person yo
 
 <center id="audioCenter">
     <audio controls>
-        <source src="{{'/assets/sound_puzzle/message.wav'}}" type="audio/wav">
         <source src="{{'/assets/sound_puzzle/message.mp3'}}" type="audio/mpeg">
+        <source src="{{'/assets/sound_puzzle/message.wav'}}" type="audio/wav">
     </audio>
     <a href="{{'/assets/sound_puzzle/message.wav'}}" download> ⇩Download </a>
 </center>
