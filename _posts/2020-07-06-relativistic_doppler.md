@@ -114,7 +114,7 @@ sensitive to different wavelengths. Together they trick our brain into seeing
 different wavelengths of light as different colors as shown below.
 
 <center>
-<img src="{{'/assets/relativistic_doppler/visiblespectrum.png'}}" alt="visiblespectrum"/>
+<img src="{% link /assets/relativistic_doppler/visiblespectrum.png %}" alt="visiblespectrum"/>
 <br>
 <i>Colors in the visible spectrum at different wavelengths. The shortest wavelengths we can see are violets around 400nm all the way to the red at 700nm.</i>
 </center>
@@ -186,7 +186,7 @@ Below is an illustration of that concept.
 
 <center>
 	<video loop controls style="max-width: 100%">
-		<source src="{{'/assets/relativistic_doppler/doppler.mp4'}}" type="video/mp4">
+		<source src="{% link /assets/relativistic_doppler/doppler.mp4 %}" type="video/mp4">
 	</video>
 	<br>
 	<i>When stationary this source produces a signal with <span style="color: green;">green wavelength</span>. When it starts moving it creates <span style="color: blue;">shorter wavelength</span> in the direction of movement and <span style="color: red;">longer wavelength</span> in the opposite direction.</i>
@@ -210,7 +210,7 @@ Using the formula from the previous section and the wavelength-color link from
 the first section we can construct the below graph.
 
 <center>
-<img src="{{'/assets/relativistic_doppler/shifted_spectrum.png'}}" alt="shifted_spectrum" />
+<img src="{% link /assets/relativistic_doppler/shifted_spectrum.png %}" alt="shifted_spectrum" />
 <br>
 <i>Different wavelengths appear differently at various velocities. Wavelengths
 around 450nm appear violet when the source is stationary, but becomes green
@@ -247,7 +247,7 @@ be notified when it gets released.
 		imageInput = document.getElementById("uploadimage"),
 		URL = window.URL || window.webkitURL,
 		MAX_WIDTH = 740,
-		DEFAULT_IMAGE = "{{'/assets/relativistic_doppler/default.png'}}";
+		DEFAULT_IMAGE = "{% link /assets/relativistic_doppler/default.png %}";
 	let memo = {},
 		filename = "default.png";
 	img.src = DEFAULT_IMAGE;

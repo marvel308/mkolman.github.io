@@ -7,9 +7,9 @@ categories: GIMP photoshop party quarantine isolation
 
 Don't let the limited number of people you live with in quarantine prevent you from appearing like a party animal on social media.
 
-<a href="/assets/quarantine_party/party.jpg"><picture>
-	<source srcset="/assets/quarantine_party/party_small.webp"/>
-	<img src="/assets/quarantine_party/party_small.jpg" alt="Party"/>
+<a href="{% link /assets/quarantine_party/party.jpg %}"><picture>
+	<source srcset="{% link /assets/quarantine_party/party_small.webp %}"/>
+	<img src="{% link /assets/quarantine_party/party_small.jpg %}" alt="Party"/>
 </picture></a>
 
 During the both boring and nerve-wrecking times of self isolation thrust upon us by a world pandemic our options of spending free time is severely limited. We can listen to [thematic music][playlist] and watch movies. But one thing we absolutely shouldn't do is go out and party with other people.
@@ -38,8 +38,8 @@ It's crucial that your camera doesn't move during the entirety of the photoshoot
 Our setup was strapping my Pixel 2 to a music stand using a capo. Yay, for having a musician in your household!
 
 <picture>
-	<source srcset="/assets/quarantine_party/pixel.webp"/>
-	<img src="/assets/quarantine_party/pixel.jpg" alt="Pixel"/>
+	<source srcset="{% link /assets/quarantine_party/pixel.webp %}"/>
+	<img src="{% link /assets/quarantine_party/pixel.jpg %}" alt="Pixel"/>
 </picture>
 
 You also have to make sure to not disturb the camera while taking photos. You can get a [custom trigger][remote], a [specialized app][timer-app], but we used Google assistant to trigger the camera using the command
@@ -59,16 +59,16 @@ This should be a straight forward process. Change your props and clothes and tak
 </style>
 <div class="photos">
 <video muted="" autoplay="" loop="">
-	<source src="{{'/assets/quarantine_party/guitar.mp4'}}"/>
+	<source src="{% link /assets/quarantine_party/guitar.mp4 %}"/>
 </video>
 <video muted="" autoplay="" loop="">
-	<source src="{{'/assets/quarantine_party/groupie.mp4'}}"/>
+	<source src="{% link /assets/quarantine_party/groupie.mp4 %}"/>
 </video>
 <video muted="" autoplay="" loop="">
-	<source src="{{'/assets/quarantine_party/drinker.mp4'}}"/>
+	<source src="{% link /assets/quarantine_party/drinker.mp4 %}"/>
 </video>
 <video muted="" autoplay="" loop="">
-	<source src="{{'/assets/quarantine_party/dancers.mp4'}}"/>
+	<source src="{% link /assets/quarantine_party/dancers.mp4 %}"/>
 </video>
 </div>
 
@@ -82,7 +82,7 @@ So you've shot all the photos and selected one favorite of every character. Now 
 [gimp]: https://gimp.org
 
 <video muted="" autoplay="" loop="">
-	<source src="{{'/assets/quarantine_party/making_of.mp4'}}"/>
+	<source src="{% link /assets/quarantine_party/making_of.mp4 %}"/>
 </video>
 
 Starting with the characters in the back stack all the photos into layers. Every time you add a new layer erase all parts of it that are covering the relevant parts on previous photos. Make sure to also include shadows and reflections of your characters, otherwise the whole scene is going to look off. Moreover you might want to add additional shadows where one character is covering up the source of light to another character.
@@ -98,7 +98,7 @@ Starting with the characters in the back stack all the photos into layers. Every
 </div>
 
 <div id="display">
-	<img src="/assets/quarantine_party/layers/bg.png" style="z-index: -1; position: relative;" alt="background">
+	<img src="{% link /assets/quarantine_party/layers/bg.png %}" style="z-index: -1; position: relative;" alt="background">
 	{% for id in (1..9) %}
 	<picture id="img-layer-{{id}}" style="display: none;">
 		<source srcset="/assets/quarantine_party/layers/{{id}}.webp"/>

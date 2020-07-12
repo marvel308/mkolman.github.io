@@ -14,7 +14,7 @@ current champion [Magnus Carlsen][magnus] and the challenger [Fabiano
 Caruana][fabi] is going be held in London.
 
 <center markdown="block">
-![caruanavscarlsen]({{"/assets/elo/Caruana_Carlsen.JPG"|relative_url}})
+![caruanavscarlsen]({% link /assets/elo/Caruana_Carlsen.JPG %})
 _Caruana (left) playing Carlsen (right) in the Grenke Chess Classic 2015.
 [[source]](https://commons.wikimedia.org/wiki/File:Caruana_Carlsen_Grenke_Chess_Classic_2015-2.JPG)_
 </center>
@@ -59,7 +59,7 @@ $$E_A = \frac{1}{1+10^{(R_B-R_A)/400}},\\
 E_B = \frac{1}{1+10^{(R_A-R_B)/400}}.$$
 
 <center markdown="block">
-![expected]({{"/assets/elo/rating_expected.svg"|relative_url}})<br>
+![expected]({% link /assets/elo/rating_expected.svg %})<br>
 _Graph depicts the expected score for two players with various
 rating differences._
 </center>
@@ -81,7 +81,7 @@ different organizations and even in different stages of players career the
 K-factor varies from as low as 10 and up to 40.
 
 <center markdown="block">
-![rating]({{"/assets/elo/rating_change.svg"|relative_url}})<br>
+![rating]({% link /assets/elo/rating_change.svg %})<br>
 _Graph depicts rating change for three K-factors when opponents with different
 relative strength draw or win a game._
 </center>
@@ -173,7 +173,7 @@ We already formulated the required functions in the previous section, so all
 that is left is to plot them.
 
 <center markdown="block">
-![win chance]({{"/assets/elo/championship.svg"|relative_url}})<br>
+![win chance]({% link /assets/elo/championship.svg %})<br>
 _Probability for every match outcome given a different number of games in the match._
 </center>
 

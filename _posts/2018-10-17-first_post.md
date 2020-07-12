@@ -27,7 +27,7 @@ print(a.format(repr(a)))
 _Woaah_... Code that prints itself.
 
 Want an image? BAM!
-![This is an image of a sentence that is a description of this image]({{"assets/img/this-is-an-image.jpg"|relative_url}})
+![This is an image of a sentence that is a description of this image]({% link /assets/img/this-is-an-image.jpg %})
 
 * Let's
 * get

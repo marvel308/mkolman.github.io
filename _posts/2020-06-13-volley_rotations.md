@@ -26,7 +26,7 @@ front row and three in the back row. Their positions are named 1-6, with 1
 starting in the back right and continuing counter-clockwise to 6 in the middle
 back.
 
-![positions]({{"/assets/volley_rotations/positions.png"}}){:.img-positions}
+![positions]({% link /assets/volley_rotations/positions.png %}){:.img-positions}
 
 Before each serve players must not pass their direct neighbor to any of the
 four sides e.g. they must be right of their left neighbor if they have one,
@@ -111,18 +111,18 @@ not be playing when it's middle blocker's turn to serve.
 		<!-- Court background -->
 		<div class="lines full"></div>
 		<div class="lines three"></div>
-		<img class="net" src="{{'/assets/volley_rotations/net.png'}}" alt="net"/>
+		<img class="net" src="{% link /assets/volley_rotations/net.png %}" alt="net"/>
 		<!-- Rotate left and right -->
 		<img
 			class="rotate right"
-			src="{{'/assets/volley_rotations/ccw_arrow.png'}}"
+			src="{% link /assets/volley_rotations/ccw_arrow.png %}"
 			v-on:click="selection.rotation = (+selection.rotation + 1) % 6; selection.serve = true; selection.gameState = 'home';"
 			alt="right"
 		/>
 		<img
 			class="rotate left"
 			v-on:click="selection.rotation = (+selection.rotation + 5) % 6; selection.serve = true; selection.gameState = 'home';"
-			src="{{'/assets/volley_rotations/cw_arrow.png'}}"
+			src="{% link /assets/volley_rotations/cw_arrow.png %}"
 			alt="left"
 		/>
 		<!-- Players and ball -->
@@ -304,7 +304,7 @@ not be playing when it's middle blocker's turn to serve.
 		color: #D32F2F;
 	}
 	#court .switch .haikyu-back {
-		background-image: url({{'/assets/volley_rotations/haikyu_short.png'}});
+		background-image: url({% link /assets/volley_rotations/haikyu_short.png %});
 		background-size: 80%;
 		background-position: center;
 		background-repeat: no-repeat;
@@ -542,4 +542,4 @@ not be playing when it's middle blocker's turn to serve.
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="{{'/assets/volley_rotations/draw_court.js'}}"></script>
+<script src="{% link /assets/volley_rotations/draw_court.js %}"></script>
