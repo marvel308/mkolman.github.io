@@ -2,8 +2,8 @@
 title: Byte-Size Snacks
 email: maks@kolman.si
 description: >- # this means to ignore newlines until "baseurl:"
-    A site to hold my thoughts, code, experiments and tools.
-    I will keep fixing it until it's completely broken.
+    I'm Maks Kolman and this is a site to hold my thoughts, code, experiments
+    and tools. I will keep fixing it until it's completely broken.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.kolman.si"
 
