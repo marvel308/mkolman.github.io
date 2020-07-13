@@ -185,7 +185,7 @@ shortened of lengthened by the distance the source travels during that time.
 Below is an illustration of that concept.
 
 <center>
-	<video loop controls style="max-width: 100%">
+	<video loop controls autoplay muted style="max-width: 100%">
 		<source src="{% link /assets/relativistic_doppler/doppler.mp4 %}" type="video/mp4">
 	</video>
 	<br>
