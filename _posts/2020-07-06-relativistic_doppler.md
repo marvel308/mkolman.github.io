@@ -303,7 +303,7 @@ be notified when it gets released.
 			img.src = DEFAULT_IMAGE;
 		}
 	}
-	import init, {color_shift_canvas} from "https://kolman.si/doppler-color-shift/pkg/doppler_color_shift.js";
+	import init, {color_shift_canvas} from "{{ site.url }}/doppler-color-shift/pkg/doppler_color_shift.js";
 	async function run() {
 		let rateLimitTime = new Date();
 		let timeoutId = null;
