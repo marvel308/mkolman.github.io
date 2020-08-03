@@ -72,7 +72,7 @@ not be playing when it's middle blocker's turn to serve.
 <div id="app">
 	<div id="above-court">
 	<select style="display: inline-block;" id="rotationTypeSelect" v-model="selection.type">
-		<option :value="index" v-for="(rotationType, index) in allRotations">${ rotationType.name }</option>
+		<option :value="index" :key="index" v-for="(rotationType, index) in allRotations">${ rotationType.name }</option>
 	</select>
 	<h2 style="font-size: 2em; display: inline-block; margin-left: 0.2em;">system</h2>
 	<div style="display: none">
