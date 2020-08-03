@@ -126,7 +126,13 @@ not be playing when it's middle blocker's turn to serve.
 			alt="left"
 		/>
 		<!-- Players and ball -->
-		<div class="player" :class="{active: trackPlayer == index, notActive: trackPlayer != null && trackPlayer != index}" v-on:click="trackPlayer == index ? trackPlayer = null : trackPlayer = index" :style="getStyle(player)" v-for="(player, index) in getDisplayPlayers()">${ selection.haikyu ? '' : player.name}</div>
+		<div
+			class="player"
+			:class="{active: trackPlayer == index, notActive: trackPlayer != null && trackPlayer != index}"
+			v-on:click="trackPlayer == index ? trackPlayer = null : trackPlayer = index"
+			:style="getStyle(player)"
+			v-for="(player, index) in getDisplayPlayers()"
+		>${ selection.haikyu ? '' : player.name }</div>
 		<div class="ball" :style="getStyle(ball)"></div>
 		<!-- Position lines -->
 		<div class="position-limits" :style="line" v-for="line in trackedPlayerPositionLimits"></div>
