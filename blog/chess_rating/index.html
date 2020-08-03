@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/logo/logo_256.png"/><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Math predicts Caruana has 39.5% chance of becoming the World Chess Champion | Byte-Size Snacks</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Math predicts Caruana has 39.5% chance of becoming the World Chess Champion" />
+<meta name="author" content="Maks Kolman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What does chess rating tell us? How is it calculated and can it predict the next World Chess Champion?" />
+<meta property="og:description" content="What does chess rating tell us? How is it calculated and can it predict the next World Chess Champion?" />
+<link rel="canonical" href="https://www.kolman.si/blog/chess_rating/" />
+<meta property="og:url" content="https://www.kolman.si/blog/chess_rating/" />
+<meta property="og:site_name" content="Byte-Size Snacks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-10-23T20:00:00+00:00" />
+<meta name="google-site-verification" content="9ZiZUK7dkw6zLRwMYV8LNIdwcvbseiUhwVsfl8n3k-0" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Maks Kolman"},"headline":"Math predicts Caruana has 39.5% chance of becoming the World Chess Champion","dateModified":"2018-10-23T20:00:00+00:00","datePublished":"2018-10-23T20:00:00+00:00","description":"What does chess rating tell us? How is it calculated and can it predict the next World Chess Champion?","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.kolman.si/blog/chess_rating/"},"@type":"BlogPosting","url":"https://www.kolman.si/blog/chess_rating/","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://www.kolman.si/feed.xml" title="Byte-Size Snacks" /><meta name="keywords" content="chess,FIDE,ELO,rating,math"></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Byte-Size Snacks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/cv/">About me</a><a class="page-link" href="/links/">Links</a><a class="page-link" href="/search/">Search</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Math predicts Caruana has 39.5% chance of becoming the World Chess Champion</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-10-23T20:00:00+00:00" itemprop="datePublished">Oct 23, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>What does chess rating tell us? How is it calculated and can it predict the
+next World Chess Champion?</p>
+
+<p>In November 2018 <a href="https://en.wikipedia.org/wiki/World_Chess_Championship_2018">the World Chess Championship</a> (WCC) match between the
+current champion <a href="https://en.wikipedia.org/wiki/Magnus_Carlsen">Magnus Carlsen</a> and the challenger <a href="https://en.wikipedia.org/wiki/Fabiano_Caruana">Fabiano
+Caruana</a> is going be held in London.</p>
+
+<center>
+  <p><img src="/assets/elo/Caruana_Carlsen.JPG" alt="caruanavscarlsen" />
+<em>Caruana (left) playing Carlsen (right) in the Grenke Chess Classic 2015.
+<a href="https://commons.wikimedia.org/wiki/File:Caruana_Carlsen_Grenke_Chess_Classic_2015-2.JPG">[source]</a></em></p>
+</center>
+
+<p>When the news of WCC reached amateurs like me, the challenger was already
+selected and the countdown to the match began. I started wondering if
+Caruana stands a chance against the champion, or will he unavoidably become
+Carlsen’s latest victim.</p>
+
+<p>This is an interesting mathematical question. <a href="https://www.fide.com/">World Chess Organization
+(FIDE)</a> assigns a rating to all players which can answer
+this exact question. At the time of writing Carlsen is the top rated player in
+the world with a rating 2834.7 and Caruana is close second with 2832.3.</p>
+
+<h1 id="chess-101">Chess 101</h1>
+
+<p>Chess is a two player <a href="https://en.wikipedia.org/wiki/Zero-sum_game">zero-sum game</a> with <a href="https://en.wikipedia.org/wiki/Complete_information">complete information</a>. This
+means that both players have directly opposing goals (i.e. what is good for one
+player is equally and oppositely bad for the other) and have full knowledge of
+the game’s state (i.e. there are no hidden pieces or cards).</p>
+
+<p>If you win a chess game you get one point and the loser gets 0. In a draw both
+players get half a point. This scoring system is the basis of determining the
+player’s ratings.</p>
+
+<h1 id="elo-rating-system">Elo rating system</h1>
+
+<p>First lets talk about the <a href="https://en.wikipedia.org/wiki/Elo_rating_system">rating system</a> used in chess. A physicist
+<a href="https://en.wikipedia.org/wiki/Arpad_Elo">Arpad Elo</a> designed it as a method to judge the skill of players in any
+zero-sum game. The higher the rating the better the player and the difference in
+players rating determines their relative strength.</p>
+
+<p>Given two ratings $R_A$ and $R_B$ we can calculate the expected scores
+players $A$ and $B$ will get with the formula</p>
+
+<script type="math/tex; mode=display">E_A = \frac{1}{1+10^{(R_B-R_A)/400}},\\
+E_B = \frac{1}{1+10^{(R_A-R_B)/400}}.</script>
+
+<center>
+  <p><img src="/assets/elo/rating_expected.svg" alt="expected" /><br />
+<em>Graph depicts the expected score for two players with various
+rating differences.</em></p>
+</center>
+
+<p>It always holds true that $E_A+E_B=1$. After each game the ratings of both
+players have to be adjusted, e.g. if you lose your rating will probably drop.</p>
+
+<p>If in a game player $A$ achieves a score $S_A \in \{0, \frac{1}{2}, 1\}$ the
+other achieved the score $S_B = 1-S_A$. After the game their ratings are
+adjusted proportionally to the difference between their expected and real score.
+We can express the change as</p>
+
+<script type="math/tex; mode=display">\Delta R_{A,B} = K(S_{A,B} - E_{A,B}),</script>
+
+<p>where $\Delta R_{A,B}$ is the resulting rating change and $K$ is a number called
+K-factor. In principle, it is possible that players have different values for
+$K$ in which case we would denote $K_A$ and $K_B$ for different players. In
+different organizations and even in different stages of players career the
+K-factor varies from as low as 10 and up to 40.</p>
+
+<center>
+  <p><img src="/assets/elo/rating_change.svg" alt="rating" /><br />
+<em>Graph depicts rating change for three K-factors when opponents with different
+relative strength draw or win a game.</em></p>
+</center>
+
+<h2 id="fide-variant-of-elo-rating-system">FIDE variant of Elo rating system</h2>
+
+<p>The main difference between various implementations of the Elo rating system is
+the use of the K-factor. Some have constant value for all players, some have
+discrete values for certain groups of players, and some use continuous K-factor
+tailored to each individual.</p>
+
+<p>We are concerned with FIDE which uses the following three values:</p>
+<ul>
+  <li>$K = 40$ , for a player new to the rating list until the completion of events
+with a total of 30 games and for all players until their 18th birthday, as long
+as their rating remains under 2300.</li>
+  <li>$K = 20$ , for players with a rating always under 2400.</li>
+  <li>$K = 10$ , for players with any published rating of at least 2400 and at least
+30 games played in previous events. Thereafter it remains permanently at 10.</li>
+</ul>
+
+<h1 id="using-rating-to-calculate-the-probability-of-winning">Using rating to calculate the probability of winning</h1>
+
+<p>Now lets return to Caruana and his 2.4 rating points disadvantage to Carlsen.
+What does that mean in terms of his winning chances?</p>
+
+<p>In this section we will use index $M$ for Magnus Carlsen and index $F$ for
+Fabiano Caruana. With that in mind we denote the probability of Magnus
+winning a $n$ game match as $P_{Mn}$. Similarly, $P_{Dn}$ and $P_{Fn}$ represent
+probabilities of him drawing and loosing said match, respectively.</p>
+
+<p>Firstly we have to choose the probability of drawing a single game $P_{D1}$.
+Looking at historical data for players at the top-level we will set this value
+to</p>
+
+<script type="math/tex; mode=display">P_{D1} = 0.6.</script>
+
+<p>The end result is not massively dependent on this figure, so its precision is of
+secondary importance. For example, even setting $P_{D1}=0$ would only change 12
+game match results by a couple of percentage points.</p>
+
+<p>Using a basic equation for calculating expected values we can write</p>
+
+<script type="math/tex; mode=display">E_M = S_{win} \cdot P_{M1} + S_{draw} \cdot P_{D1}</script>
+
+<p>where $S_{win}=1$ is the winning score and $S_{draw}=1/2$ is the drawing score.
+Expressing $P_{M1}$ (similarly $P_{F1}$) from the above equation yields</p>
+
+<script type="math/tex; mode=display">P_{M1} = E_M - \frac{P_{D1}}{2} \simeq 20.3 \%,\\
+P_{F1} = E_F - \frac{P_{D1}}{2} \simeq 19.7 \% .</script>
+
+<p>Next, lets tackle the problem of multiple games. To win an entire $n$-game match
+Magnus needs at least one win ($N_M$) and Caruana has to win less than Magnus
+($N_F$) with the remaining games being drawn($N_D$). Mathematically this gives
+us the following restrictions:</p>
+
+<script type="math/tex; mode=display">N_M \in \{1, 2, 3, ..., n\} \\
+N_F \in \{0, 1, 2, ..., \min\{N_M-1, n-N_M\}=\widetilde{N_F}\}\\
+N_D = n - N_M - N_F</script>
+
+<p>If we sum over all possible configurations, we get the total probability that
+Magnus will win</p>
+
+<script type="math/tex; mode=display">P_{Mn} = \sum_{N_M=1}^{n}\sum_{N_F=0}^{\widetilde{N_F}} \bar P(N_M, n-N_M-N_F, N_F),</script>
+
+<p>where $\bar P(N_M, N_D, N_F)$ represents the probability of a match ending with
+$N_M$ wins for Magnus, $N_D$ draws and $N_F$ wins for Fabiano. The drawing
+probability is expressed in the same way, except we insist that $N_M=N_F$</p>
+
+<script type="math/tex; mode=display">P_{Dn} = \sum_{N_W=0}^{n/2} P(N_W, n-2N_W, N_W).</script>
+
+<p>The last thing to do is to define the function $\bar P$:</p>
+
+<script type="math/tex; mode=display">\bar P(N_M, N_D, N_F) = \\
+P_{M1}^{N_M} \cdot {N_M+N_D+N_F\choose N_M} \cdot\\
+P_{F1}^{N_F} \cdot {N_F+N_F\choose N_F} \cdot\\
+P_{D1}^{N_D}</script>
+
+<p>Beautiful, I know. The first line represents the probability of Magnus winning
+$N_M$ games, the second line calculates the probability that Caruana will win
+$N_F$ of the remaining games, and lastly we calculate the probability that the
+rest of the games are drawn.</p>
+
+<h1 id="results">Results</h1>
+
+<p>Here we are at last. It is about time we answer the question at the top of the
+page. What does math have to say about Caruana’s chances of becoming the world
+chess champion?</p>
+
+<p>We already formulated the required functions in the previous section, so all
+that is left is to plot them.</p>
+
+<center>
+  <p><img src="/assets/elo/championship.svg" alt="win chance" /><br />
+<em>Probability for every match outcome given a different number of games in the match.</em></p>
+</center>
+
+<p>The above image shows the expected results for matches with up to 20 games.
+Though, 12 is the magic number in this case.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Carlsen</th>
+      <th>Draw</th>
+      <th>Caruana</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>42.4%</td>
+      <td>18.1%</td>
+      <td>39.5%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>All that is left for us to do is to wish both players good luck and hope for an
+interesting championship.</p>
+
+
+  </div><a class="u-url" href="/blog/chess_rating/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+  <div class="wrapper">
+    <h2 class="footer-heading">Byte-Size Snacks</h2>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=ByteSizeSnacks', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+          Get new posts to your email <br>
+          <input type="text" name="email" placeholder="Your email address">
+          <input type="hidden" value="ByteSizeSnacks" name="uri"/>
+          <input type="hidden" name="loc" value="en_US"/>
+          <input type="submit" value="Subscribe" />
+        </form>
+      </div>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/MKolman"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">MKolman</span></a></li><li><a href="https://www.linkedin.com/in/MaksKolman"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">MaksKolman</span></a></li><li><a href="https://youtube.com/KolmanMaks"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">KolmanMaks</span></a></li><li><a href="mailto:maks@kolman.si"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#email"></use></svg> <span class="username">maks@kolman.si</span></a></li></ul>
+</div>
+      <div class="footer-col footer-col-3">
+        <p>I&#39;m Maks Kolman and this is a site to hold my thoughts, code, experiments and tools. I will keep fixing it until it&#39;s completely broken.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<div id="cookie-consent">
+    <a href="javascript:toggleCookies()"><img class="cookie" alt="cookies" src="/assets/img/cookie.gif" /></a>
+    <div class="wrapper">
+        <a class="response" href="javascript:declineCookies()">Decline</a>
+        <a class="response" href="javascript:acceptCookies()">Accept</a>
+        This website uses <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage">cookies</a> for Google Analytics.
+    </div>
+</div>
+<script type="text/javascript">
+    function acceptCookies() {
+        localStorage.cookie_consent = "yes";
+        toggleCookies();
+    }
+    function declineCookies() {
+        localStorage.cookie_consent = "no";
+        toggleCookies();
+    }
+    function toggleCookies() {
+        document.getElementById("cookie-consent").classList.toggle("show");
+    }
+    doNotTrack = (window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1");
+    if (!localStorage.cookie_consent) {
+        if (doNotTrack) {
+            localStorage.cookie_consent = "no";
+        } else {
+            toggleCookies();
+        }
+    }
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script></body>
+
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/logo/logo_256.png"/><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Want to play a game? | Byte-Size Snacks</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Want to play a game?" />
+<meta name="author" content="Maks Kolman" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A set of various programming tasks waiting for you. Encryption of input files forces you so solve them sequentially." />
+<meta property="og:description" content="A set of various programming tasks waiting for you. Encryption of input files forces you so solve them sequentially." />
+<link rel="canonical" href="https://www.kolman.si/blog/aes_game/" />
+<meta property="og:url" content="https://www.kolman.si/blog/aes_game/" />
+<meta property="og:site_name" content="Byte-Size Snacks" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-10-19T21:00:00+00:00" />
+<meta name="google-site-verification" content="9ZiZUK7dkw6zLRwMYV8LNIdwcvbseiUhwVsfl8n3k-0" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Maks Kolman"},"headline":"Want to play a game?","dateModified":"2018-10-19T21:00:00+00:00","datePublished":"2018-10-19T21:00:00+00:00","description":"A set of various programming tasks waiting for you. Encryption of input files forces you so solve them sequentially.","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.kolman.si/blog/aes_game/"},"@type":"BlogPosting","url":"https://www.kolman.si/blog/aes_game/","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://www.kolman.si/feed.xml" title="Byte-Size Snacks" /><meta name="keywords" content="AES,game,programming,encryption,IPSC"></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Byte-Size Snacks</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/cv/">About me</a><a class="page-link" href="/links/">Links</a><a class="page-link" href="/search/">Search</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Want to play a game?</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-10-19T21:00:00+00:00" itemprop="datePublished">Oct 19, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>A set of various programming tasks waiting for you. Encryption of input files
+forces you so solve them sequentially.</p>
+
+<p>Is there a way to store private information publicly on GitHub? The data we
+upload must be perfectly retrievable but only for the key holder.</p>
+
+<h1 id="advanced-encryption-standard">Advanced Encryption Standard</h1>
+
+<p>The answer might lie with Advanced Encryption Standard (AES) which provides a
+symmetric encryption for any binary stream. As a demonstration I devised a game
+that utilizes encryption.</p>
+
+<h1 id="programming-challenge">Programming challenge</h1>
+
+<p>Here are a series of tasks. They are heavily inspired by some old
+<a href="https://ipsc.ksp.sk">IPSC</a> problems so if you enjoy this game, you will surely
+like IPSC as well.</p>
+
+<p>Each input is encrypted with <a href="/assets/aes_game/encrypt.sh">encrypt.sh</a> as</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">openssl-1.0 aes-256-cbc <span class="nt">-in</span> &lt;inFname&gt; <span class="nt">-out</span> &lt;outFname&gt; <span class="nt">-k</span> &lt;encKey&gt; <span class="nt">-base64</span> <span class="nt">-md</span> md5</code></pre></figure>
+
+<p>To decrypt a file just add a <code class="language-plaintext highlighter-rouge">-d</code> flag to the end of the command. You can also
+use JavaScript decryptor below.</p>
+
+<p>By solving a task you get a key to decrypt the official solution and the input
+of the next task. You can check if your solution is correct by calculating and
+comparing the first 5 characters of the key’s SHA256 hash.</p>
+
+<p>The first task is encrypted with a two character key (its hash starts with
+73475). Find it and you can start! And remember, <strong>don’t panic</strong>.</p>
+
+<p><input type="text" placeholder="Calculate SHA256" onkeyup="calcHash(event);" />
+<span id="keyHash"></span></p>
+
+<div class="horizontal-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Input</th>
+        <th>Solution</th>
+        <th>Hash</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01_run_me.py</td>
+        <td><a href="/assets/aes_game/01_run_me.py.aes">download</a> <a href="/assets/aes_game/01_run_me.py.aes" class="decrypt">decrypt</a></td>
+        <td><a href="/assets/aes_game/01_run_me_solution.py.aes" class="decrypt">decrypt</a></td>
+        <td><code class="language-plaintext highlighter-rouge">2A700</code></td>
+      </tr>
+      <tr>
+        <td>02_clocks.txt</td>
+        <td><a href="/assets/aes_game/02_clocks.txt.aes">download</a> <a href="/assets/aes_game/02_clocks.txt.aes" class="decrypt">decrypt</a></td>
+        <td><a href="/assets/aes_game/02_clocks_solution.py.aes" class="decrypt">decrypt</a></td>
+        <td><code class="language-plaintext highlighter-rouge">F4A97</code></td>
+      </tr>
+      <tr>
+        <td>03_play_me.wav</td>
+        <td><a href="/assets/aes_game/03_play_me.wav.aes">download</a> <a href="/assets/aes_game/03_play_me.wav.aes" class="decrypt">decrypt</a></td>
+        <td><a href="/assets/aes_game/03_play_me_solution.py.aes" class="decrypt">decrypt</a></td>
+        <td><code class="language-plaintext highlighter-rouge">F577B</code></td>
+      </tr>
+      <tr>
+        <td>04_chess.txt</td>
+        <td><a href="/assets/aes_game/04_chess.txt.aes">download</a> <a href="/assets/aes_game/04_chess.txt.aes" class="decrypt">decrypt</a></td>
+        <td><a href="/assets/aes_game/04_chess_solution.py.aes" class="decrypt">decrypt</a></td>
+        <td><code class="language-plaintext highlighter-rouge">AA76D</code></td>
+      </tr>
+      <tr>
+        <td>05_image.png</td>
+        <td><a href="/assets/aes_game/05_image.png.aes">download</a> <a href="/assets/aes_game/05_image.png.aes" class="decrypt">decrypt</a></td>
+        <td><a href="/assets/aes_game/05_image_solution.py.aes" class="decrypt">decrypt</a></td>
+        <td><code class="language-plaintext highlighter-rouge">6AEB6</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<h1 id="hall-of-fame">Hall of fame</h1>
+
+<div class="horizontal-scroll">
+  <table id="hallOfFame">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Username</th>
+        <th>Signature</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>00</td>
+        <td><a href="https://github.com/dcrystalj/">dcrystalj</a></td>
+        <td><code class="language-plaintext highlighter-rouge">81B26737244D1AA1A254A447F498DE65DCF76486F456C5AAEBE2798AEB838BBF</code></td>
+      </tr>
+      <tr>
+        <td>00</td>
+        <td><a href="https://github.com/daiwai/">daiwai</a></td>
+        <td><code class="language-plaintext highlighter-rouge">47CF7E1DB51207914959909DF21FBC486CA601CFEBE4F4BE36804A5C280BFD50</code></td>
+      </tr>
+      <tr>
+        <td>00</td>
+        <td><a href="https://github.com/damir00/">damir00</a></td>
+        <td><code class="language-plaintext highlighter-rouge">253DE19E5B77DD4E503C6D6BBE2406BFBACE3932E855C661A9D2F5F7532E89F7</code></td>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td><a href="https://github.com/daiwai/">daiwai</a></td>
+        <td><code class="language-plaintext highlighter-rouge">6792BB97C2E387DDE29787BA563CFF44A79516C5446C2D7A09E476E687FC67E6</code></td>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td><a href="https://github.com/damir00/">damir00</a></td>
+        <td><code class="language-plaintext highlighter-rouge">B165B1F36527A8D39DB48BB0838B77B886ECC7A309E191F37E39EA8A68FB6F86</code></td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td><a href="https://github.com/daiwai/">daiwai</a></td>
+        <td><code class="language-plaintext highlighter-rouge">C77A592244A3A79CBFC9BAA7A155F2C46050CCC6F72DEB1C18E5555E9E0F9D18</code></td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td><a href="https://github.com/damir00/">damir00</a></td>
+        <td><code class="language-plaintext highlighter-rouge">725F2B07995A2DB322DE6AF63E18E389F65B43A6A39490872527089947700304</code></td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td><a href="https://github.com/damir00/">damir00</a></td>
+        <td><code class="language-plaintext highlighter-rouge">ECAA6DDD53DD97E991823F042DA704159C6AB1082F588D465F09533D52346FB2</code></td>
+      </tr>
+      <tr>
+        <td>04</td>
+        <td><a href="https://github.com/damir00/">damir00</a></td>
+        <td><code class="language-plaintext highlighter-rouge">57F6C8B2CEFC2B5FA2662C615040F026BAD7FE20C8B9A05620095FCA4C57C60F</code></td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td><a href="https://github.com/damir00/">damir00</a></td>
+        <td><code class="language-plaintext highlighter-rouge">9FABD9953DE108D4A2E08EB8BA3EAABFA8585936E1ECAEA528EC8B4BA200AC1F</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>If you are amongst the first three people to solve a task you can get your name
+in the hall of fame above. Simply open a pull request for
+<a href="https://github.com/MKolman/mkolman.github.io/blob/master/_posts/2018-10-19-aes_game.md">this file</a> and add your GitHub username and signature to the
+above table. <a href="https://github.com/MKolman/mkolman.github.io/edit/master/_posts/2018-10-19-aes_game.md">Click here to fork and edit this page online.</a></p>
+
+<p>The signature for each task is the SHA256 hash of <code class="language-plaintext highlighter-rouge">&lt;username&gt;-&lt;task_num&gt;-&lt;key&gt;</code>.
+For example if the solution to task 05 is <code class="language-plaintext highlighter-rouge">makarena</code> then my signature would be
+the hash of <code class="language-plaintext highlighter-rouge">MKolman-05-makarena</code>.</p>
+
+<script>
+    function calcHash(event) {
+        let hash = CryptoJS.SHA256(event.target.value).toString().toUpperCase()
+        document.getElementById("keyHash").innerText = hash;
+    }
+</script>
+
+
+  </div><a class="u-url" href="/blog/aes_game/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+  <div class="wrapper">
+    <h2 class="footer-heading">Byte-Size Snacks</h2>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=ByteSizeSnacks', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+          Get new posts to your email <br>
+          <input type="text" name="email" placeholder="Your email address">
+          <input type="hidden" value="ByteSizeSnacks" name="uri"/>
+          <input type="hidden" name="loc" value="en_US"/>
+          <input type="submit" value="Subscribe" />
+        </form>
+      </div>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/MKolman"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">MKolman</span></a></li><li><a href="https://www.linkedin.com/in/MaksKolman"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">MaksKolman</span></a></li><li><a href="https://youtube.com/KolmanMaks"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">KolmanMaks</span></a></li><li><a href="mailto:maks@kolman.si"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#email"></use></svg> <span class="username">maks@kolman.si</span></a></li></ul>
+</div>
+      <div class="footer-col footer-col-3">
+        <p>I&#39;m Maks Kolman and this is a site to hold my thoughts, code, experiments and tools. I will keep fixing it until it&#39;s completely broken.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<div id="cookie-consent">
+    <a href="javascript:toggleCookies()"><img class="cookie" alt="cookies" src="/assets/img/cookie.gif" /></a>
+    <div class="wrapper">
+        <a class="response" href="javascript:declineCookies()">Decline</a>
+        <a class="response" href="javascript:acceptCookies()">Accept</a>
+        This website uses <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage">cookies</a> for Google Analytics.
+    </div>
+</div>
+<script type="text/javascript">
+    function acceptCookies() {
+        localStorage.cookie_consent = "yes";
+        toggleCookies();
+    }
+    function declineCookies() {
+        localStorage.cookie_consent = "no";
+        toggleCookies();
+    }
+    function toggleCookies() {
+        document.getElementById("cookie-consent").classList.toggle("show");
+    }
+    doNotTrack = (window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1");
+    if (!localStorage.cookie_consent) {
+        if (doNotTrack) {
+            localStorage.cookie_consent = "no";
+        } else {
+            toggleCookies();
+        }
+    }
+</script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"> </script>
+  <!-- <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"> </script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+<!-- <script type="text/javascript" src="/assets/js/crypto-js.min.js"></script> -->
+  <script type="text/javascript">
+      MIME_TYPE = {
+          "csv":  "text/csv",
+          "gif":  "image/gif",
+          "jpg":  "image/jpeg",
+          "png":  "image/png",
+          "pdf":  "application/pdf",
+          "py":   "text/python",
+          "txt":  "text/plain",
+          "wav":  "audio/wav",
+          "zip":  "application/zip",
+      }
+      function getAesEncFile(uri, passcode, callback) {
+          // Download a file encrypted with AES e.g.
+          // openssl-1.0 aes-256-cbc -in original.pdf -out encrypted.pdf.aes -k passcode -base64
+          if (!passcode) {
+             passcode = prompt("Enter AES encryption key:");
+          }
+          if (passcode) {
+              $.get(uri, function(data) {
+                  // For some reason openssl pushes new lines every 64 chars
+                  data = data.split(/\s/).join('');
+                  // Decrypt
+                  let decrypted = CryptoJS.AES.decrypt(data, passcode);
+                  callback(decrypted);
+              });
+          }
+      }
+      for (let dec_link of $(".decrypt")) {
+        dec_link.href = "#" + $(dec_link).attr("href");
+      }
+      $(".decrypt").click(function(event){
+          event.preventDefault();
+          let target = $(event.target);
+          let file_url = target.attr("href").slice(1);
+          getAesEncFile(file_url, null, function (decrypted) {
+              target.unbind('click');
+              target.html(target.html().replace("decrypt", "<del>decrypt</del> download decrypted"));
+              let file_name = file_url.replace(/.aes$/, "").split("/");
+              file_name = file_name[file_name.length-1];
+              target.attr("download", file_name);
+
+              let file_ext = file_name.split(".");
+              file_ext = file_ext[file_ext.length-1];
+              let file_mime_type = MIME_TYPE[file_ext] || "text/plain";
+
+              target.attr("href", "data:"+file_mime_type+";base64, "+decrypted.toString(CryptoJS.enc.Base64));
+          });
+      });
+  </script></body>
+
+</html>
