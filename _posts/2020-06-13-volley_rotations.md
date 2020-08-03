@@ -69,7 +69,7 @@ back row. Libero will always receive serves and try to pass opponent's spikes
 from the middle of the court. Because libero is not allowed to serve they will
 not be playing when it's middle blocker's turn to serve.
 
-<div id="app">
+<div id="app" markdown="0">
 	<div id="above-court">
 	<select style="display: inline-block;" id="rotationTypeSelect" v-model="selection.type">
 		<option :value="index" :key="index" v-for="(rotationType, index) in allRotations">${ rotationType.name }</option>
